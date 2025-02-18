@@ -13,4 +13,10 @@ class Supervisor extends Model
     protected $fillable = ['nombre', 'apellido_paterno', 'apellido_materno', 'email', 'telefono', 'zona', 'sector'];
 
 
+    public function levels()
+    {
+        return $this->hasMany(Level::class);
+    }
+
+
 }

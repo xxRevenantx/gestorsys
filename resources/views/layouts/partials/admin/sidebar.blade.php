@@ -61,8 +61,8 @@
         [
             'name' => 'Niveles',
             'icon' => 'fa-solid fa-house',
-            'route' =>  route('admin.dashboard'),
-            'active' => false
+            'route' =>  route('admin.levels.index'),
+            'active' =>  request()->routeIs('admin.levels.index'),
         ],
 
     ];
