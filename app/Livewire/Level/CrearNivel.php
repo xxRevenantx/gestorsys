@@ -26,15 +26,18 @@ class CrearNivel extends Component
 
 
     protected $rules = [
-        'level' => 'required',
+        'level' => 'required|unique:levels',
         'slug' => 'required|unique:levels',
+        'cct' => 'nullable|unique:levels',
         'imagen' =>  'image|nullable|max:2048|mimes:jpeg,jpg,png',
     ];
 
     protected $messages = [
         'level.required' => 'El campo nivel es obligatorio',
+        'level.unique' => 'El nivel ya existe',
         'slug.required' => 'El campo slug es obligatorio',
         'slug.unique' => 'El slug ya existe',
+        'cct.unique' => 'El C.C.T. ya existe',
         'imagen.image' => 'El archivo debe ser una imagen',
         'imagen.max' => 'El archivo no debe pesar más de 2MB',
         'imagen.mimes' => 'El archivo debe ser formato jpeg, jpg o png',

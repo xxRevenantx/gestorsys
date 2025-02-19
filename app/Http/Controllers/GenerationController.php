@@ -43,9 +43,11 @@ class GenerationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Generation $generation)
+    public function edit($generacion_id)
     {
-        //
+        $generacion = Generation::find($generacion_id);
+        return view('admin.generations.edit', compact('generacion'));
+
     }
 
     /**

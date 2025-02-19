@@ -76,7 +76,7 @@ class CrearGeneracion extends Component
 
     public function render()
     {
-        $niveles = Level::all();
+        $niveles = Level::orderBy('sort', 'ASC')->get();
         return view('livewire.generation.crear-generacion', compact('niveles'));
     }
 }

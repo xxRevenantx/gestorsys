@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Level;
 
+
 class LevelObserver
 {
 
@@ -12,7 +13,19 @@ class LevelObserver
         if ($level->imagen) {
             unlink(public_path('storage/levels/' . $level->imagen));
         }
+    }
 
+    public function creating(Level $level): void
+    {
+        $level->sort = Level::max('sort') + 1;
+    }
+
+
+    public function deleted(Level $level)
+    {
+        // Actualizar los niveles
+        Level::where('sort', '>', $level->sort)
+            ->decrement('sort');
 
     }
 

@@ -47,7 +47,11 @@
                     'name' => 'Directores',
                     'icon' => 'fa-regular fa-circle',
                     'route' => route('admin.directores.index'),
-                    'active' => request()->routeIs('admin.directores.index'),
+                    'active' => request()->routeIs(
+                        'admin.directores.index',
+                        'admin.directores.create',
+                        'admin.directores.edit'
+                    ),
                 ],
              ]
         ],
@@ -61,19 +65,31 @@
             'name' => 'Administrar niveles',
             'icon' => 'fas fa-layer-group',
             'route' =>  route('admin.levels.index'),
-            'active' =>  request()->routeIs('admin.levels.index'),
+            'active' =>  request()->routeIs(
+                'admin.levels.index',
+                'admin.levels.create',
+                'admin.levels.edit'
+            ),
         ],
         [
             'name' => 'Grupos',
             'icon' => 'fas fa-layer-group',
             'route' =>  route('admin.groups.index'),
-            'active' =>  request()->routeIs('admin.groups.index'),
+            'active' =>  request()->routeIs(
+                'admin.groups.index',
+                'admin.groups.create',
+                'admin.groups.edit'
+            ),
         ],
         [
             'name' => 'Generaciones',
             'icon' => 'fas fa-layer-group',
             'route' =>  route('admin.generations.index'),
-            'active' =>  request()->routeIs('admin.generations.index'),
+            'active' =>  request()->routeIs(
+                'admin.generations.index',
+                'admin.generations.create',
+                'admin.generations.edit'
+            ),
         ],
 
     ];

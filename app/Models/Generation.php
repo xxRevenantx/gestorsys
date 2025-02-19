@@ -17,7 +17,9 @@ class Generation extends Model
         'anio_termino',
         'status',
         'level_id',
+        'sort',
     ];
+
 
     public function level()
     {

@@ -13,7 +13,6 @@
 
 
 
-
 @livewire('generation.crear-generacion')
 @livewire('generation.mostrar-generacion')
 

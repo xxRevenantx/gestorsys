@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('cct')->nullable();
             $table->unsignedBigInteger('director_id')->nullable();
             $table->unsignedBigInteger('supervisor_id')->nullable();
+            $table->integer('sort');
 
 
             $table->foreign('director_id')->references('id')->on('directors')->onDelete('set null');

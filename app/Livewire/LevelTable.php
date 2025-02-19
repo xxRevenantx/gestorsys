@@ -5,8 +5,10 @@ namespace App\Livewire;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Level;
+use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ColorColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class LevelTable extends DataTableComponent
 {
@@ -14,7 +16,13 @@ class LevelTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id')
+        ->setReorderEnabled()
+        ->setSingleSortingDisabled()
+        ->setHideReorderColumnUnlessReorderingEnabled()
+        ->setFilterLayoutSlideDown()
+        ->setRememberColumnSelectionDisabled();
+
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los niveles seleccionados?');
 
 
@@ -39,6 +47,11 @@ class LevelTable extends DataTableComponent
     public function columns(): array
     {
         return [
+            Column::make('#', 'sort')
+            ->sortable()
+            ->collapseOnMobile()
+            ->excludeFromColumnSelect(),
+
             Column::make("Id", "id")
                 ->sortable(),
             Column::make("Level", "level")
@@ -83,4 +96,42 @@ class LevelTable extends DataTableComponent
                 )->html(),
         ];
     }
+
+    public function filters(): array
+    {
+        return [
+
+            SelectFilter::make('Status', 'status')
+
+                ->options([
+                    '' => 'Todos',
+                    '1' => 'Activo',
+                    '0' => 'Inactivo',
+                ])
+                ->filter(function(Builder $builder, string $value) {
+                    if ($value === '1') {
+                        $builder->where('status', true);
+                    } elseif ($value === '0') {
+                        $builder->where('status', false);
+                    }
+                }),
+        ];
+
+
+    }
+
+    public function reorder($items): void
+    {
+        foreach ($items as $item) {
+            Level::find($item[$this->getPrimaryKey()])->update(['sort' => (int)$item[$this->getDefaultReorderColumn()]]);
+        }
+    }
+
+
+    public function builder(): Builder
+{
+    return Level::query()
+    ->orderBy('sort', 'asc');
+}
+
 }

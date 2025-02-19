@@ -5,8 +5,8 @@
 
     ],
     [
-        'name' => 'Grupos',
-        'url' => 'admin.groups.index',
+        'name' => 'Generaciones',
+        'url' => 'admin.generations.index',
     ],
     [
         'name' => 'Editar',
@@ -17,7 +17,7 @@
 
 
 
-<livewire:group.editar-grupo :grupo="$grupo" />
+<livewire:generation.editar-generacion :generacion="$generacion" />
 
 
 </x-admin-layout>

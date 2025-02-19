@@ -29,14 +29,26 @@ class EditarNivel extends Component
     public function actualizarNivel()
     {
         $datos = $this->validate([
-            'level' => 'required',
+            'level' => 'required|unique:levels,level,' . $this->level_id,
             'slug' => 'required|unique:levels,slug,' . $this->level_id,
-            'color' => 'required',
-            'cct' => 'required',
-            'director_id' => 'required',
-            'supervisor_id' => 'required',
+            'cct' => 'required|unique:levels,cct,' . $this->level_id,
+            'director_id' => 'nullable',
+            'supervisor_id' => 'nullable',
             'imagen_nueva' => 'image|nullable|max:5120|mimes:jpeg,jpg,png',
-        ]);
+        ], [
+            'level.required' => 'El campo nivel es obligatorio',
+            'level.unique' => 'El nivel ya existe',
+            'slug.required' => 'El campo slug es obligatorio',
+            'slug.unique' => 'El slug ya existe',
+            'color.required' => 'El campo color es obligatorio',
+            'cct.required' => 'El campo C.C.T. es obligatorio',
+            'cct.unique' => 'El C.C.T. ya existe',
+            'imagen_nueva.image' => 'El archivo debe ser una imagen',
+            'imagen_nueva.max' => 'El archivo no debe pesar más de 5MB',
+            'imagen_nueva.mimes' => 'El archivo debe ser formato jpeg, jpg o png',
+
+        ]
+    );
 
         if($this->imagen_nueva){
             $imagen = $this->imagen_nueva->store('levels');

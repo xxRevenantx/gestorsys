@@ -19,7 +19,8 @@ class Level extends Model
         'color',
         'cct',
         'director_id',
-        'supervisor_id'
+        'supervisor_id',
+        'sort',
     ];
 
 
