@@ -34,5 +34,10 @@ class Level extends Model
     }
 
 
+    public function generations()
+    {
+        return $this->hasMany(Generation::class);
+    }
+
 
 }

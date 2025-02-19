@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DirectorController;
+use App\Http\Controllers\GenerationController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LevelPDFController;
 use App\Http\Controllers\PDFController;
@@ -24,5 +26,14 @@ Route::resource('supervisores', SupervisorController::class)->names('supervisore
 Route::resource('directores', DirectorController::class)->names('directores');
 
 // RUTAS DEL CONTROLADOR NIVEL
-Route::resource('niveles', LevelController::class)->names('levels');
+Route::resource('administrar-niveles', LevelController::class)->names('levels');
+
+// RUTAS DEL GRUPO
+Route::resource('grupos', GroupController::class)->names('groups');
+
+
+// RUTAS DE LA GENERACIÓN
+Route::resource('generaciones', GenerationController::class)->names('generations');
+
+
 Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');

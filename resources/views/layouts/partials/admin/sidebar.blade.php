@@ -52,17 +52,28 @@
              ]
         ],
 
-
         [
-            'header' => 'Niveles',
+            'header' => 'ESTRUCTURA ACADÉMICA',
             'color' => '#7267EF'
         ],
 
         [
-            'name' => 'Niveles',
-            'icon' => 'fa-solid fa-house',
+            'name' => 'Administrar niveles',
+            'icon' => 'fas fa-layer-group',
             'route' =>  route('admin.levels.index'),
             'active' =>  request()->routeIs('admin.levels.index'),
+        ],
+        [
+            'name' => 'Grupos',
+            'icon' => 'fas fa-layer-group',
+            'route' =>  route('admin.groups.index'),
+            'active' =>  request()->routeIs('admin.groups.index'),
+        ],
+        [
+            'name' => 'Generaciones',
+            'icon' => 'fas fa-layer-group',
+            'route' =>  route('admin.generations.index'),
+            'active' =>  request()->routeIs('admin.generations.index'),
         ],
 
     ];

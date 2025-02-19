@@ -18,6 +18,8 @@ class LevelTable extends DataTableComponent
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los niveles seleccionados?');
 
 
+
+
     $this->setBulkActions([
         'deleteSelected' => 'Eliminar',
     ]);
