@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grade;
-use App\Http\Requests\StoreGradeRequest;
-use App\Http\Requests\UpdateGradeRequest;
+use App\Models\Student;
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 
-class GradeController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.grades.index');
+        return view('admin.students.index');
     }
 
     /**
@@ -27,7 +27,7 @@ class GradeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGradeRequest $request)
+    public function store(StoreStudentRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class GradeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Grade $grade)
+    public function show(Student $student)
     {
         //
     }
@@ -43,16 +43,15 @@ class GradeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($grade_id)
+    public function edit(Student $student)
     {
-        $grado = Grade::find($grade_id);
-        return view('admin.grades.edit', compact('grado'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGradeRequest $request, Grade $grade)
+    public function update(UpdateStudentRequest $request, Student $student)
     {
         //
     }
@@ -60,7 +59,7 @@ class GradeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Grade $grade)
+    public function destroy(Student $student)
     {
         //
     }

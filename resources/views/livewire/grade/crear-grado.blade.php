@@ -16,7 +16,7 @@
     <div class="flex items-center justify-between mb-4">
 
         <div class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-4 w-full" role="alert">
-            <p class="font-bold"><i class="fas fa-layer-group"></i> Nuevo Grado</p>
+            <p class="font-bold"><i class="fas fa-layer-group"></i> Asigna un Nuevo Grado</p>
           </div>
    </div>
 
@@ -55,7 +55,7 @@
         </div>
 
         <div class="mb-5">
-            <label for="level_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>
+            <label for="level_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asigna el Nivel</label>
             <select id="level_id" wire:model.live="level_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="">--Seleccione el nivel--</option>
                 @foreach($niveles as $nivel)
@@ -69,7 +69,7 @@
         </div>
 
         <div class="mb-5">
-            <label for="generation_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Generación</label>
+            <label for="generation_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asigna la Generación</label>
             <select id="generation_id" wire:model.live="generation_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="">--Seleccione la generación--</option>
                 @foreach($generaciones as $generacion)
@@ -82,7 +82,7 @@
         </div>
 
         <div class="mb-5">
-            <label for="group_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo</label>
+            <label for="group_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asigna el Grupo</label>
             <select id="group_id" wire:model.live="group_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="">--Seleccione el grupo--</option>
                 @foreach($grupos as $grupo)

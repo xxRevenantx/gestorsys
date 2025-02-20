@@ -8,7 +8,9 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LevelPDFController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PDFLevelController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\TutorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -38,6 +40,12 @@ Route::resource('generaciones', GenerationController::class)->names('generations
 
 // RUTAS DE LOS GRADOS
 Route::resource('grados', GradeController::class)->names('grades');
+
+// RUTAS DEL TUTOR
+Route::resource('tutores', TutorController::class)->names('tutors');
+
+// RUTAS DEL ESTUDIANTE
+Route::resource('estudiantes', StudentController::class)->names('students');
 
 
 Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');

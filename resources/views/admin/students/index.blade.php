@@ -5,11 +5,7 @@
 
     ],
     [
-        'name' => 'Grados',
-        'url' => 'admin.grades.index',
-    ],
-    [
-        'name' => 'Editar',
+        'name' => 'Estudiantes',
         'url' => '#',
     ],
 
@@ -17,8 +13,7 @@
 
 
 
-<livewire:grade.editar-grado :grado="$grado" />
-
+@livewire('generation.crear-generacion')
+@livewire('generation.mostrar-generacion', ['lazy' => true])
 
 </x-admin-layout>
-

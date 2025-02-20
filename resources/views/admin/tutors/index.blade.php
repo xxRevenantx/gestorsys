@@ -5,11 +5,7 @@
 
     ],
     [
-        'name' => 'Grados',
-        'url' => 'admin.grades.index',
-    ],
-    [
-        'name' => 'Editar',
+        'name' => 'Turores',
         'url' => '#',
     ],
 
@@ -17,8 +13,7 @@
 
 
 
-<livewire:grade.editar-grado :grado="$grado" />
-
+@livewire('tutor.crear-tutor', ['lazy' => true])
+@livewire('tutor.mostrar-tutor', ['lazy' => true])
 
 </x-admin-layout>
-
