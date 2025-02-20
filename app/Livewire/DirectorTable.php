@@ -60,7 +60,7 @@ class DirectorTable extends DataTableComponent
             Column::make("Updated at", "updated_at")
                 ->sortable(),
 
-                Column::make('Action')
+                Column::make('Editar')
                 ->label(
                     fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
                         [

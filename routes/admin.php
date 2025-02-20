@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\GenerationController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LevelPDFController;
@@ -34,6 +35,9 @@ Route::resource('grupos', GroupController::class)->names('groups');
 
 // RUTAS DE LA GENERACIÓN
 Route::resource('generaciones', GenerationController::class)->names('generations');
+
+// RUTAS DE LOS GRADOS
+Route::resource('grados', GradeController::class)->names('grades');
 
 
 Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');

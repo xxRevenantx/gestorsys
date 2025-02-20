@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Livewire\Level;
+namespace App\Livewire\Grade;
 
 use Livewire\Component;
 
-class MostrarNiveles extends Component
+class MostrarGrados extends Component
 {
 
     public function placeholder(){
@@ -12,8 +12,9 @@ class MostrarNiveles extends Component
     }
 
 
+
     public function render()
     {
-        return view('livewire.level.mostrar-niveles');
+        return view('livewire.grade.mostrar-grados');
     }
 }

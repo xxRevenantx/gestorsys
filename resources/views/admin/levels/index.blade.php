@@ -15,6 +15,6 @@
 
 
 @livewire('level.crear-nivel')
-@livewire('level.mostrar-niveles')
+@livewire('level.mostrar-niveles', ['lazy' => true])
 
 </x-admin-layout>

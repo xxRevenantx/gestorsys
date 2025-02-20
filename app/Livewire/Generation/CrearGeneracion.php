@@ -15,8 +15,8 @@ class CrearGeneracion extends Component
     public $level_id;
 
     protected $rules = [
-        'anio_inicio' => 'required|integer|min:4',
-        'anio_termino' => 'required|integer|min:4',
+        'anio_inicio' => 'required|integer|digits:4',
+        'anio_termino' => 'required|integer|digits:4',
         'status' => 'required|integer|in:0,1',
         'level_id' => 'required|integer|exists:levels,id',
     ];

@@ -15,6 +15,6 @@
 
 
 @livewire('group.crear-grupo')
-@livewire('group.mostrar-grupos')
+@livewire('group.mostrar-grupos' , ['lazy' => true])
 
 </x-admin-layout>

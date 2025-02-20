@@ -28,6 +28,8 @@ class GroupTable extends DataTableComponent
         {
            $eliminar = Group::find($item);
               $eliminar->delete();
+
+            $this->dispatch('grupo-eliminado');
         }
         $this->clearSelected();
     }
@@ -45,7 +47,7 @@ class GroupTable extends DataTableComponent
             Column::make("Updated at", "updated_at")
                 ->sortable(),
 
-                Column::make('Action')
+                Column::make('Editar')
                 ->label(
                     fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
                         [

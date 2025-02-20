@@ -63,6 +63,7 @@ class CrearSupervisor extends Component
     }
 
 
+
     public function render()
     {
         return view('livewire.supervisor.crear-supervisor');

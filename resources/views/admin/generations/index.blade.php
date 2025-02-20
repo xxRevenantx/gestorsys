@@ -14,6 +14,6 @@
 
 
 @livewire('generation.crear-generacion')
-@livewire('generation.mostrar-generacion')
+@livewire('generation.mostrar-generacion', ['lazy' => true])
 
 </x-admin-layout>

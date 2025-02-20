@@ -12,6 +12,12 @@ class MostrarGeneracion extends Component
     public $contarGeneracion;
 
 
+
+    public function placeholder(){
+        return view('placeholder');
+    }
+
+
     public function mount()
     {
         $this->contarGeneracion = Generation::count();

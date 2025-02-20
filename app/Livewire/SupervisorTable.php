@@ -79,7 +79,7 @@ class SupervisorTable extends DataTableComponent
             Column::make("Sector", "sector")
                 ->sortable(),
 
-                Column::make('Action')
+                Column::make('Editar')
                 ->label(
                     fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
                         [

@@ -15,4 +15,10 @@ class Group extends Model
     ];
 
 
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
+
 }

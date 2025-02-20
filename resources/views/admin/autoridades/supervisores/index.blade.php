@@ -14,7 +14,7 @@
 
 
 @livewire('supervisor.crear-supervisor')
-@livewire('supervisor.mostrar-supervisores')
+@livewire('supervisor.mostrar-supervisores', ['lazy' => true])
 
 </x-admin-layout>
 

@@ -5,7 +5,7 @@
 
     ],
     [
-        'name' => 'Directores',
+        'name' => 'Grados',
         'url' => '#',
     ],
 
@@ -13,7 +13,7 @@
 
 
 
-@livewire('director.crear-director')
-@livewire('director.mostrar-directores', ['lazy' => true])
+@livewire('grade.crear-grado')
+@livewire('grade.mostrar-grados', ['lazy' => true])
 
 </x-admin-layout>

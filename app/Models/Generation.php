@@ -25,4 +25,10 @@ class Generation extends Model
     {
         return $this->belongsTo(Level::class);
     }
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
 }

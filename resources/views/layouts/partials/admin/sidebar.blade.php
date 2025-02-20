@@ -91,6 +91,16 @@
                 'admin.generations.edit'
             ),
         ],
+        [
+            'name' => 'Grados',
+            'icon' => 'fas fa-layer-group',
+            'route' =>  route('admin.grades.index'),
+            'active' =>  request()->routeIs(
+                'admin.grades.index',
+                'admin.grades.create',
+                'admin.grades.edit'
+            ),
+        ],
 
     ];
 
