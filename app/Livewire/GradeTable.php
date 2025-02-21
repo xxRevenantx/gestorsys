@@ -20,6 +20,8 @@ class GradeTable extends DataTableComponent
         ->setReorderEnabled()
         ->setSingleSortingDisabled()
         ->setHideReorderColumnUnlessReorderingEnabled()
+        ->setQueryStringStatusForSearch(true)
+
         // ->setFilterLayoutPopover()
         ->setFilterLayoutSlideDown()
         ->setRememberColumnSelectionDisabled();

@@ -18,6 +18,7 @@ class CrearGrado extends Component
     public $group_id;
     public $generaciones = [];
 
+
     protected $rules = [
         'grado' => 'required|string',
         'grado_numero' => 'required|integer',
@@ -46,18 +47,13 @@ class CrearGrado extends Component
 
         $this->validateOnly($propertyName);
 
-        /**
-         * Actualiza la propiedad generaciones cuando cambia la propiedad level_id.
-         *
-         * Cuando se actualiza la propiedad level_id, este método obtiene todos los registros
-         * de Generation que coinciden con el nuevo level_id y los asigna a la propiedad generaciones.
-         *
-         */
         if ($propertyName == 'level_id') {
             $this->generaciones = Generation::where('level_id', $this->level_id)
-                            ->where('status', 1)
-                            ->get();
+                    ->where('status', 1)
+                    ->get();
         }
+
+
     }
 
     public function guardarGrado()

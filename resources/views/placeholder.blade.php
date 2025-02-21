@@ -12,6 +12,5 @@
         <div class="flex justify-start mt-4">
             <div class="h-10 bg-blue-300 rounded w-32"></div>
         </div>
-    </div>
 </div>
 

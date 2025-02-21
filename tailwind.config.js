@@ -15,6 +15,9 @@ export default {
         './vendor/rappasoft/laravel-livewire-tables/resources/views/*.blade.php',
         './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
 
+        './src/**/*.{html,js}',
+    './node_modules/select2-tailwindcss-theme/dist/*.css', // Include the package
+
 
     ],
 

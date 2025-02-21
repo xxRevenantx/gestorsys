@@ -170,36 +170,36 @@
     <div class="h-full pb-4 overflow-y-auto" style="background-color: #1c232f;">
         <ul class="font-medium">
             @foreach ($links as $index => $link)
-                <li>
-                    @isset($link['header'])
-                        <div class="px-3 py-2 text-xs uppercase" style="color: {{ $link['color'] }}">{{ $link['header'] }}</div>
-                    @else
-                        @isset($link['submenu'])
-                            <button type="button" class="flex items-center w-full p-2 pr-6 text-base text-white group hover:bg-[{{ $colorOscuro }}]" aria-controls="dropdown-{{ $index }}" data-collapse-toggle="dropdown-{{ $index }}">
-                                <i class="{{ $link['icon'] }}" style="color:#778290"></i>
-                                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ $link['name'] }}</span>
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                </svg>
-                            </button>
-                            <ul id="dropdown-{{ $index }}" class="py-2 space-y-1 transition-all duration-300 ease-in-out {{ collect($link['submenu'])->contains('active', true) ? 'block' : 'hidden' }}">
-                                @foreach ($link['submenu'] as $sublink)
-                                    <li class="{{ $sublink['active'] ? 'bg-[#161c25]' : '' }}">
-                                        <a href="{{ $sublink['route'] }}" class="flex items-center w-full p-2 pl-11 group hover:bg-[{{ $colorOscuro }}] text-white">
-                                            <i class="{{ $sublink['icon'] }} mr-2" style="color:#778290"></i>
-                                            {{ $sublink['name'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <a href="{{ $link['route'] }}" class="flex items-center p-2 text-white dark:text-white hover:bg-[{{ $colorOscuro }}] dark:hover:bg-[{{ $colorOscuro }}] group {{ $link['active'] ? 'bg-[#161c25]' : '' }}">
-                                <i class="{{ $link['icon'] }}" style="color:#778290"></i>
-                                <span class="ms-3">{{ $link['name'] }}</span>
-                            </a>
-                        @endisset
-                    @endisset
-                </li>
+            <li>
+                @isset($link['header'])
+                <div class="px-3 py-2 text-xs uppercase" style="color: {{ $link['color'] }}">{{ $link['header'] }}</div>
+                @else
+                @isset($link['submenu'])
+                    <button type="button" class="flex items-center w-full p-2 pr-6 text-base text-white group hover:bg-[#161c25]" aria-controls="dropdown-{{ $index }}" data-collapse-toggle="dropdown-{{ $index }}">
+                    <i class="{{ $link['icon'] }}" style="color:#778290"></i>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ $link['name'] }}</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                    </button>
+                    <ul id="dropdown-{{ $index }}" class="py-2 space-y-1 transition-all duration-300 ease-in-out {{ collect($link['submenu'])->contains('active', true) ? 'block' : 'hidden' }}">
+                    @foreach ($link['submenu'] as $sublink)
+                        <li class="{{ $sublink['active'] ? 'bg-[#161c25]' : '' }}">
+                        <a href="{{ $sublink['route'] }}" class="flex items-center w-full p-2 pl-11 group hover:bg-[#161c25] text-white">
+                            <i class="{{ $sublink['icon'] }} mr-2" style="color:#778290"></i>
+                            {{ $sublink['name'] }}
+                        </a>
+                        </li>
+                    @endforeach
+                    </ul>
+                @else
+                    <a href="{{ $link['route'] }}" class="flex items-center p-2 text-white dark:text-white hover:bg-[#161c25] dark:hover:bg-[#161c25] group {{ $link['active'] ? 'bg-[#161c25]' : '' }}">
+                    <i class="{{ $link['icon'] }}" style="color:#778290"></i>
+                    <span class="ms-3">{{ $link['name'] }}</span>
+                    </a>
+                @endisset
+                @endisset
+            </li>
             @endforeach
         </ul>
     </div>
