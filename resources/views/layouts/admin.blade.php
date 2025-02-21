@@ -19,6 +19,7 @@
         <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,800" rel="stylesheet" />
 
         <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="{{ asset('fontawesome/js/all.min.js') }}"></script>

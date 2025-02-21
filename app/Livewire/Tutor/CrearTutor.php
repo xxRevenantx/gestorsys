@@ -9,12 +9,12 @@ class CrearTutor extends Component
 {
 
     public $CURP, $nombre, $apellido_paterno, $apellido_materno, $calle;
-    public $num_ext, $num_int, $localidad, $colonia, $codigo_postal;
+    public $num_ext, $num_int, $localidad, $colonia, $CP;
     public $municipio, $estado, $telefono, $celular, $email, $parentesco, $ocupacion;
 
 
     protected $rules = [
-        'CURP' => 'min:18|max:18|unique:tutors|nullable',
+        'CURP' => 'unique:tutors|nullable',
         'nombre' => 'required|string',
         'apellido_paterno' => 'required|string',
         'apellido_materno' => 'required|string',
@@ -23,20 +23,18 @@ class CrearTutor extends Component
         'num_int' => 'nullable',
         'localidad' => 'nullable|string',
         'colonia' => 'nullable|string',
-        'codigo_postal' => 'nullable',
+        'CP' => 'nullable',
         'municipio' => 'nullable|string',
         'estado' => 'nullable|string',
         'telefono' => 'nullable|numeric|digits:10',
         'celular' => 'nullable|numeric|digits:10',
-        'email' => 'nullable|email',
+        'email' => 'nullable|email|unique:tutors',
         'parentesco' => 'nullable',
         'ocupacion' => 'nullable',
     ];
 
 
     protected $messages = [
-        'CURP.min' => 'La CURP debe tener 18 caracteres',
-        'CURP.max' => 'La CURP debe tener 18 caracteres',
         'CURP.unique' => 'La CURP ya existe',
         'nombre.required' => 'El nombre es requerido',
         'apellido_paterno.required' => 'El apellido paterno es requerido',
@@ -46,6 +44,7 @@ class CrearTutor extends Component
         'celular.numeric' => 'El celular debe ser numérico',
         'celular.digits' => 'El celular debe tener 10 dígitos',
         'email.email' => 'El email debe ser válido',
+        'email.unique' => 'El email ya existe',
     ];
 
     public function updated($propertyName) // ACTUALIZAR EN TIEMPO REAL
@@ -67,7 +66,7 @@ class CrearTutor extends Component
             'num_int' => trim($this->num_int),
             'localidad' => trim($this->localidad),
             'colonia' => trim($this->colonia),
-            'codigo_postal' => trim($this->codigo_postal),
+            'CP' => trim($this->CP),
             'municipio' => trim($this->municipio),
             'estado' => trim($this->estado),
             'telefono' => trim($this->telefono),
@@ -78,7 +77,7 @@ class CrearTutor extends Component
         ]);
 
 
-        $this->reset(['CURP', 'nombre', 'apellido_paterno', 'apellido_materno', 'calle', 'num_ext', 'num_int', 'localidad', 'colonia', 'codigo_postal', 'municipio', 'estado', 'telefono', 'celular', 'email', 'parentesco', 'ocupacion']);
+        $this->reset(['CURP', 'nombre', 'apellido_paterno', 'apellido_materno', 'calle', 'num_ext', 'num_int', 'localidad', 'colonia', 'CP', 'municipio', 'estado', 'telefono', 'celular', 'email', 'parentesco', 'ocupacion']);
 
         session()->flash('mensaje', '¡Tutor creado correctamente!');
 

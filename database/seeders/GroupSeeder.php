@@ -12,6 +12,16 @@ class GroupSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $grupos  = [
+         ["grupo" => "A"],
+         ["grupo" => "B"],
+         ["grupo" => "C"],
+        ];
+
+
+        foreach ($grupos as $grupo) {
+            \App\Models\Group::create($grupo);
+        }
+
     }
 }

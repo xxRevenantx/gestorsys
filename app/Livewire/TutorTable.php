@@ -21,10 +21,8 @@ class TutorTable extends DataTableComponent
         ->setReorderEnabled()
         ->setSingleSortingDisabled()
         ->setHideReorderColumnUnlessReorderingEnabled()
+        // ->setFilterLayoutPopover()
         ->setFilterLayoutSlideDown()
-        ->setLoadingPlaceholderStatus(true)
-        ->setLoadingPlaceholderEnabled()
-        ->setLoadingPlaceholderContent('Cargando...')
         ->setRememberColumnSelectionDisabled();
 
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los tutores seleccionados?');
@@ -51,11 +49,15 @@ class TutorTable extends DataTableComponent
 
     public function exportSelected()
     {
-        foreach($this->getSelected() as $item)
-        {
-            $tutors  = Tutor::find($item);
+        if($this->getSelected()){
+            $this->getSelected();
+            $tutors = Tutor::whereIn('id', $this->getSelected())->get();
             return Excel::download(new TutorExport($tutors), 'tutores.xlsx');
+        }else{
+            return Excel::download(new TutorExport($this->getRows()), 'tutores.xlsx');
         }
+
+
     }
 
     public function columns(): array
@@ -105,6 +107,7 @@ class TutorTable extends DataTableComponent
                     fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
                         [
                             'editLink' => route('admin.tutors.edit', $row),
+                            'viewLink' => route('admin.tutors.show', $row),
 
                         ]
                     )
@@ -112,28 +115,7 @@ class TutorTable extends DataTableComponent
         ];
     }
 
-    public function filters(): array
-    {
-        return [
 
-            SelectFilter::make('Status', 'status')
-
-                ->options([
-                    '' => 'Todos',
-                    '1' => 'Activo',
-                    '0' => 'Inactivo',
-                ])
-                ->filter(function(Builder $builder, string $value) {
-                    if ($value === '1') {
-                        $builder->where('status', true);
-                    } elseif ($value === '0') {
-                        $builder->where('status', false);
-                    }
-                }),
-        ];
-
-
-    }
 
     public function reorder($items): void
     {
@@ -142,11 +124,10 @@ class TutorTable extends DataTableComponent
         }
     }
 
-
     public function builder(): Builder
-{
-    return Tutor::query()
-    ->orderBy('sort', 'asc');
-}
+    {
+        return Tutor::query()
+        ->orderBy('tutors.sort', 'asc');
+    }
 
 }

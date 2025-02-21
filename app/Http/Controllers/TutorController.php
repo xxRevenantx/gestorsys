@@ -35,17 +35,19 @@ class TutorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tutor $tutor)
+    public function show($tutor_id)
     {
-        //
+        $tutor = Tutor::find($tutor_id);
+        return view('admin.tutors.show', compact('tutor'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tutor $tutor)
+    public function edit($tutor_id)
     {
-        //
+        $tutor = Tutor::find($tutor_id);
+        return view('admin.tutors.edit', compact('tutor'));
     }
 
     /**

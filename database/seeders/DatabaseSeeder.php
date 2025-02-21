@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tutor;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,5 +22,15 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
 
         ]);
+
+        $this->call([
+            DirectorSeeder::class,
+            SupervisorSeeder::class,
+            GroupSeeder::class,
+            NivelSeeder::class,
+            TutorSeeder::class,
+        ]);
+
+
     }
 }

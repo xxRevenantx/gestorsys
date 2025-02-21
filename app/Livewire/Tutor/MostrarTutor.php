@@ -7,11 +7,7 @@ use Livewire\Component;
 class MostrarTutor extends Component
 {
 
-    public function placeholder(){
-        return view('placeholder');
-    }
-
-
+    public $tutor;
 
     public function render()
     {

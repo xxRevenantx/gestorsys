@@ -124,12 +124,14 @@
             'name' => 'Gestión escolar',
             'icon' => 'fa-regular fa-user',
             'active' => request()->routeIs(
-                // 'admin.students.index',
-                // 'admin.students.create',
-                // 'admin.students.edit',
+                    'admin.students.index',
+                    'admin.students.create',
+                    'admin.students.edit',
+                    'admin.students.show',
                       'admin.tutors.index',
                       'admin.tutors.create',
-                      'admin.tutors.edit'
+                      'admin.tutors.edit',
+                      'admin.tutors.show',
             ),
             'submenu' => [
                 [
@@ -137,9 +139,10 @@
                     'icon' => 'fa-regular fa-circle',
                     'route' => route('admin.students.index'),
                     'active' => request()->routeIs(
-                        // 'admin.students.index',
-                        // 'admin.students.create',
-                        // 'admin.students.edit'
+                        'admin.students.index',
+                        'admin.students.create',
+                        'admin.students.edit',
+                        'admin.students.show',
 
 
                     ),
@@ -151,7 +154,8 @@
                     'active' => request()->routeIs(
                         'admin.tutors.index',
                         'admin.tutors.create',
-                        'admin.tutors.edit'
+                        'admin.tutors.edit',
+                        'admin.tutors.show',
                     ),
                 ],
             ]

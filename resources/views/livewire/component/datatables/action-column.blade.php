@@ -7,11 +7,14 @@
         </a>
     @endif
 
-    @isset ( $deleteLink )
 
-            <button onclick="eliminarSupervisor({{ $supervisor->id }})" class="btn btn-link">
-                <i class="fa-solid fa-trash"></i>
-            </button>
+    @isset ( $viewLink )
 
-    @endif
+        <a href="{{$viewLink}}" class="btn bg-blue-500 text-white">
+            <i class="fa-solid fa-eye"></i>
+        </a>
+
+    @endisset
+
+
 </div>

@@ -5,11 +5,7 @@
 
     ],
     [
-        'name' => 'Tutores',
-        'url' => 'admin.tutors.index',
-    ],
-    [
-        'name' => 'Editar',
+        'name' => 'Vista del tutor',
         'url' => '#',
     ],
 
@@ -17,8 +13,6 @@
 
 
 
-<livewire:tutor.editar-tutor :tutor="$tutor" />
-
+<livewire:tutor.mostrar-tutor :tutor="$tutor"  />
 
 </x-admin-layout>
-

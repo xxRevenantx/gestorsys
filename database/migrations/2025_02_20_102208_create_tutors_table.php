@@ -22,12 +22,12 @@ return new class extends Migration
             $table->string('num_int')->nullable();
             $table->string('localidad')->nullable();
             $table->string('colonia')->nullable();
-            $table->string('CP', 5)->nullable();
+            $table->string('CP', 10)->nullable();
             $table->string('municipio')->nullable();
             $table->string('estado')->nullable();
             $table->string('telefono', 10)->nullable();
             $table->string('celular', 10)->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('parentesco')->nullable();
             $table->string('ocupacion')->nullable();
             $table->integer('sort');

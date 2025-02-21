@@ -36,6 +36,11 @@ class Tutor extends Model
         'sort',
     ];
 
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
+
 
 
 }

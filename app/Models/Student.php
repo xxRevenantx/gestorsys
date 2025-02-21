@@ -32,4 +32,10 @@ class Student extends Model
 
     ];
 
+
+    public function tutor()
+    {
+        return $this->belongsTo(Tutor::class);
+    }
+
 }
