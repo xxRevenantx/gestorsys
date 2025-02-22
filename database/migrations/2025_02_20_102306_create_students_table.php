@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('edad');
             $table->date('fecha_nacimiento');
             $table->enum('sexo', ['H', 'M']);
+            $table->string('imagen')->nullable();
             $table->boolean('status');
             $table->unsignedBigInteger('level_id');
             $table->unsignedBigInteger('grade_id');

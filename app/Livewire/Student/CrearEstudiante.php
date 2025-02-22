@@ -13,6 +13,8 @@ use Livewire\Component;
 class CrearEstudiante extends Component
 {
 
+    use \Livewire\WithFileUploads;
+
     public $CURP;
     public $nombre;
     public $apellido_paterno;
@@ -26,6 +28,7 @@ class CrearEstudiante extends Component
     public $group_id;
     public $tutor_id;
     public $status;
+    public $imagen;
 
     public $generaciones = [];
     public $grados = [];
@@ -36,6 +39,7 @@ class CrearEstudiante extends Component
     public $generacion_nombre;
     public $grado_nombre;
     public $tutor_nombre;
+    public $tutor_estudiantes;
 
 
     protected $rules = [
@@ -46,12 +50,13 @@ class CrearEstudiante extends Component
         'fecha_nacimiento' => 'required|date',
         'edad' => 'required|integer',
         'sexo' => 'required|in:H,M',
-        'level_id' => 'required',
+        'level_id' => 'required|exists:levels,id',
         'generation_id' => 'required|exists:generations,id',
         'grade_id' => 'required|exists:grades,id',
         'group_id' => 'required|exists:groups,id',
-        'tutor_id' => 'nullable|exists:tutors,id',
+        'tutor_id' => 'required|exists:tutors,id',
         'status' => 'required|in:0,1',
+        'imagen' => 'image|nullable|max:2048|mimes:jpeg,jpg,png',
     ];
 
     protected $messages = [
@@ -78,8 +83,13 @@ class CrearEstudiante extends Component
         'group_id.required' => 'El campo grupo es requerido',
         'group_id.exists' => 'El grupo seleccionado no existe',
         'tutor_id.exists' => 'El tutor seleccionado no existe',
+        'tutor_id.required' => 'El campo tutor es requerido',
         'status.required' => 'El campo status es requerido',
         'status.in' => 'El campo status no es válido',
+        'imagen.image' => 'El archivo debe ser una imagen',
+        'imagen.max' => 'El archivo no debe pesar más de 2MB',
+        'imagen.mimes' => 'El archivo debe ser formato jpeg, jpg o png',
+
 
     ];
 
@@ -88,30 +98,25 @@ class CrearEstudiante extends Component
         $this->validateOnly($propertyName);
 
         if($propertyName == 'fecha_nacimiento'){
-            $this->edad = \Carbon\Carbon::parse($this->fecha_nacimiento)->age.' años';
+            $this->edad = \Carbon\Carbon::parse($this->fecha_nacimiento)->age;
         }
 
-        if ($propertyName == 'level_id') {
 
-                if ($this->level_id && $this->level_id != 0) {
+
+        if ($propertyName == 'level_id') {
                     $this->generation_id = null; // Reset generation_id
                     $this->generacion_nombre = null; // Reset generacion_nombre
                     $this->generaciones = Generation::where('level_id', $this->level_id)
                             ->where('status', 1)
                             ->get();
 
-                    $this->nivel_nombre = Level::find($this->level_id)->level;
-                } else {
-                    $this->nivel_nombre = "N/A";
-                }
-
-
+            $this->nivel_nombre = Level::find($this->level_id)->level;
 
             }
 
         if ($propertyName == 'generation_id') {
-            $this->grade_id = null;
-            $this->grado_nombre = null;
+            $this->grade_id = "";
+            $this->grado_nombre = "";
             $this->grados = Grade::where('generation_id', $this->generation_id)
                     ->get();
 
@@ -130,6 +135,8 @@ class CrearEstudiante extends Component
         if($propertyName == 'tutor_id'){
             $tutor = Tutor::find($this->tutor_id);
             $this->tutor_nombre = $tutor->nombre.' '.$tutor->apellido_paterno.' '.$tutor->apellido_materno;
+
+            $this->tutor_estudiantes = ' (Estudiantes: ' . $tutor->students()->count() . ')';
         }
 
 
@@ -138,9 +145,14 @@ class CrearEstudiante extends Component
     }
 
     public function guardarEstudiante(){
-        $this->validate();
+        $datos = $this->validate();
 
-
+        if ($this->imagen) {
+            $imagen = $this->imagen->store('students');
+            $datos["imagen"] = str_replace('students/', '', $imagen);
+        } else {
+            $datos["imagen"] = null;
+        }
 
         Student::create([
             'CURP' => $this->CURP,
@@ -156,7 +168,11 @@ class CrearEstudiante extends Component
             'group_id' => $this->group_id,
             'tutor_id' => $this->tutor_id,
             'status' => $this->status,
+            'imagen' => $datos["imagen"],
         ]);
+
+
+        $this->imagen = null;
 
         $this->reset([
             'CURP',
@@ -172,11 +188,25 @@ class CrearEstudiante extends Component
             'group_id',
             'tutor_id',
             'status',
+            'imagen',
+
+            'nivel_nombre',
+            'grado_nombre',
+            'grupo_name',
+            'generacion_nombre',
+            'tutor_nombre',
+
         ]);
 
-        session()->flash('mensaje', 'Estudiante creado correctamente');
+        // session()->flash('mensaje', 'Estudiante creado correctamente');
 
-        return redirect()->route('admin.students.index');
+        $this->dispatch('swal', [
+            'title' => 'Estudiante creado correctamente',
+            'icon' => 'success',
+            'position' => 'top-end',
+        ]);
+
+        // return redirect()->route('admin.students.index');
 
 
     }

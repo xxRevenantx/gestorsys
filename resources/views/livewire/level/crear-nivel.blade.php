@@ -109,6 +109,7 @@
 @push('scripts')
 
 <script>
+document.addEventListener('livewire:navigated', () => {
     const uploadArea = document.getElementById("uploadArea");
     const fileInput = document.getElementById("fileInput");
     const preview = document.getElementById("preview");
@@ -146,6 +147,8 @@
         };
         reader.readAsDataURL(file);
     }
+    })
+
 </script>
 
 

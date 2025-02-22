@@ -1,5 +1,4 @@
-<div
-    class="w-full mt-15 p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+<div>
 
     @if (session('error'))
         <div class="bg-red-100 border-t-4 border-red-500 rounded-b text-red-900 px-4 py-2 my-2 shadow-md" role="alert">
@@ -22,7 +21,7 @@
         <!-- component -->
         <style>
             :root {
-                --main-color: #4a76a8;
+                --main-color: #2e3b51;
             }
 
             .bg-main-color {
@@ -58,13 +57,22 @@
             <div class="container mx-auto my-5 p-5">
                 <div class="md:flex no-wrap md:-mx-2 ">
                     <!-- Left Side -->
-                    <div class="w-full md:w-3/12 md:mx-2">
+                    <div class="w-full md:w-5/12 md:mx-2">
                         <!-- Profile Card -->
                         <div class="bg-white p-3 border-t-4 border-green-400">
-                            <div class="image overflow-hidden">
-                                <img class="h-auto mx-auto" style="width: 150px"
+                            <div wire:ignore>
+                            <div class="image overflow-hidden" >
+                                <img id="preview" class="h-auto mx-auto" style="width: 150px"
                                     src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
                                     alt="">
+                            </div>
+                            <div class="my-4 m-auto flex justify-center">
+                            <label for="fileInput" class="btn bg-blue-700 me-2 mb-4 text-white p-3" tabindex="0">
+                                <span class="d-none d-sm-block my-3">Subir foto</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file" wire:model="imagen" id="fileInput"
+                                 accept="image/png, image/jpeg" hidden="hidden"></label>
+                                </div>
                             </div>
                             <ul
                                 class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
@@ -98,13 +106,14 @@
                                     <span class="ml-auto">{{ $grado_nombre }}</span>
                                 </li>
                                 <li class="flex items-center py-3">
-                                    <span>Generación: </span>
-                                    <span class="ml-auto">{{ $generacion_nombre ?? 'N/A' }}</span>
-                                </li>
-                                <li class="flex items-center py-3">
                                     <span>Grupo: </span>
                                     <span class="ml-auto">{{ $grupo_name}}</span>
                                 </li>
+                                <li class="flex items-center py-3">
+                                    <span>Generación: </span>
+                                    <span class="ml-auto">{{ $generacion_nombre ?? 'N/A' }}</span>
+                                </li>
+
                                 <li class="flex items-center py-3">
                                     <span>Tutor : </span>
                                     <span class="ml-auto">{{ $tutor_nombre}}</span>
@@ -137,10 +146,14 @@
                             </div>
                             <div class="grid grid-cols-3">
                                 <div class="text-center my-2">
+                                    @isset($tutor_id)
                                     <img class="h-16 w-16 rounded-full mx-auto"
                                         src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
                                         alt="">
-                                    <a href="#" class="text-main-color">{{ $tutor_nombre }}</a>
+
+                                        <a target="_blank" href="{{ route('admin.tutors.show', $tutor_id) }}" class="text-main-color">{{ $tutor_nombre }}</a>
+                                        <p class="text-gray-600">{{ $tutor_estudiantes }}</p>
+                                    @endisset
                                 </div>
 
                             </div>
@@ -148,7 +161,7 @@
                         <!-- End of friends card -->
                     </div>
                     <!-- Right Side -->
-                    <div class="w-full md:w-9/12 mx-2 ">
+                    <div class="w-full md:w-7/12 mx-2 ">
                         <!-- Profile tab -->
                         <!-- About Section -->
                         <div class="bg-white p-3 shadow-sm rounded-sm">
@@ -275,7 +288,7 @@
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>
                                                 <select id="level_id" wire:model.live="level_id"
                                                     class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    <option value="0">--Seleccione un nivel--</option>
+                                                    <option value="">--Seleccione un nivel--</option>
                                                     @foreach ($niveles as $nivel)
                                                         <option value="{{ $nivel->id }}">{{ $nivel->level }}
                                                         </option>
@@ -326,7 +339,7 @@
                                                     <div class="mb-5">
                                                         <label for="grupo_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo</label>
-                                                        <input type="text" id="grupo_name" wire:model.live="grupo_name" placeholder="Ingrese el nombre del grupo"
+                                                        <input readonly type="text" id="grupo_name" wire:model.live="grupo_name" placeholder="Ingrese el nombre del grupo"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                                                         @error('grupo_name')
                                                             <div class="text-red-500">{{ $message }}</div>
@@ -334,8 +347,7 @@
                                                     </div>
 
                                                     <div class="mb-5">
-                                                        <label for="group_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID del Grupo</label>
-                                                        <input type="text" id="group_id" wire:model.live="group_id" placeholder="Ingrese el ID del grupo"
+                                                        <input type="hidden" id="group_id" wire:model.live="group_id" placeholder="Ingrese el ID del grupo"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                                                         @error('group_id')
                                                             <div class="text-red-500">{{ $message }}</div>
@@ -437,3 +449,31 @@
         });
     </script>
 @endpush --}}
+@push('scripts')
+
+<script>
+   document.addEventListener('livewire:initialized', () => {
+    const preview = document.getElementById("preview");
+            const fileInput = document.getElementById("fileInput");
+
+        fileInput.addEventListener("change", () => {
+            const file = fileInput.files[0];
+            if (file) {
+                showPreview(file);
+            }
+        });
+
+        function showPreview(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+                preview.classList.remove("d-none");
+            };
+            reader.readAsDataURL(file);
+        }
+    })
+
+</script>
+
+
+@endpush

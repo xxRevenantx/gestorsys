@@ -65,14 +65,25 @@
                         <div class="mb-6">
 
                             @foreach ($tutor->students as $student )
-                                <div class="flex justify-between flex-wrap gap-2 w-full p-1">
-                                    <a href="#" class="text-white font-bold bg-indigo-700 p-2 rounded-lg hover:bg-indigo-800">Alumno: {{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno }}</a>
-                                    <p  class="text-white font-bold bg-indigo-700 p-2 rounded-lg">CURP: {{ $student->CURP }}</p>
-                                    <p>
-                                        <span class="text-gray-700 mr-2 font-bold">Fecha de inscripción:</span>
+                                <div class="flex justify-between p-3 align-center">
+
+                                    <div class="p-3">
+                                    <img src="{{ $student->imagen ? asset('storage/students/'.$student->imagen) : 'https://cdn-icons-png.flaticon.com/512/3237/3237472.png' }}" alt="{{$student->nombre}}" class="w-16 h-16 bg-gray-300 rounded-full mb-4 shrink-0">
+                                </div>
+
+                                    <div class="flex-1">
+                                    <a href="#" class="text-white font-bold bg-indigo-700 p-2 rounded-lg hover:bg-indigo-800 mb-3 mt-3">Alumno: {{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno }}</a>
+
+
+                                    <p class="p-1 mt-2">
+                                        <span class="text-gray-700 font-bold">CURP:</span>
+                                        <span class="text-gray-700">{{ $student->CURP }}</span>
+                                    </p>
+                                    <p class="p-1" >
+                                        <span class="text-gray-700  font-bold">Fecha de inscripción:</span>
                                         <span class="text-gray-700">{{ $student->created_at->format('d-m-Y') }}</span>
                                     </p>
-                                </div>
+
                                 <p class="p-1" >
                                     <span class="text-gray-700 font-bold">Nivel:</span>
                                     <span class="text-gray-700">{{ $student->level->level }} </span>
@@ -90,6 +101,8 @@
                                     <span class="text-gray-700 font-bold">Generación:</span>
                                     <span class="text-gray-700">{{ $student->generation->anio_inicio }} - {{ $student->generation->anio_termino }} </span>
                                 </p>
+                                    </div>
+                                </div>
 
                                 <hr>
                             @endforeach

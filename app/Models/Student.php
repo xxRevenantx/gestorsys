@@ -27,6 +27,7 @@ class Student extends Model
         'group_id',
         'generation_id',
         'tutor_id',
+        'imagen',
         'sort',
 
 
