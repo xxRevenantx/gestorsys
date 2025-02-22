@@ -26,6 +26,7 @@ class EditarTutor extends Component
     public $email;
     public $parentesco;
     public $ocupacion;
+    public $ultimo_grado;
 
     protected $messages = [
         'CURP.min' => 'La CURP debe tener 18 caracteres',
@@ -66,6 +67,7 @@ class EditarTutor extends Component
         $this->email = $tutor->email;
         $this->parentesco = $tutor->parentesco;
         $this->ocupacion = $tutor->ocupacion;
+        $this->ultimo_grado = $tutor->ultimo_grado;
     }
 
     public function actualizarTutor()
@@ -76,42 +78,46 @@ class EditarTutor extends Component
             'apellido_paterno' => 'required|string',
             'apellido_materno' => 'required|string',
             'calle' => 'nullable|string',
-            'num_ext' => 'nullable',
-            'num_int' => 'nullable',
             'localidad' => 'nullable|string',
             'colonia' => 'nullable|string',
-            'CP' => 'nullable',
             'municipio' => 'nullable|string',
             'estado' => 'nullable|string',
             'telefono' => 'nullable|numeric|digits:10',
             'celular' => 'nullable|numeric|digits:10',
             'email' => 'nullable|email|unique:tutors,email,'.$this->tutor_id,
-            'parentesco' => 'nullable',
-            'ocupacion' => 'nullable',
+            'ultimo_grado' => 'nullable|string',
+
+
         ]);
 
         $tutor = Tutor::find($this->tutor_id);
-        $tutor->update([
-            'CURP' => strtoupper(trim($this->CURP)),
-            'nombre' => trim($this->nombre),
-            'apellido_paterno' => trim($this->apellido_paterno),
-            'apellido_materno' => trim($this->apellido_materno),
-            'calle' => trim($this->calle),
-            'num_ext' => trim($this->num_ext),
-            'num_int' => trim($this->num_int),
-            'localidad' => trim($this->localidad),
-            'colonia' => trim($this->colonia),
-            'CP' => trim($this->CP),
-            'municipio' => trim($this->municipio),
-            'estado' => trim($this->estado),
-            'telefono' => trim($this->telefono),
-            'celular' => trim($this->celular),
-            'email' => trim($this->email),
-            'parentesco' => trim($this->parentesco),
-            'ocupacion' => trim($this->ocupacion),
-        ]);
 
-        $this->reset(['CURP', 'nombre', 'apellido_paterno', 'apellido_materno', 'calle', 'num_ext', 'num_int', 'localidad', 'colonia', 'CP', 'municipio', 'estado', 'telefono', 'celular', 'email', 'parentesco', 'ocupacion']);
+        $tutor->CURP =  strtoupper(trim($this->CURP));
+        $tutor->nombre = trim($this->nombre);
+        $tutor->apellido_paterno = trim($this->apellido_paterno);
+        $tutor->apellido_materno = trim($this->apellido_materno);
+        $tutor->calle = trim($this->calle);
+        $tutor->num_ext = trim($this->num_ext);
+        $tutor->num_int = trim($this->num_int);
+        $tutor->localidad = trim($this->localidad);
+        $tutor->colonia = trim($this->colonia);
+        $tutor->CP = trim($this->CP);
+        $tutor->municipio = trim($this->municipio);
+        $tutor->estado = trim($this->estado);
+        $tutor->telefono = trim($this->telefono);
+        $tutor->celular = trim($this->celular);
+        $tutor->email = trim($this->email);
+        $tutor->parentesco = trim($this->parentesco);
+        $tutor->ocupacion = trim($this->ocupacion);
+        $tutor->ultimo_grado = trim($this->ultimo_grado);
+
+
+
+        $tutor->save();
+
+
+
+        $this->reset(['CURP', 'nombre', 'apellido_paterno', 'apellido_materno', 'calle', 'num_ext', 'num_int', 'localidad', 'colonia', 'CP', 'municipio', 'estado', 'telefono', 'celular', 'email', 'parentesco', 'ocupacion', 'ultimo_grado']);
 
         session()->flash('mensaje', '¡Tutor actualizado correctamente!');
 

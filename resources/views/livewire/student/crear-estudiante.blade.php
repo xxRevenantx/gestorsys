@@ -53,6 +53,8 @@
             </div>
             <!-- End of Navbar -->
 
+
+
             <div class="container mx-auto my-5 p-5">
                 <div class="md:flex no-wrap md:-mx-2 ">
                     <!-- Left Side -->
@@ -60,26 +62,63 @@
                         <!-- Profile Card -->
                         <div class="bg-white p-3 border-t-4 border-green-400">
                             <div class="image overflow-hidden">
-                                <img class="h-auto w-full mx-auto"
-                                    src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
+                                <img class="h-auto mx-auto" style="width: 150px"
+                                    src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
                                     alt="">
                             </div>
-                            <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">Jane Doe</h1>
-                            <h3 class="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
-                            <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
-                                consectetur adipisicing elit.
-                                Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p>
                             <ul
                                 class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                 <li class="flex items-center py-3">
-                                    <span>Status</span>
-                                    <span class="ml-auto"><span
-                                            class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                                    <span>CURP:</span>
+                                    <span class="ml-auto">{{ $CURP }}</span>
                                 </li>
                                 <li class="flex items-center py-3">
-                                    <span>Member since</span>
-                                    <span class="ml-auto">Nov 07, 2016</span>
+                                    <span>Alumno: </span>
+                                    <span class="ml-auto">{{ $nombre }} {{ $apellido_paterno }} {{ $apellido_materno }} </span>
                                 </li>
+
+                                <li class="flex items-center py-3">
+                                    <span>Fecha de Nacimiento: </span>
+                                    <span class="ml-auto">{{ \Carbon\Carbon::parse($fecha_nacimiento)->format('d, m, Y') }}</span>
+                                </li>
+                                <li class="flex items-center py-3">
+                                    <span>Edad: </span>
+                                    <span class="ml-auto">{{ $edad }}</span>
+                                </li>
+                                <li class="flex items-center py-3">
+                                    <span>Sexo: </span>
+                                    <span class="ml-auto">{{ $sexo }}</span>
+                                </li>
+                                <li class="flex items-center py-3">
+                                    <span>Nivel: </span>
+                                    <span class="ml-auto">{{ $nivel_nombre }}</span>
+                                </li>
+                                <li class="flex items-center py-3">
+                                    <span>Grado: </span>
+                                    <span class="ml-auto">{{ $grado_nombre }}</span>
+                                </li>
+                                <li class="flex items-center py-3">
+                                    <span>Generación: </span>
+                                    <span class="ml-auto">{{ $generacion_nombre ?? 'N/A' }}</span>
+                                </li>
+                                <li class="flex items-center py-3">
+                                    <span>Grupo: </span>
+                                    <span class="ml-auto">{{ $grupo_name}}</span>
+                                </li>
+                                <li class="flex items-center py-3">
+                                    <span>Tutor : </span>
+                                    <span class="ml-auto">{{ $tutor_nombre}}</span>
+                                </li>
+
+                                <li class="flex items-center py-3">
+                                    <span>Estatus: </span>
+                                    <span class="ml-auto">
+                                        <span class="py-1 px-2 rounded text-white text-sm {{ $status === null ? 'bg-gray-500' : ($status == 1 ? 'bg-green-500' : 'bg-red-500') }}">
+                                            {{ $status === null ? 'No seleccionado' : ($status == 1 ? 'Activo' : 'Inactivo') }}
+                                        </span>
+                                    </span>
+                                </li>
+
                             </ul>
                         </div>
                         <!-- End of profile card -->
@@ -94,33 +133,16 @@
                                             d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
                                 </span>
-                                <span>Similar Profiles</span>
+                                <span>Tutor</span>
                             </div>
                             <div class="grid grid-cols-3">
                                 <div class="text-center my-2">
                                     <img class="h-16 w-16 rounded-full mx-auto"
-                                        src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
+                                        src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
                                         alt="">
-                                    <a href="#" class="text-main-color">Kojstantin</a>
+                                    <a href="#" class="text-main-color">{{ $tutor_nombre }}</a>
                                 </div>
-                                <div class="text-center my-2">
-                                    <img class="h-16 w-16 rounded-full mx-auto"
-                                        src="https://avatars2.githubusercontent.com/u/24622175?s=60&amp;v=4"
-                                        alt="">
-                                    <a href="#" class="text-main-color">James</a>
-                                </div>
-                                <div class="text-center my-2">
-                                    <img class="h-16 w-16 rounded-full mx-auto"
-                                        src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-                                        alt="">
-                                    <a href="#" class="text-main-color">Natie</a>
-                                </div>
-                                <div class="text-center my-2">
-                                    <img class="h-16 w-16 rounded-full mx-auto"
-                                        src="https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/f04b52da-12f2-449f-b90c-5e4d5e2b1469_361x361.png"
-                                        alt="">
-                                    <a href="#" class="text-main-color">Casey</a>
-                                </div>
+
                             </div>
                         </div>
                         <!-- End of friends card -->
@@ -130,15 +152,16 @@
                         <!-- Profile tab -->
                         <!-- About Section -->
                         <div class="bg-white p-3 shadow-sm rounded-sm">
-                            <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                                <span clas="text-green-500">
-                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                </span>
-                                <span class="tracking-wide">INSCRIBE UN ESTUDIANTE</span>
+                            <div class="flex items-center justify-between space-x-2 font-semibold text-gray-900 leading-8 pb-4">
+                               <div>
+                                <span class="tracking-wide"> <i class="fas fa-user"></i> INSCRIBE UN ESTUDIANTE</span>
+                                </div>
+                                <div>
+                                    <a href="{{ route('admin.tutors.index') }}" target="_blank" class="text-white font-bold bg-blue-600 p-2 rounded-lg hover:bg-blue-800">
+                                        <i class="fas fa-user"></i>  Nuevo tutor
+                                    </a>
+                                </div>
+
                             </div>
                             <div class="text-gray-700">
 
@@ -252,7 +275,7 @@
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>
                                                 <select id="level_id" wire:model.live="level_id"
                                                     class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    <option value="">--Seleccione un nivel--</option>
+                                                    <option value="0">--Seleccione un nivel--</option>
                                                     @foreach ($niveles as $nivel)
                                                         <option value="{{ $nivel->id }}">{{ $nivel->level }}
                                                         </option>
@@ -297,18 +320,32 @@
                                             </div>
 
                                             <div class="mb-5">
-                                                <label for="group_id"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo</label>
-                                                <input placeholder="Se mostrará el grupo" type="text" id="group_id" wire:model.live="group_id"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500" readonly />
-                                                @error('group_id')
-                                                    <div class="text-red-500">{{ $message }}</div>
-                                                @enderror
+
+
+
+                                                    <div class="mb-5">
+                                                        <label for="grupo_name"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo</label>
+                                                        <input type="text" id="grupo_name" wire:model.live="grupo_name" placeholder="Ingrese el nombre del grupo"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                                        @error('grupo_name')
+                                                            <div class="text-red-500">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="mb-5">
+                                                        <label for="group_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID del Grupo</label>
+                                                        <input type="text" id="group_id" wire:model.live="group_id" placeholder="Ingrese el ID del grupo"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                                        @error('group_id')
+                                                            <div class="text-red-500">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
                                             </div>
 
 
 
-                                            <div class="mb-5">
+                                            <div class="mb-5" >
                                                 <label for="tutor_id"
                                                     class="block mb-3 text-sm font-medium text-gray-900 dark:text-white">Tutor</label>
                                                 <select id="tutor_id" wire:model.live="tutor_id"
@@ -317,7 +354,7 @@
                                                     @foreach ($tutores as $tutor)
                                                         <option value="{{ $tutor->id }}">{{ $tutor->nombre }}
                                                             {{ $tutor->apellido_paterno }}
-                                                            {{ $tutor->apellido_materno }} </option>
+                                                            {{ $tutor->apellido_materno }} => {{ $tutor->CURP }} </option>
                                                     @endforeach
                                                 </select>
                                                 @error('tutor_id')
@@ -387,12 +424,16 @@
     </div>
 </div>
 
-@push('scripts')
+{{-- @push('scripts')
     <script>
         $(document).ready(function() {
             $('.student').select2({
                 theme: 'tailwindcss-3',
             });
+
+            // $('.student').on('change', function(){
+            //    @this.set('tutor_id', this.value);
+            // })
         });
     </script>
-@endpush
+@endpush --}}

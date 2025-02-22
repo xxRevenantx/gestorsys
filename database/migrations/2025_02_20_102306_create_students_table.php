@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('grade_id');
             $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('generation_id');
-            $table->unsignedBigInteger('tutor_id');
+            $table->unsignedBigInteger('tutor_id')->nullable();
 
 
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');

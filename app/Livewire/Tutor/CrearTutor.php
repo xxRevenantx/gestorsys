@@ -10,7 +10,7 @@ class CrearTutor extends Component
 
     public $CURP, $nombre, $apellido_paterno, $apellido_materno, $calle;
     public $num_ext, $num_int, $localidad, $colonia, $CP;
-    public $municipio, $estado, $telefono, $celular, $email, $parentesco, $ocupacion;
+    public $municipio, $estado, $telefono, $celular, $email, $parentesco, $ocupacion, $ultimo_grado;
 
 
     protected $rules = [
@@ -31,6 +31,7 @@ class CrearTutor extends Component
         'email' => 'nullable|email|unique:tutors',
         'parentesco' => 'nullable',
         'ocupacion' => 'nullable',
+        'ultimo_grado' => 'nullable',
     ];
 
 
@@ -45,6 +46,7 @@ class CrearTutor extends Component
         'celular.digits' => 'El celular debe tener 10 dígitos',
         'email.email' => 'El email debe ser válido',
         'email.unique' => 'El email ya existe',
+
     ];
 
     public function updated($propertyName) // ACTUALIZAR EN TIEMPO REAL
@@ -74,10 +76,11 @@ class CrearTutor extends Component
             'email' => trim($this->email),
             'parentesco' => trim($this->parentesco),
             'ocupacion' => trim($this->ocupacion),
+            'ultimo_grado' => trim($this->ultimo_grado),
         ]);
 
 
-        $this->reset(['CURP', 'nombre', 'apellido_paterno', 'apellido_materno', 'calle', 'num_ext', 'num_int', 'localidad', 'colonia', 'CP', 'municipio', 'estado', 'telefono', 'celular', 'email', 'parentesco', 'ocupacion']);
+        $this->reset(['CURP', 'nombre', 'apellido_paterno', 'apellido_materno', 'calle', 'num_ext', 'num_int', 'localidad', 'colonia', 'CP', 'municipio', 'estado', 'telefono', 'celular', 'email', 'parentesco', 'ocupacion', 'ultimo_grado']);
 
         session()->flash('mensaje', '¡Tutor creado correctamente!');
 

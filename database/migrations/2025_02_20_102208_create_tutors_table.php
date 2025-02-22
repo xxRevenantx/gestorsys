@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('parentesco')->nullable();
             $table->string('ocupacion')->nullable();
+            $table->string('ultimo_grado')->nullable();
             $table->integer('sort');
             $table->timestamps();
         });

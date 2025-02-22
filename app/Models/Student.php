@@ -32,6 +32,27 @@ class Student extends Model
 
     ];
 
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function generation()
+    {
+        return $this->belongsTo(Generation::class);
+    }
+
+
 
     public function tutor()
     {
