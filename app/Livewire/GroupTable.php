@@ -13,7 +13,8 @@ class GroupTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id')
+        ->setReorderEnabled();
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los grupos seleccionados?');
 
 

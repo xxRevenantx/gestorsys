@@ -20,9 +20,6 @@ class GradeTable extends DataTableComponent
     {
         $this->setPrimaryKey('id')
         ->setReorderEnabled()
-        ->setSingleSortingDisabled()
-        ->setHideReorderColumnUnlessReorderingEnabled()
-        ->setQueryStringStatusForSearch(true)
 
         // ->setFilterLayoutPopover()
         ->setFilterLayoutSlideDown()

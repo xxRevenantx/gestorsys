@@ -15,18 +15,13 @@ class TutorTable extends DataTableComponent
 {
 
     protected $listeners = ['resfreshTable' => '$refresh'];
-    
+
     protected $model = Tutor::class;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-        ->setReorderEnabled()
-        ->setSingleSortingDisabled()
-        ->setHideReorderColumnUnlessReorderingEnabled()
-        // ->setFilterLayoutPopover()
-        ->setFilterLayoutSlideDown()
-        ->setRememberColumnSelectionDisabled();
+        ->setReorderEnabled();
 
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los tutores seleccionados?');
 

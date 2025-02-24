@@ -59,7 +59,7 @@ class EditarNivel extends Component
         $level = Level::find($this->level_id);
 
 
-        $level->level = $this->level;
+        $level->level = trim($this->level);
         $level->slug = $this->slug;
         $level->color = $this->color;
         $level->cct = $this->cct;

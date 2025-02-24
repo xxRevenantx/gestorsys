@@ -43,9 +43,10 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit($student_id)
     {
-        //
+        $student = Student::find($student_id);
+        return view('admin.students.edit', compact('student'));
     }
 
     /**

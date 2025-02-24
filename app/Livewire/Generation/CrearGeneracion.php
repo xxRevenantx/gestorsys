@@ -77,6 +77,8 @@ class CrearGeneracion extends Component
             'position' => 'top-end',
         ]);
 
+        $this->dispatch('resfreshTable');
+
     }
 
     public function render()

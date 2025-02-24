@@ -14,20 +14,13 @@ class LevelTable extends DataTableComponent
 {
 
     protected $listeners = ['resfreshTable' => '$refresh'];
-    
+
     protected $model = Level::class;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')
         ->setReorderEnabled()
-        ->setSingleSortingDisabled()
-        ->setHideReorderColumnUnlessReorderingEnabled()
-        ->setFilterLayoutSlideDown()
-        ->setRememberColumnSelectionDisabled()
-        ->setLoadingPlaceholderStatus(true)
-        // ->setLoadingPlaceholderContent('Cargando...');
-        ->setLoadingPlaceholderBlade('loader-table');
         ;
 
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los niveles seleccionados?');

@@ -14,17 +14,14 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class GenerationTable extends DataTableComponent
 {
+    protected $listeners = ['resfreshTable' => '$refresh'];
+
     protected $model = Generation::class;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-        ->setReorderEnabled()
-        ->setSingleSortingDisabled()
-        ->setHideReorderColumnUnlessReorderingEnabled()
-        // ->setFilterLayoutPopover()
-        ->setFilterLayoutSlideDown()
-        ->setRememberColumnSelectionDisabled();
+        ->setReorderEnabled();
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que deseas eliminar los elementos seleccionados?');
 
 
