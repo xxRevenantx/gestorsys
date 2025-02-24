@@ -69,9 +69,14 @@ class CrearGeneracion extends Component
 
         $this->reset(['anio_inicio', 'anio_termino', 'status', 'level_id']);
 
-        session()->flash('mensaje', '¡Generación creada con éxito!');
+        // session()->flash('mensaje', '¡Generación creada con éxito!');
 
-        return redirect()->route('admin.generations.index');
+        $this->dispatch('swal', [
+            'title' => '¡Generación creada con éxito!',
+            'icon' => 'success',
+            'position' => 'top-end',
+        ]);
+
     }
 
     public function render()

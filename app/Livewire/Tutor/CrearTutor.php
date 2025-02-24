@@ -82,9 +82,19 @@ class CrearTutor extends Component
 
         $this->reset(['CURP', 'nombre', 'apellido_paterno', 'apellido_materno', 'calle', 'num_ext', 'num_int', 'localidad', 'colonia', 'CP', 'municipio', 'estado', 'telefono', 'celular', 'email', 'parentesco', 'ocupacion', 'ultimo_grado']);
 
-        session()->flash('mensaje', '¡Tutor creado correctamente!');
 
-        return redirect()->route('admin.tutors.index');
+
+        $this->dispatch('swal', [
+            'title' => '¡Tutor creado correctamente!',
+            'icon' => 'success',
+            'position' => 'top-end',
+        ]);
+
+        $this->dispatch('resfreshTable');
+        // session()->flash('mensaje', '¡Tutor creado correctamente!');
+
+
+        // return redirect()->route('admin.tutors.index');
 
     }
 

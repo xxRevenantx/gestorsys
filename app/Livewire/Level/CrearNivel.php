@@ -78,9 +78,17 @@ class CrearNivel extends Component
 
         $this->reset();
 
-        session()->flash('mensaje', 'Nivel creado con éxito');
+        $this->dispatch('swal', [
+            'title' => '¡Nivel creado con éxito!',
+            'icon' => 'success',
+            'position' => 'top-end',
+        ]);
 
-        return redirect()->route('admin.levels.index');
+        $this->dispatch('resfreshTable');
+
+        // session()->flash('mensaje', 'Nivel creado con éxito');
+
+        // return redirect()->route('admin.levels.index');
 
     }
 

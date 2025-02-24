@@ -475,5 +475,14 @@
 
 </script>
 
+<script>
+Livewire.on('resetImagePreview', () => {
+
+    let imagenPreview = document.getElementById('preview');
+    imagenPreview.src = 'https://cdn-icons-png.flaticon.com/512/3237/3237472.png';
+})
+
+
+</script>
 
 @endpush

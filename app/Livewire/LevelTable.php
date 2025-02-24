@@ -12,6 +12,9 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class LevelTable extends DataTableComponent
 {
+
+    protected $listeners = ['resfreshTable' => '$refresh'];
+    
     protected $model = Level::class;
 
     public function configure(): void
@@ -21,7 +24,11 @@ class LevelTable extends DataTableComponent
         ->setSingleSortingDisabled()
         ->setHideReorderColumnUnlessReorderingEnabled()
         ->setFilterLayoutSlideDown()
-        ->setRememberColumnSelectionDisabled();
+        ->setRememberColumnSelectionDisabled()
+        ->setLoadingPlaceholderStatus(true)
+        // ->setLoadingPlaceholderContent('Cargando...');
+        ->setLoadingPlaceholderBlade('loader-table');
+        ;
 
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los niveles seleccionados?');
 
@@ -97,28 +104,7 @@ class LevelTable extends DataTableComponent
         ];
     }
 
-    public function filters(): array
-    {
-        return [
 
-            SelectFilter::make('Status', 'status')
-
-                ->options([
-                    '' => 'Todos',
-                    '1' => 'Activo',
-                    '0' => 'Inactivo',
-                ])
-                ->filter(function(Builder $builder, string $value) {
-                    if ($value === '1') {
-                        $builder->where('status', true);
-                    } elseif ($value === '0') {
-                        $builder->where('status', false);
-                    }
-                }),
-        ];
-
-
-    }
 
     public function reorder($items): void
     {

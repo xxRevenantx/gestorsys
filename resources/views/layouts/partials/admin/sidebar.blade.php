@@ -135,9 +135,22 @@
             ),
             'submenu' => [
                 [
-                    'name' => 'Estudiantes',
+                    'name' => 'Inscripción',
                     'icon' => 'fa-regular fa-circle',
                     'route' => route('admin.students.index'),
+                    'active' => request()->routeIs(
+                        'admin.students.index',
+                        'admin.students.create',
+                        'admin.students.edit',
+                        'admin.students.show',
+
+
+                    ),
+                ],
+                [
+                    'name' => 'Niveles',
+                    'icon' => 'fa-regular fa-circle',
+                    'route' => route('admin.levels.index'),
                     'active' => request()->routeIs(
                         'admin.students.index',
                         'admin.students.create',

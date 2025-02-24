@@ -13,6 +13,9 @@ use App\Exports\TutorExport;
 
 class TutorTable extends DataTableComponent
 {
+
+    protected $listeners = ['resfreshTable' => '$refresh'];
+    
     protected $model = Tutor::class;
 
     public function configure(): void

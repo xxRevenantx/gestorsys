@@ -82,9 +82,15 @@ class CrearGrado extends Component
 
         $this->reset('grado', 'grado_numero', 'level_id', 'generation_id', 'group_id');
 
-        session()->flash('mensaje', '¡Grado creado con éxito!');
+        $this->dispatch('resfreshTable');
+        // session()->flash('mensaje', '¡Grado creado con éxito!');
+        $this->dispatch('swal', [
+            'title' => '¡Grado creado con éxito!',
+            'icon' => 'success',
+            'position' => 'top-end',
+        ]);
 
-        return redirect()->route('admin.grades.index');
+        // return redirect()->route('admin.grades.index');
     }
 
 

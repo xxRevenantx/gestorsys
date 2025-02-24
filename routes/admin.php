@@ -45,7 +45,7 @@ Route::resource('grados', GradeController::class)->names('grades');
 Route::resource('tutores', TutorController::class)->names('tutors');
 
 // RUTAS DEL ESTUDIANTE
-Route::resource('estudiantes', StudentController::class)->names('students');
+Route::resource('inscripcion-estudiantes', StudentController::class)->names('students');
 
 
 Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');

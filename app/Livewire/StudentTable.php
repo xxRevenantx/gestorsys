@@ -12,13 +12,45 @@ class StudentTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id')
+        ->setReorderEnabled()
+        ->setSingleSortingDisabled()
+        ->setHideReorderColumnUnlessReorderingEnabled()
+        ->setFilterLayoutSlideDown()
+        ->setRememberColumnSelectionDisabled()
+        ->setLoadingPlaceholderStatus(true)
+        // ->setLoadingPlaceholderContent('Cargando...');
+        ->setLoadingPlaceholderBlade('loader-table');
+        ;
+
+        $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los alumnos seleccionados?');
+
+
+
+
+    $this->setBulkActions([
+        'deleteSelected' => 'Eliminar',
+    ]);
+
     }
+
+    public function deleteSelected()
+    {
+        foreach($this->getSelected() as $item)
+        {
+           $eliminar = Student::find($item);
+              $eliminar->delete();
+        }
+        $this->clearSelected();
+    }
+
 
     public function columns(): array
     {
         return [
             Column::make("Id", "id")
+                ->sortable(),
+                Column::make("#", "sort")
                 ->sortable(),
             Column::make("CURP", "CURP")
                 ->sortable(),
@@ -35,19 +67,25 @@ class StudentTable extends DataTableComponent
             Column::make("Sexo", "sexo")
                 ->sortable(),
             Column::make("Status", "status")
+                ->format(function($value) {
+                    return $value == 1 ? '<span class="bg-blue-500 p-1 rounded-lg text-white">Activo</span>' : '<span style="color: red;">Inactivo</span>';
+                })
+                ->html()
                 ->sortable(),
-            Column::make("Level id", "level_id")
+            Column::make("Level id", "level.level")
                 ->sortable(),
-            Column::make("Grade id", "grade_id")
+            Column::make("Grade id", "grade.grado")
                 ->sortable(),
-            Column::make("Group id", "group_id")
+            Column::make("Group id", "group.grupo")
                 ->sortable(),
-            Column::make("Generation id", "generation_id")
+            // Column::make("Generación", "generation.anio_inicio")
+            //     ->format(function($value, $column, $row) {
+            //         return $row->generation->anio_inicio . ' - ' . $row->generation->anio_termino;
+            //     })
+            //     ->sortable(),
+            Column::make("Tutor id", "tutor.nombre")
                 ->sortable(),
-            Column::make("Tutor id", "tutor_id")
-                ->sortable(),
-            Column::make("Sort", "sort")
-                ->sortable(),
+
             Column::make("Created at", "created_at")
                 ->sortable(),
             Column::make("Updated at", "updated_at")

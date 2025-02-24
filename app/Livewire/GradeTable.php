@@ -13,6 +13,8 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 class GradeTable extends DataTableComponent
 {
     protected $model = Grade::class;
+     // Agregar el listener
+     protected $listeners = ['resfreshTable' => '$refresh'];
 
     public function configure(): void
     {

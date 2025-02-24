@@ -174,6 +174,8 @@ class CrearEstudiante extends Component
 
         $this->imagen = null;
 
+        $this->dispatch('resetImagePreview');
+
         $this->reset([
             'CURP',
             'nombre',

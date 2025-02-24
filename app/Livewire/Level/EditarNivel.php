@@ -31,7 +31,7 @@ class EditarNivel extends Component
         $datos = $this->validate([
             'level' => 'required|unique:levels,level,' . $this->level_id,
             'slug' => 'required|unique:levels,slug,' . $this->level_id,
-            'cct' => 'required|unique:levels,cct,' . $this->level_id,
+            'cct' => 'nullable|unique:levels,cct,' . $this->level_id,
             'director_id' => 'nullable',
             'supervisor_id' => 'nullable',
             'imagen_nueva' => 'image|nullable|max:5120|mimes:jpeg,jpg,png',
@@ -41,7 +41,6 @@ class EditarNivel extends Component
             'slug.required' => 'El campo slug es obligatorio',
             'slug.unique' => 'El slug ya existe',
             'color.required' => 'El campo color es obligatorio',
-            'cct.required' => 'El campo C.C.T. es obligatorio',
             'cct.unique' => 'El C.C.T. ya existe',
             'imagen_nueva.image' => 'El archivo debe ser una imagen',
             'imagen_nueva.max' => 'El archivo no debe pesar más de 5MB',
@@ -72,9 +71,10 @@ class EditarNivel extends Component
 
 
 
-        session()->flash('mensaje', 'Nivel creado con éxito');
+        session()->flash('mensaje', 'Nivel actualizado con éxito');
 
         return redirect()->route('admin.levels.index');
+
     }
 
 
