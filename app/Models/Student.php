@@ -33,6 +33,11 @@ class Student extends Model
 
     ];
 
+
+    protected $casts = [
+        'fecha_nacimiento' => 'datetime', // Convertir a fecha el campo fecha_nacimiento de la tabla students en la base de datos
+    ];
+
     public function level()
     {
         return $this->belongsTo(Level::class);

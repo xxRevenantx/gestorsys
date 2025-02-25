@@ -150,12 +150,11 @@
                 [
                     'name' => 'Niveles',
                     'icon' => 'fa-regular fa-circle',
-                    'route' => route('admin.levels.index'),
+                    'route' => route('admin.level.index'),
                     'active' => request()->routeIs(
-                        'admin.students.index',
-                        'admin.students.create',
-                        'admin.students.edit',
-                        'admin.students.show',
+                        'admin.level.index',
+                        'admin.level.action',
+
 
 
                     ),

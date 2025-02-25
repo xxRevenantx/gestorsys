@@ -35,9 +35,10 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show($student_id)
     {
-        //
+        $student = Student::find($student_id);
+        return view('admin.students.show', compact('student'));
     }
 
     /**

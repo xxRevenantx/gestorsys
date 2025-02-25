@@ -6,6 +6,7 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LevelPDFController;
+use App\Http\Controllers\MostrarNivelController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PDFLevelController;
 use App\Http\Controllers\StudentController;
@@ -28,8 +29,10 @@ Route::resource('supervisores', SupervisorController::class)->names('supervisore
 // RUTAS DEL CONTROLADOR DIRECTOR
 Route::resource('directores', DirectorController::class)->names('directores');
 
-// RUTAS DEL CONTROLADOR NIVEL
+// RUTAS DEL CONTROLADOR ADMINISTADOR DE NIVELES
 Route::resource('administrar-niveles', LevelController::class)->names('levels');
+
+
 
 // RUTAS DEL GRUPO
 Route::resource('grupos', GroupController::class)->names('groups');
@@ -49,3 +52,11 @@ Route::resource('inscripcion-estudiantes', StudentController::class)->names('stu
 
 
 Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');
+
+
+
+
+// RUTAS DEL CONTROLADOR DE NIVELES
+Route::get('/niveles', [MostrarNivelController::class, 'index'])->name('level.index');
+
+Route::get('/niveles/{action}', [MostrarNivelController::class, 'action'])->name('level.action');

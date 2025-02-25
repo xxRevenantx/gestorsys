@@ -9,8 +9,10 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Builder;
+use Rappasoft\LaravelLivewireTables\Views\Columns\DateColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class StudentTable extends DataTableComponent
@@ -95,19 +97,16 @@ class StudentTable extends DataTableComponent
                     return $value == 1 ? '<span class="bg-blue-500 p-1 rounded-lg text-white">Activo</span>' : '<span style="color: red;">Inactivo</span>';
                 })
                 ->html()
-                ->searchable(
-                    fn(Builder $query, $searchTerm) => $query->where('status', 'like', '%' . $searchTerm . '%')
-                )
+                ->searchable()
                 ->sortable(),
 
             Column::make("Edad", "edad")
                 ->sortable(),
-            Column::make("Fecha nacimiento", "fecha_nacimiento")
-                ->format(fn($value) => \Carbon\Carbon::parse($value)->format('d/m/Y'))
-                ->searchable(
-                    fn(Builder $query, $searchTerm) => $query->whereRaw("DATE_FORMAT(fecha_nacimiento, '%d/%m/%Y') like ?", ["%$searchTerm%"])
-                )
-                ->sortable(),
+            DateColumn::make('Fecha nacimiento', 'fecha_nacimiento')
+            ->searchable()
+            ->sortable(),
+
+
             Column::make("Sexo", "sexo")
                 ->searchable()
                 ->sortable(),
@@ -159,11 +158,11 @@ class StudentTable extends DataTableComponent
                 ->sortable(),
 
             Column::make("Inscrito", "created_at")
-                ->format(fn($value) => \Carbon\Carbon::parse($value)->format('d/m/Y'))
+                ->format(fn($value) => \Carbon\Carbon::parse($value)->format('d-m-Y'))
                 ->searchable()
                 ->sortable(),
             Column::make("Actualizado", "updated_at")
-                ->format(fn($value) => \Carbon\Carbon::parse($value)->format('d/m/Y'))
+                ->format(fn($value) => \Carbon\Carbon::parse($value)->format('d-m-Y'))
                 ->searchable(
                     fn(Builder $query, $searchTerm) => $query->where('students.updated_at', 'like', '%' . $searchTerm . '%')
                 )
@@ -174,6 +173,7 @@ class StudentTable extends DataTableComponent
                     fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
                         [
                             'editLink' => route('admin.students.edit', $row),
+                            'viewLink' => route('admin.students.show', $row),
 
                         ]
                     )
@@ -219,6 +219,14 @@ class StudentTable extends DataTableComponent
                 }
             }),
 
+            DateFilter::make('Fecha de Nacimiento', 'fecha_nacimiento')
+            ->config([
+                'min' => '1988-01-01',
+                'max' => '2050-12-31',
+            ])
+            ->filter(function(Builder $builder, string $value) {
+                $builder->where('fecha_nacimiento', '=', $value);
+            }),
 
         ];
 

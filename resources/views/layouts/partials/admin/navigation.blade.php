@@ -10,7 +10,6 @@
         </button>
 
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-
                     <img class="size-8 rounded-full object-cover ms-2 md:me-5" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white dark:text-white">GestorSys</span>
 
@@ -35,7 +34,16 @@
                 <span class="sr-only">Open user menu</span>
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
 
-                    <img class="size-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                <div class="flex items-center ms-3">
+                    <div>
+                        <p class="text-sm text-white mr-3">{{Auth::user()->name}}</p>
+                       </div>
+                       <div>
+                        <img class="size-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                       </div>
+                </div>
+
+
 
             @else
                 <span class="inline-flex rounded-md">

@@ -12,40 +12,40 @@
                             <p class="text-gray-700"><span class="font-bold"> CURP:</span> {{ $tutor->CURP }}</p>
                             <p class="text-gray-700"><span class="font-bold">Ocupación:</span> {{ $tutor->ocupacion }}</p>
                             <div class="mt-6 flex flex-wrap gap-4 justify-center">
-                                <a href="https://api.whatsapp.com/send?phone={{ $tutor->celular }}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">WhatsApp</a>
-                                <a href="{{ route('admin.tutors.edit', $tutor) }}" target="_blank" class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded">Modificar tutor</a>
+                                <a href="https://api.whatsapp.com/send?phone={{ $tutor->celular }}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                                <a href="{{ route('admin.tutors.edit', $tutor) }}" target="_blank" class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded"><i class="fa-solid fa-user-pen"></i> Modificar tutor</a>
                             </div>
                         </div>
                         <hr class="my-6 border-t border-gray-300">
                         <div class="flex flex-col">
                             <ul>
-                                <li class="py-2"><span class="font-bold">Dirección: </span>{{ $tutor->calle }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-location-dot"></i> Dirección: </span>{{ $tutor->calle }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Número Exterior: </span>{{ $tutor->num_ext }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-hashtag"></i> Número Exterior: </span>{{ $tutor->num_ext }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Número Interior: </span>{{ $tutor->num_int }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-hashtag"></i> Número Interior: </span>{{ $tutor->num_int }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Código Postal: </span>{{ $tutor->CP }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-brands fa-usps"></i> Código Postal: </span>{{ $tutor->CP }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Colonia: </span>{{ $tutor->colonia }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-location-dot"></i> Colonia: </span>{{ $tutor->colonia }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Localidad: </span>{{ $tutor->localidad }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-location-dot"></i> Localidad: </span>{{ $tutor->localidad }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Municipio: </span>{{ $tutor->municipio }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-location-dot"></i> Municipio: </span>{{ $tutor->municipio }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Estado: </span>{{ $tutor->estado }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-location-dot"></i> Estado: </span>{{ $tutor->estado }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Teléfono: </span>{{ $tutor->telefono }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-phone"></i> Teléfono: </span>{{ $tutor->telefono }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Celular: </span>{{ $tutor->celular }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-mobile"></i> Celular: </span>{{ $tutor->celular }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Email: </span>{{ $tutor->email }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-inbox"></i> Email: </span>{{ $tutor->email }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Parentesco: </span>{{ $tutor->parentesco }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-user"></i> Parentesco: </span>{{ $tutor->parentesco }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Ocupación: </span>{{ $tutor->ocupacion }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-briefcase"></i> Ocupación: </span>{{ $tutor->ocupacion }}</li>
                                 <hr>
-                                <li class="py-2"><span class="font-bold">Último Grado de estudios: </span>{{ $tutor->ultimo_grado }}</li>
+                                <li class="py-2"><span class="font-bold"><i class="fa-solid fa-graduation-cap"></i> Último Grado de estudios: </span>{{ $tutor->ultimo_grado }}</li>
                             </ul>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                                 </div>
 
                                     <div class="flex-1">
-                                    <a href="#" class="text-white font-bold bg-indigo-700 p-2 rounded-lg hover:bg-indigo-800 mb-3 mt-3">Alumno: {{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno }}</a>
+                                    <a href="{{route('admin.students.edit', $student->id)}}" class="text-white font-bold bg-indigo-700 p-2 rounded-lg hover:bg-indigo-800 mb-3 mt-3">Alumno: {{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno }}</a>
 
 
                                     <p class="p-1 mt-2">
