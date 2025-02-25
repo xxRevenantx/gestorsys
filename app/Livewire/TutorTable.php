@@ -41,6 +41,7 @@ class TutorTable extends DataTableComponent
         {
            $eliminar = Tutor::find($item);
               $eliminar->delete();
+              $this->dispatch('tutor-eliminado');
         }
         $this->clearSelected();
     }
