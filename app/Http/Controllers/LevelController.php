@@ -26,10 +26,11 @@ class LevelController extends Controller
     }
 
 
-    public function edit($level_id)
+    public function edit($slug)
     {
-        $level = Level::find($level_id);
-        return view('admin.levels.edit', compact('level'));
+        // $level = Level::where('slug', $slug);
+        // dd($level)
+        // return view('admin.levels.edit', compact('level'));
 
     }
 

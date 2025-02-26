@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             GenerationSeeder::class,
             GradeSeeder::class,
             StudentSeeder::class,
+            ActionSeeder::class,
         ]);
 
 

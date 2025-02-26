@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActionController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\GenerationController;
 use App\Http\Controllers\GradeController;
@@ -22,6 +23,9 @@ Route::get('/', function () {
 //     return view('admin.perfil');
 // })->name('perfil');
 
+// RUTAS DE LAS ACCIONES
+
+Route::resource('acciones', ActionController::class)->names('actions');
 
 // RUTAS DEL CONTROLADOR SUPERVISOR
 Route::resource('supervisores', SupervisorController::class)->names('supervisores');
@@ -48,7 +52,7 @@ Route::resource('grados', GradeController::class)->names('grades');
 Route::resource('tutores', TutorController::class)->names('tutors');
 
 // RUTAS DEL ESTUDIANTE
-Route::resource('inscripcion-estudiantes', StudentController::class)->names('students');
+Route::resource('inscripcion-alumnos', StudentController::class)->names('students');
 
 
 Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');
@@ -59,4 +63,6 @@ Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivel
 // RUTAS DEL CONTROLADOR DE NIVELES
 Route::get('/niveles', [MostrarNivelController::class, 'index'])->name('level.index');
 
-Route::get('/niveles/{action}', [MostrarNivelController::class, 'action'])->name('level.action');
+Route::get('/niveles/{nivel}', [MostrarNivelController::class, 'nivel'])->name('level.nivel');
+
+Route::get('/niveles/{nivel}/{action}', [MostrarNivelController::class, 'action'])->name('level.action');

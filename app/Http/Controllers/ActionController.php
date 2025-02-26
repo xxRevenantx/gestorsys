@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Accion;
-use App\Http\Requests\StoreAccionRequest;
-use App\Http\Requests\UpdateAccionRequest;
+use App\Models\Action;
+use App\Http\Requests\StoreActionRequest;
+use App\Http\Requests\UpdateActionRequest;
 
-class AccionController extends Controller
+class ActionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('admin.actions.index');
     }
 
     /**
@@ -27,7 +27,7 @@ class AccionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAccionRequest $request)
+    public function store(StoreActionRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class AccionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Accion $accion)
+    public function show(Action $action)
     {
         //
     }
@@ -43,7 +43,7 @@ class AccionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Accion $accion)
+    public function edit(Action $action)
     {
         //
     }
@@ -51,7 +51,7 @@ class AccionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAccionRequest $request, Accion $accion)
+    public function update(UpdateActionRequest $request, Action $action)
     {
         //
     }
@@ -59,7 +59,7 @@ class AccionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Accion $accion)
+    public function destroy(Action $action)
     {
         //
     }

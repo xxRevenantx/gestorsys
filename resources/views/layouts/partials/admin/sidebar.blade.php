@@ -13,6 +13,16 @@
             'active' => request()->routeIs('profile.show')
         ],
         [
+            'name' => 'Acciones',
+            'icon' => 'fa-solid fa-user',
+            'route' =>  route('admin.actions.index'),
+            'active' => request()->routeIs(
+                'admin.actions.index',
+                'admin.actions.create',
+                'admin.actions.edit'
+            )
+        ],
+        [
             'header' => 'Autoridades',
             'color' => '#7267EF'
         ],
@@ -153,7 +163,7 @@
                     'route' => route('admin.level.index'),
                     'active' => request()->routeIs(
                         'admin.level.index',
-                        'admin.level.action',
+                        'admin.level.nivel',
 
 
 

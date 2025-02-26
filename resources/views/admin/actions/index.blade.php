@@ -5,7 +5,7 @@
 
     ],
     [
-        'name' => 'Niveles',
+        'name' => 'Acciones',
         'url' => '#',
     ],
 
@@ -26,7 +26,7 @@
 </div>
 @endif
 
-@livewire('level.crear-nivel')
-@livewire('level.mostrar-niveles', ['lazy' => true])
+@livewire('action.crear-accion', ['lazy' => true])
+@livewire('action.mostrar-acciones' , ['lazy' => true])
 
 </x-admin-layout>

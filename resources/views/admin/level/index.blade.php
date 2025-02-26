@@ -24,18 +24,24 @@
     </div>
     <div class="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
         @if ($nivel->imagen)
-        <img class="object-cover object-center w-full h-full" src="{{ Storage::url($nivel->imagen) }}" alt="Profile image">
+        <img class="object-cover object-center w-full h-full" src="{{ asset('storage/levels/'.$nivel->imagen) }}" alt="Profile image">
         @else
         <img class="object-cover object-center w-full h-full" src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png" alt="Profile image">
         @endif
     </div>
     <div class="text-center mt-2">
         <h2 class="font-semibold">{{$nivel->level}}</h2>
-        <p class="text-gray-500 ">C.C.T. {{$nivel->cct}} </p>
-        <p class="text-gray-500 ">Director: {{$nivel->director->nombre}} {{$nivel->director->apellido_paterno}} {{$nivel->director->apellido_materno}} </p>
-        <p class="text-gray-500 ">Supervisor: {{$nivel->supervisor->nombre}} {{$nivel->supervisor->apellido_paterno}} {{$nivel->supervisor->apellido_materno}} </p>
-        <p class="text-gray-500 ">Zona: {{$nivel->supervisor->zona}}</p>
-        <p class="text-gray-500 ">Zona: {{$nivel->supervisor->sector}}</p>
+        @if ($nivel->cct)
+            <p class="text-gray-500">C.C.T. {{$nivel->cct}}</p>
+        @endif
+        @if ($nivel->director)
+            <p class="text-gray-500">Director: {{$nivel->director->nombre}} {{$nivel->director->apellido_paterno}} {{$nivel->director->apellido_materno}}</p>
+        @endif
+        @if ($nivel->supervisor)
+            <p class="text-gray-500">Supervisor: {{$nivel->supervisor->nombre}} {{$nivel->supervisor->apellido_paterno}} {{$nivel->supervisor->apellido_materno}}</p>
+            <p class="text-gray-500">Zona: {{$nivel->supervisor->zona}}</p>
+            <p class="text-gray-500">Sector: {{$nivel->supervisor->sector}}</p>
+        @endif
     </div>
     <ul class="py-4 mt-2 text-gray-700 flex items-center justify-around">
         <li class="flex flex-col items-center justify-around">
@@ -52,7 +58,7 @@
         </li>
     </ul>
     <div class="p-4 border-t mx-8 mt-2">
-        <a href="{{route('admin.level.action', $nivel)}}" class="w-1/2 block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2 text-center"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a>
+        <a href="{{route('admin.level.nivel', $nivel)}}" class="w-1/2 block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2 text-center"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a>
     </div>
 </div>
 @endforeach
