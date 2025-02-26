@@ -58,7 +58,7 @@
         </li>
     </ul>
     <div class="p-4 border-t mx-8 mt-2">
-        <a href="{{route('admin.level.nivel', $nivel)}}" class="w-1/2 block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2 text-center"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a>
+        <a href="{{route('admin.level.action', ['nivel' => $nivel->slug, 'action' => "matricula-escolar"])}}" class="w-1/2 block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2 text-center"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a>
     </div>
 </div>
 @endforeach

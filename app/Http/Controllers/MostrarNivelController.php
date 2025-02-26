@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Action;
 use App\Models\Level;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class MostrarNivelController extends Controller
@@ -14,18 +15,27 @@ class MostrarNivelController extends Controller
         return view('admin.level.index', compact('niveles'));
     }
 
-    public function nivel($level_id)
-    {
+    // public function nivel($level_id)
+    // {
 
-        $nivel = Level::where('slug', $level_id)->first();
+    //     $nivel = Level::where('slug', $level_id)->first();
 
+
+    //     $acciones = Action::all();
+    //     return view('admin.level.action', compact('nivel', 'acciones'));
+    // }
+
+    public function action($level_slug, $action_slug){
+
+
+        $nivel = Level::where('slug', $level_slug)->firstOrFail();
+        $action = Action::where('slug', $action_slug)->firstOrFail();
 
         $acciones = Action::all();
-        return view('admin.level.action', compact('nivel', 'acciones'));
-    }
 
-    public function action($nivel, $action){
-        dd($nivel, $action);
+        $level_id = $nivel->id; // OBTENER EL ID DEL NIVEL
+
+        return view('admin.level.action', compact('nivel', 'action', 'acciones', 'level_id'));
     }
 
 }

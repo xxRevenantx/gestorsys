@@ -164,6 +164,7 @@
                     'active' => request()->routeIs(
                         'admin.level.index',
                         'admin.level.nivel',
+                        'admin.level.action',
 
 
 
