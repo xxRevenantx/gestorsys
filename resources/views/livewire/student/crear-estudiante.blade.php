@@ -337,11 +337,16 @@
 
 
                                                     <div class="mb-5">
-                                                        <label for="grupo_name"
+                                                        <label for="group_id"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo</label>
-                                                        <input readonly type="text" id="grupo_name" wire:model.live="grupo_name" placeholder="Ingrese el nombre del grupo"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                                                        @error('grupo_name')
+                                                        <select id="group_id" wire:model.live="group_id"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                            <option value="">--Seleccione un grupo--</option>
+                                                            @foreach ($grupos as $grupo)
+                                                                <option value="{{ $grupo->name }}">{{ $grupo->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('group_id')
                                                             <div class="text-red-500">{{ $message }}</div>
                                                         @enderror
                                                     </div>

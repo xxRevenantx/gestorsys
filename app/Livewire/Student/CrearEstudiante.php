@@ -32,6 +32,7 @@ class CrearEstudiante extends Component
 
     public $generaciones = [];
     public $grados = [];
+    public $grupos = [];
     public $grupo_name;
 
     // NOMBRES
@@ -125,6 +126,10 @@ class CrearEstudiante extends Component
 
         }
 
+        if ($propertyName == 'group_id') {
+            $this->grupos = Grade::where('gr', $this->generation_id)
+                    ->get();
+        }
         if ($propertyName == 'grade_id') {
             $this->group_id = Grade::find($this->grade_id)->group->id; // Obtenemos el grupo del grado seleccionado para mostrarlo en la vista
             $this->grupo_name = Grade::find($this->grade_id)->group->grupo; // Obtenemos el grupo del grado seleccionado para mostrarlo en la vista

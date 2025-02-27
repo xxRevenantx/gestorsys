@@ -74,7 +74,8 @@ class GroupTable extends DataTableComponent
     return Group::query()
         ->with('level')
         ->with('grade')
-        ->orderBy('groups.level_id', 'asc');
+        ->orderBy('groups.level_id', 'asc')
+        ->orderBy('groups.grade_id', 'asc');
 }
 
 
