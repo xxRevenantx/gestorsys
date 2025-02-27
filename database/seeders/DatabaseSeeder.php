@@ -26,12 +26,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DirectorSeeder::class,
             SupervisorSeeder::class,
-            GroupSeeder::class,
+            // GroupSeeder::class,
             NivelSeeder::class,
             TutorSeeder::class,
-            GenerationSeeder::class,
-            GradeSeeder::class,
-            StudentSeeder::class,
+            // GenerationSeeder::class,
+            // GradeSeeder::class,
+            // StudentSeeder::class,
             ActionSeeder::class,
         ]);
 

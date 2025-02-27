@@ -78,6 +78,8 @@ class CrearGeneracion extends Component
         ]);
 
         $this->dispatch('resfreshTable');
+        $this->dispatch('generacion');
+
 
     }
 

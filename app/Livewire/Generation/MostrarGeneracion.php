@@ -24,7 +24,7 @@ class MostrarGeneracion extends Component
     }
 
 
-    #[On('generacion-eliminada')]
+    #[On('generacion')]
     public function updateGenerationList()
     {
         $this->contarGeneracion = Generation::count();

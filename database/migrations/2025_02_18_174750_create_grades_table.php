@@ -14,15 +14,12 @@ return new class extends Migration
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
             $table->string('grado');
-            $table->string('grado_numero');
             $table->unsignedBigInteger('level_id');
             $table->unsignedBigInteger('generation_id');
-            $table->unsignedBigInteger('group_id');
 
 
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
             $table->foreign('generation_id')->references('id')->on('generations')->onDelete( 'cascade');
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
 
             $table->integer('sort');
 

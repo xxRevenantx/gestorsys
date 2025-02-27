@@ -9,13 +9,14 @@ use Illuminate\Database\Eloquent\Builder;
 
 class GroupTable extends DataTableComponent
 {
+    protected $listeners = ['resfreshTable' => '$refresh'];
+
     protected $model = Group::class;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-        ->setReorderEnabled();
-        $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los grupos seleccionados?');
+        ->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los grupos seleccionados?');
 
 
         $this->setBulkActions([
@@ -30,7 +31,7 @@ class GroupTable extends DataTableComponent
            $eliminar = Group::find($item);
               $eliminar->delete();
 
-            $this->dispatch('grupo-eliminado');
+            $this->dispatch('grupos');
         }
         $this->clearSelected();
     }
@@ -41,6 +42,12 @@ class GroupTable extends DataTableComponent
             Column::make("Id", "id")
                 ->sortable(),
             Column::make("Grupo", "grupo")
+                ->sortable()
+                ->searchable(),
+            Column::make("Nivel", "level.level")
+                ->sortable()
+                ->searchable(),
+            Column::make("Grado", "grade.grado")
                 ->sortable()
                 ->searchable(),
             Column::make("Created at", "created_at")
@@ -65,7 +72,9 @@ class GroupTable extends DataTableComponent
     public function builder(): Builder
 {
     return Group::query()
-    ->orderBy('grupo', 'asc');
+        ->with('level')
+        ->with('grade')
+        ->orderBy('groups.level_id', 'asc');
 }
 
 

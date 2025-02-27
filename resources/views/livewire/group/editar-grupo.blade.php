@@ -15,12 +15,39 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div class="mb-5">
+            <label for="level_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>
+            <select id="level_id" wire:model.live="level_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="">--Seleccione un nivel--</option>
+                @foreach($niveles as $nivel)
+                    <option value="{{ $nivel->id }}">{{ $nivel->level }}</option>
+                @endforeach
+            </select>
+            @error('level_id')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-5">
+            <label for="grade_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grado</label>
+            <select id="grade_id" wire:model.live="grade_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="">--Seleccione un grado--</option>
+                @foreach($grados as $grado)
+                    <option value="{{ $grado->id }}">{{ $grado->grado }}°</option>
+                @endforeach
+            </select>
+            @error('grade_id')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+
+
+        <div class="mb-5">
             <label for="grupo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo</label>
             <input type="text"  id="grupo" wire:model.live="grupo" placeholder="Ingrese el grupo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             @error('grupo')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
         </div>
+
 
     </div>
 

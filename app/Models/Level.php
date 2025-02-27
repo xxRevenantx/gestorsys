@@ -24,6 +24,11 @@ class Level extends Model
     ];
 
 
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
     public function director()
     {
         return $this->belongsTo(Director::class);

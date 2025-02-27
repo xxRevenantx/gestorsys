@@ -24,7 +24,7 @@ class MostrarGrupos extends Component
     }
 
 
-    #[On('grupo-eliminado')]
+    #[On('grupos')]
     public function updateGroupList()
     {
         $this->contarGrupos = Group::count();

@@ -93,16 +93,6 @@
                     ),
                 ],
                 [
-                    'name' => 'Grupos',
-                    'icon' => 'fas fa-layer-group',
-                    'route' =>  route('admin.groups.index'),
-                    'active' =>  request()->routeIs(
-                        'admin.groups.index',
-                        'admin.groups.create',
-                        'admin.groups.edit'
-                    ),
-                ],
-                [
                     'name' => 'Generaciones',
                     'icon' => 'fas fa-layer-group',
                     'route' =>  route('admin.generations.index'),
@@ -112,6 +102,7 @@
                         'admin.generations.edit'
                     ),
                 ],
+
                 [
                     'name' => 'Grados',
                     'icon' => 'fas fa-layer-group',
@@ -122,6 +113,19 @@
                         'admin.grades.edit'
                     ),
                 ],
+
+                [
+                    'name' => 'Grupos',
+                    'icon' => 'fas fa-layer-group',
+                    'route' =>  route('admin.groups.index'),
+                    'active' =>  request()->routeIs(
+                        'admin.groups.index',
+                        'admin.groups.create',
+                        'admin.groups.edit'
+                    ),
+                ],
+
+
             ]
         ],
 

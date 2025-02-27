@@ -13,7 +13,7 @@ class Grade extends Model
     /** @use HasFactory<\Database\Factories\GradeFactory> */
     use HasFactory;
 
-    protected $fillable = ['grado', 'grado_numero', 'level_id', 'generation_id', 'group_id', 'sort'];
+    protected $fillable = ['grado', 'level_id', 'generation_id', 'sort'];
 
     public function level()
     {
@@ -25,9 +25,9 @@ class Grade extends Model
         return $this->belongsTo(Generation::class);
     }
 
-    public function group()
+    public function groups()
     {
-        return $this->belongsTo(Group::class);
+        return $this->hasMany(Group::class);
     }
 
     public function students()

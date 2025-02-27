@@ -37,7 +37,7 @@ class GenerationTable extends DataTableComponent
            $eliminar = Generation::find($item);
               $eliminar->delete();
 
-            $this->dispatch('generacion-eliminada');
+            $this->dispatch('generacion');
         }
         $this->clearSelected();
     }

@@ -323,7 +323,7 @@
                                                     @foreach ($grados as $grado)
                                                         <option value="{{ $grado->id }}">
 
-                                                            {{ $grado->grado_numero }}° "{{$grado->group->grupo}}"
+                                                            {{ $grado->grado }}°
                                                         </option>
                                                     @endforeach
                                                 </select>

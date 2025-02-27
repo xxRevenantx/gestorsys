@@ -12,12 +12,19 @@ class Group extends Model
 
     protected $fillable = [
         'grupo',
+        'level_id',
+        'grade_id',
     ];
 
 
-    public function grades()
+    public function level()
     {
-        return $this->hasMany(Grade::class);
+        return $this->belongsTo(Level::class);
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
     }
 
     public function students()

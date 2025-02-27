@@ -46,23 +46,21 @@ class GradeTable extends DataTableComponent
         $this->clearSelected();
     }
 
-    public function updateSelected()
-    {
-        foreach($this->getSelected() as $item)
-        {
+    // public function updateSelected()
+    // {
+    //     foreach($this->getSelected() as $item)
+    //     {
 
-           $actualizar = Grade::find($item);
+    //        $actualizar = Grade::find($item);
 
-              $actualizar->update([
-                'group_id' => 1
-              ]);
-
-
+    //           $actualizar->update([
+    //             'group_id' => 1
+    //           ]);
 
 
-        }
-        $this->clearSelected();
-    }
+    //     }
+    //     $this->clearSelected();
+    // }
 
 
 
@@ -75,8 +73,6 @@ class GradeTable extends DataTableComponent
             Column::make("#", "sort")
                 ->sortable(),
             Column::make("Grado", "grado")
-                ->sortable(),
-            Column::make("Grado numero", "grado_numero")
                 ->sortable(),
             Column::make("Nivel", "level.level")
                 ->sortable(),
@@ -93,8 +89,7 @@ class GradeTable extends DataTableComponent
                 )
                 ->html()
                 ,
-            Column::make("Grupo", "group.grupo")
-                ->sortable(),
+
 
                 Column::make("Status", "generation.status")
                     ->sortable()
