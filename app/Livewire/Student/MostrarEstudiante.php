@@ -13,7 +13,7 @@ class MostrarEstudiante extends Component
     public $apellido_materno;
     public $fecha_nacimiento;
     public $edad;
-    public $sexo;
+    public $genero;
     public $level_id;
     public $generation_id;
     public $grade_id;
@@ -41,7 +41,7 @@ class MostrarEstudiante extends Component
         $this->apellido_materno = $student->apellido_materno;
         $this->fecha_nacimiento = $student->fecha_nacimiento;
         $this->edad = $student->edad;
-        $this->sexo = $student->sexo;
+        $this->genero = $student->genero;
 
         $this->tutor_id = $student->tutor_id;
         $this->status = $student->status;

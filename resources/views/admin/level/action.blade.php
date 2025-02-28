@@ -42,23 +42,25 @@
 </style>
 
 <div class="min-w-screen mt-5">
-    <div class="py-3 px-5 w-full m-auto  rounded shadow-xl text-white mb-5"  style="background-color: #1c232f" >
+    <div class="py-3 px-5 w-full m-auto rounded shadow-xl text-white mb-5" style="background-color: #1c232f">
         <div class="-mx-1">
-            <ul class="flex w-full flex-wrap items-center h-10">
-                @foreach ($acciones as $accion )
+            <ul class="flex flex-wrap items-center">
+                @foreach ($acciones as $accion)
                 <li class="block relative">
-                    <a  href="{{ route('admin.level.action', ['nivel' => $nivel->slug, 'action' => $accion->slug]) }}" class="flex items-center h-10 leading-10 px-4 rounded cursor-pointer no-underline hover:no-underline transition-colors duration-100 mx-1 @if($action->slug == $accion->slug) bg-indigo-500 @endif hover:bg-gray-500">
+                    <a href="{{ route('admin.level.action', ['nivel' => $nivel->slug, 'action' => $accion->slug]) }}" class="flex items-center h-10 leading-10 px-4 rounded cursor-pointer no-underline hover:no-underline transition-colors duration-100 mx-1 @if($action->slug == $accion->slug) bg-indigo-500 @endif hover:bg-gray-500">
                         <span class="mr-3 text-xl"> <i class="mdi mdi-widgets-outline"></i> </span>
                         <span>{{ $accion->accion }}</span>
                     </a>
+                </li>
                 @endforeach
-
             </ul>
         </div>
     </div>
 
         @if($action->slug == 'matricula-escolar')
              <livewire:action.matricula-escolar :level_id="$level_id" lazy />
+        @elseif ($action->slug == 'datos-del-alumno')
+            <livewire:action.datos-alumno  lazy />
         @else
             {{$action->slug}}
         @endif

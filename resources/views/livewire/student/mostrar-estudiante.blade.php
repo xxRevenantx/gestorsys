@@ -73,8 +73,8 @@
                                     <span class="ml-auto">{{ $edad }}</span>
                                 </li>
                                 <li class="flex items-center py-3">
-                                    <span>Sexo: </span>
-                                    <span class="ml-auto">{{ $sexo }}</span>
+                                    <span>Género: </span>
+                                    <span class="ml-auto">{{ $genero }}</span>
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Nivel: </span>

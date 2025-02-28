@@ -94,8 +94,8 @@
                                     <span class="ml-auto">{{ $edad }}</span>
                                 </li>
                                 <li class="flex items-center py-3">
-                                    <span>Sexo: </span>
-                                    <span class="ml-auto">{{ $sexo }}</span>
+                                    <span>Género: </span>
+                                    <span class="ml-auto">{{ $genero }}</span>
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Nivel: </span>
@@ -257,23 +257,23 @@
 
 
                                             <div class="mb-5">
-                                                <label for="sexo"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sexo</label>
+                                                <label for="genero"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Género</label>
                                                 <div class="flex items-center">
                                                     <label class="inline-flex items-center">
-                                                        <input type="radio" id="sexo_h" wire:model.live="sexo"
+                                                        <input type="radio" id="genero_h" wire:model.live="genero"
                                                             value="H" class="form-radio text-blue-600"
-                                                            name="sexo">
+                                                            name="genero">
                                                         <span class="ml-2 text-gray-700 dark:text-white">Hombre</span>
                                                     </label>
                                                     <label class="inline-flex items-center ml-6">
-                                                        <input type="radio" id="sexo_m" wire:model.live="sexo"
+                                                        <input type="radio" id="genero_m" wire:model.live="genero"
                                                             value="M" class="form-radio text-blue-600"
-                                                            name="sexo">
+                                                            name="genero">
                                                         <span class="ml-2 text-gray-700 dark:text-white">Mujer</span>
                                                     </label>
                                                 </div>
-                                                @error('sexo')
+                                                @error('genero')
                                                     <div class="text-red-500">{{ $message }}</div>
                                                 @enderror
                                             </div>

@@ -23,7 +23,7 @@ class EditarEstudiante extends Component
     public $apellido_materno;
     public $fecha_nacimiento;
     public $edad;
-    public $sexo;
+    public $genero;
     public $level_id;
     public $generation_id;
     public $grade_id;
@@ -61,8 +61,8 @@ class EditarEstudiante extends Component
         'fecha_nacimiento.date' => 'El campo fecha de nacimiento debe ser una fecha',
         'edad.required' => 'El campo edad es requerido',
         'edad.integer' => 'El campo edad debe ser un número entero',
-        'sexo.required' => 'El campo sexo es requerido',
-        'sexo.in' => 'El campo sexo debe ser H o M',
+        'genero.required' => 'El campo genero es requerido',
+        'genero.in' => 'El campo genero debe ser H o M',
         'level_id.required' => 'El campo nivel es requerido',
         'level_id.exists' => 'El nivel seleccionado no existe',
         'generation_id.required' => 'El campo generación es requerido',
@@ -86,7 +86,7 @@ class EditarEstudiante extends Component
         'apellido_materno' => 'required|string',
         'fecha_nacimiento' => 'required|date',
         'edad' => 'required|integer',
-        'sexo' => 'required|in:H,M',
+        'genero' => 'required|in:H,M',
         'level_id' => 'required|exists:levels,id',
         'generation_id' => 'required|exists:generations,id',
         'grade_id' => 'required|exists:grades,id',
@@ -105,7 +105,7 @@ class EditarEstudiante extends Component
         $this->apellido_materno = $student->apellido_materno;
         $this->fecha_nacimiento = $student->fecha_nacimiento;
         $this->edad = $student->edad;
-        $this->sexo = $student->sexo;
+        $this->genero = $student->genero;
         $this->level_id = $student->level_id;
         $this->generation_id = $student->generation_id;
         $this->grade_id = $student->grade_id;
@@ -194,7 +194,7 @@ class EditarEstudiante extends Component
             'apellido_materno' => 'required|string',
             'fecha_nacimiento' => 'required|date',
             'edad' => 'required|integer',
-            'sexo' => 'required|in:H,M',
+            'genero' => 'required|in:H,M',
             'level_id' => 'required|exists:levels,id',
             'generation_id' => 'required|exists:generations,id',
             'grade_id' => 'required|exists:grades,id',
@@ -215,8 +215,8 @@ class EditarEstudiante extends Component
             'fecha_nacimiento.date' => 'El campo fecha de nacimiento debe ser una fecha',
             'edad.required' => 'El campo edad es requerido',
             'edad.integer' => 'El campo edad debe ser un número entero',
-            'sexo.required' => 'El campo sexo es requerido',
-            'sexo.in' => 'El campo sexo debe ser H o M',
+            'genero.required' => 'El campo genero es requerido',
+            'genero.in' => 'El campo genero debe ser H o M',
             'level_id.required' => 'El campo nivel es requerido',
             'level_id.exists' => 'El nivel seleccionado no existe',
             'generation_id.required' => 'El campo generación es requerido',
@@ -251,7 +251,7 @@ class EditarEstudiante extends Component
         $student->apellido_materno = trim($this->apellido_materno);
         $student->fecha_nacimiento = $this->fecha_nacimiento;
         $student->edad = $this->edad;
-        $student->sexo = $this->sexo;
+        $student->genero = $this->genero;
         $student->level_id = $this->level_id;
         $student->generation_id = $this->generation_id;
         $student->grade_id = $this->grade_id;

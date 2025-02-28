@@ -107,7 +107,7 @@ class StudentTable extends DataTableComponent
             ->sortable(),
 
 
-            Column::make("Sexo", "sexo")
+            Column::make("Género", "genero")
                 ->searchable()
                 ->sortable(),
 

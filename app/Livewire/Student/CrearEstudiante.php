@@ -21,7 +21,7 @@ class CrearEstudiante extends Component
     public $apellido_materno;
     public $fecha_nacimiento;
     public $edad;
-    public $sexo;
+    public $genero;
     public $level_id;
     public $generation_id;
     public $grade_id;
@@ -50,7 +50,7 @@ class CrearEstudiante extends Component
         'apellido_materno' => 'required|string',
         'fecha_nacimiento' => 'required|date',
         'edad' => 'required|integer',
-        'sexo' => 'required|in:H,M',
+        'genero' => 'required|in:H,M',
         'level_id' => 'required|exists:levels,id',
         'generation_id' => 'required|exists:generations,id',
         'grade_id' => 'required|exists:grades,id',
@@ -73,8 +73,8 @@ class CrearEstudiante extends Component
         'fecha_nacimiento.date' => 'El campo fecha de nacimiento debe ser una fecha',
         'edad.required' => 'El campo edad es requerido',
         'edad.integer' => 'El campo edad debe ser un número entero',
-        'sexo.required' => 'El campo sexo es requerido',
-        'sexo.in' => 'El campo sexo debe ser H o M',
+        'genero.required' => 'El campo genero es requerido',
+        'genero.in' => 'El campo genero debe ser H o M',
         'level_id.required' => 'El campo nivel es requerido',
         'level_id.exists' => 'El nivel seleccionado no existe',
         'generation_id.required' => 'El campo generación es requerido',
@@ -167,7 +167,7 @@ class CrearEstudiante extends Component
             'apellido_materno' => $this->apellido_materno,
             'fecha_nacimiento' => $this->fecha_nacimiento,
             'edad' => $this->edad,
-            'sexo' => $this->sexo,
+            'genero' => $this->genero,
             'level_id' => $this->level_id,
             'generation_id' => $this->generation_id,
             'grade_id' => $this->grade_id,
@@ -189,7 +189,7 @@ class CrearEstudiante extends Component
             'apellido_materno',
             'fecha_nacimiento',
             'edad',
-            'sexo',
+            'genero',
             'level_id',
             'generation_id',
             'grade_id',

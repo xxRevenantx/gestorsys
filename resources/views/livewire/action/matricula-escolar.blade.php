@@ -1,7 +1,7 @@
-<div>
-    <div class="w-fullmx-auto px-4 sm:px-6">
+<div class="rounded-lg shadow-lg px-4 py-4">
+    <div class="w-full mx-auto px-4 sm:px-6 ">
 
-            <div class="md:grid md:grid-cols-3 gap-5">
+            <div class="md:grid md:grid-cols-4 gap-5">
                 <div class="mb-5">
                     <label class="block mb-1 text-sm text-gray-700 uppercase font-bold">Nivel</label>
                     <x-input class="bg-gray-200 w-full" disabled  value="{{$level_nombre}}" />
@@ -24,6 +24,14 @@
                         @foreach ($grupos as $grupo)
                             <option value="{{$grupo->id}}">{{$grupo->grupo}}°</option>
                         @endforeach
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <label class="block mb-1 text-sm text-gray-700 uppercase font-bold">Género</label>
+                    <select wire:model.live="genero"  class="block w-full mt-1 bg-gray-200 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="">--Selecciona el Género--</option>
+                        <option value="H">Hombre</option>
+                        <option value="M">Mujer</option>
                     </select>
                 </div>
             </div>
@@ -75,50 +83,20 @@
 
 
         <table class="w-full text-left table-auto min-w-max">
+
+
+
           <thead class="bg-slate-100 text-slate-800">
             <tr>
-              <th class="p-4 border-b border-slate-300 bg-slate-50">
-                <p class="block text-sm font-normal leading-none text-slate-500">
-                  #
-                </p>
-              </th>
-              <th class="p-4 border-b border-slate-300 bg-slate-50">
-                <p class="block text-sm font-normal leading-none text-slate-500">
-                  CURP
-                </p>
-              </th>
-              <th class="p-4 border-b border-slate-300 bg-slate-50">
-                <p class="block text-sm font-normal leading-none text-slate-500">
-                  Nombre completo
-                </p>
-              </th>
-              <th class="p-4 border-b border-slate-300 bg-slate-50">
-                <p class="block text-sm font-normal leading-none text-slate-500">
-                 Nivel
-                </p>
-              </th>
-              <th class="p-4 border-b border-slate-300 bg-slate-50">
-                <p class="block text-sm font-normal leading-none text-slate-500">
-                 Grado
-                </p>
-              </th>
-              <th class="p-4 border-b border-slate-300 bg-slate-50">
-                <p class="block text-sm font-normal leading-none text-slate-500">
-                 Grupo
-                </p>
-              </th>
-              <th class="p-4 border-b border-slate-300 bg-slate-50">
-                <p class="block text-sm font-normal leading-none text-slate-500">
-                 Fecha de Nacimiento
-                </p>
-              </th>
-              <th class="p-4 border-b border-slate-300 bg-slate-50">
-                <p class="block text-sm font-normal leading-none text-slate-500">
-                 Edad
-                </p>
-              </th>
-
-
+                @foreach ($headers as $header)
+                <th class="p-4 border
+                -b border-slate-300 bg-slate-50">
+                    <p class="block text
+                    -sm font-normal leading-none text-slate-500">
+                        {{ $header }}
+                    </p>
+                </th>
+                @endforeach
 
             </tr>
           </thead>
@@ -165,6 +143,12 @@
                     <p class="block text
                     -sm text-slate-800">
                         {{ $alumno->group->grupo }}
+                    </p>
+                </td>
+                <td class="p-4 border-b border-slate-200">
+                    <p class="block text
+                    -sm text-slate-800">
+                        {{ $alumno->genero }}
                     </p>
                 </td>
                 <td class="p-4 border-b border-slate-200">

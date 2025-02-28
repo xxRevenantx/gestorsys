@@ -32,7 +32,7 @@ class MostrarNivelController extends Controller
         $nivel = Level::where('slug', $level_slug)->firstOrFail();
         $action = Action::where('slug', $action_slug)->firstOrFail();
 
-        $acciones = Action::all();
+        $acciones = Action::orderBy('sort', "asc")->get();
 
         $level_id = $nivel->id; // OBTENER EL ID DEL NIVEL
 

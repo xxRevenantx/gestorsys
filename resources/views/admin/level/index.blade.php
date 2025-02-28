@@ -46,7 +46,7 @@
     <ul class="py-4 mt-2 text-gray-700 flex items-center justify-around">
         <li class="flex flex-col items-center justify-around">
             MUJERES
-            <div>{{ $nivel->students->where('sexo', 'M')->count() }}</div>
+            <div>{{ $nivel->students->where('genero', 'M')->count() }}</div>
         </li>
         <li class="flex flex-col items-center justify-between">
             TOTAL
@@ -54,7 +54,7 @@
         </li>
         <li class="flex flex-col items-center justify-around">
             HOMBRES
-            <div>{{ $nivel->students->where('sexo', 'H')->count() }}</div>
+            <div>{{ $nivel->students->where('genero', 'H')->count() }}</div>
         </li>
     </ul>
     <div class="p-4 border-t mx-8 mt-2">

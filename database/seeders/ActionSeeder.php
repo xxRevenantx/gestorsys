@@ -18,13 +18,18 @@ class ActionSeeder extends Seeder
                     'slug' => 'matricula-escolar'
                 ],
                 [
-                    'accion' => 'Pago de Colegiaturas',
-                    'slug' => 'pago-de-colegiaturas'
+                    'accion' => 'Datos del alumno',
+                    'slug' => 'datos-del-alumno'
                 ],
                 [
                     'accion' => 'Pago de inscripción',
                     'slug' => 'pago-de-inscripcion'
                 ],
+                [
+                    'accion' => 'Pago de Colegiaturas',
+                    'slug' => 'pago-de-colegiaturas'
+                ],
+
                 [
                     'accion' => 'Materias',
                     'slug' => 'materias'
@@ -40,7 +45,8 @@ class ActionSeeder extends Seeder
                 [
                     'accion' => 'Documentos',
                     'slug' => 'documentos'
-                ]
+                ],
+
             ];
 
         foreach ($acciones as $accion) {
