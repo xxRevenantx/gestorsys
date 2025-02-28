@@ -126,16 +126,17 @@ class CrearEstudiante extends Component
 
         }
 
-        if ($propertyName == 'group_id') {
-            $this->grupos = Grade::where('gr', $this->generation_id)
-                    ->get();
-        }
-        if ($propertyName == 'grade_id') {
-            $this->group_id = Grade::find($this->grade_id)->group->id; // Obtenemos el grupo del grado seleccionado para mostrarlo en la vista
-            $this->grupo_name = Grade::find($this->grade_id)->group->grupo; // Obtenemos el grupo del grado seleccionado para mostrarlo en la vista
 
-            $this->grado_nombre = Grade::find($this->grade_id)->grado_numero.'° grado' ;
+        if ($propertyName == 'grade_id') {
+            $this->grupos = Grade::find($this->grade_id)->groups; // RELACION INVERSA CON GRUPOS
+
+            $this->grado_nombre = Grade::find($this->grade_id)->grado.'° grado' ;
         }
+
+        if ($propertyName == 'group_id') {
+            $this->grupo_name = Group::find($this->group_id)->grupo;
+        }
+
 
         if($propertyName == 'tutor_id'){
             $tutor = Tutor::find($this->tutor_id);

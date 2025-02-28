@@ -4,6 +4,7 @@ namespace App\Livewire\Student;
 
 use App\Models\Generation;
 use App\Models\Grade;
+use App\Models\Group;
 use App\Models\Level;
 use App\Models\Student;
 use App\Models\Tutor;
@@ -34,6 +35,7 @@ class EditarEstudiante extends Component
 
     public $generaciones = [];
     public $grados = [];
+    public $grupos = [];
     public $grupo_name;
 
     // NOMBRES
@@ -112,13 +114,16 @@ class EditarEstudiante extends Component
         $this->status = $student->status;
         $this->imagen = $student->imagen;
 
+
         $this->generaciones = \App\Models\Generation::where('level_id', $this->level_id)->orderBy('sort', 'ASC')->get();
-        $this->grados = \App\Models\Grade::where('level_id', $this->level_id)->orderBy('sort', 'ASC')->get();
+        $this->grados = \App\Models\Grade::where('generation_id', $this->generation_id)->orderBy('sort', 'ASC')->get();
+
+        $this->grupos = Grade::find($this->grade_id)->groups;
 
         $this->grupo_name = \App\Models\Group::find($this->group_id)->grupo;
         $this->nivel_nombre = \App\Models\Level::find($this->level_id)->level;
         $this->generacion_nombre = \App\Models\Generation::find($this->generation_id)->anio_inicio . ' - ' . \App\Models\Generation::find($this->generation_id)->anio_termino;
-        $this->grado_nombre = \App\Models\Grade::find($this->grade_id)->grado_numero.'° grado' ;
+        $this->grado_nombre = \App\Models\Grade::find($this->grade_id)->grado.'° grado' ;
         $this->tutor_nombre = \App\Models\Tutor::find($this->tutor_id)->nombre . ' ' . \App\Models\Tutor::find($this->tutor_id)->apellido_paterno . ' ' . \App\Models\Tutor::find($this->tutor_id)->apellido_materno;
         $this->tutor_estudiantes = \App\Models\Student::where('tutor_id', $this->tutor_id)->count();
     }
@@ -146,6 +151,7 @@ class EditarEstudiante extends Component
 
         if ($propertyName == 'generation_id') {
             $this->grade_id = "";
+            $this->group_id = "";
             $this->grado_nombre = "";
             $this->grados = Grade::where('generation_id', $this->generation_id)
                     ->get();
@@ -156,10 +162,15 @@ class EditarEstudiante extends Component
         }
 
         if ($propertyName == 'grade_id') {
-            $this->group_id = Grade::find($this->grade_id)->group->id; // Obtenemos el grupo del grado seleccionado para mostrarlo en la vista
-            $this->grupo_name = Grade::find($this->grade_id)->group->grupo; // Obtenemos el grupo del grado seleccionado para mostrarlo en la vista
+            $this->group_id = "";
+            $this->grupos = Grade::find($this->grade_id)->groups; // RELACION INVERSA CON GRUPOS
 
-            $this->grado_nombre = Grade::find($this->grade_id)->grado_numero.'° grado' ;
+            $this->grado_nombre = Grade::find($this->grade_id)->grado.'° grado';
+
+        }
+
+        if ($propertyName == 'group_id') {
+            $this->grupo_name = Group::find($this->group_id)->grupo;
         }
 
         if($propertyName == 'tutor_id'){
@@ -263,6 +274,7 @@ class EditarEstudiante extends Component
     {
         $tutores = \App\Models\Tutor::orderBy('sort', 'DESC')->get();
         $niveles = \App\Models\Level::orderBy('sort', 'ASC')->get();
+
 
 
         return view('livewire.student.editar-estudiante' , compact('tutores', 'niveles'));

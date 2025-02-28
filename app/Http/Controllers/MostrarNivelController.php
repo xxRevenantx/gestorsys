@@ -25,6 +25,7 @@ class MostrarNivelController extends Controller
     //     return view('admin.level.action', compact('nivel', 'acciones'));
     // }
 
+
     public function action($level_slug, $action_slug){
 
 
@@ -35,7 +36,7 @@ class MostrarNivelController extends Controller
 
         $level_id = $nivel->id; // OBTENER EL ID DEL NIVEL
 
-        return view('admin.level.action', compact('nivel', 'action', 'acciones', 'level_id'));
+        return view('admin.level.action', compact('nivel',  'action', 'acciones', 'level_id'));
     }
 
 }

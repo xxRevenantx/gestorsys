@@ -58,7 +58,7 @@
     </div>
 
         @if($action->slug == 'matricula-escolar')
-             <livewire:action.matricula-escolar :level_id="$level_id" />
+             <livewire:action.matricula-escolar :level_id="$level_id"/>
         @else
             {{$action->slug}}
         @endif
