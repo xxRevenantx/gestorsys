@@ -21,6 +21,11 @@ class MatriculaEscolar extends Component
 
     public $contarAlumnos = 0;
 
+
+    public function placeholder(){
+        return view('placeholder');
+    }
+
     public function updated($propertyName)
     {
         if ($propertyName == 'grade_id') {
