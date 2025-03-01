@@ -60,7 +60,7 @@
         @if($action->slug == 'matricula-escolar')
              <livewire:action.matricula-escolar :level_id="$level_id" lazy />
         @elseif ($action->slug == 'datos-del-alumno')
-            <livewire:action.datos-alumno  lazy />
+            <livewire:action.datos-alumno :level_id="$level_id" lazy />
         @else
             {{$action->slug}}
         @endif

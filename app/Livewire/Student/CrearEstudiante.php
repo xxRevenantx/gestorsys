@@ -44,7 +44,7 @@ class CrearEstudiante extends Component
 
 
     protected $rules = [
-        'CURP' => 'required|unique:students,CURP',
+        'CURP' => 'required|unique:students,CURP|min:18|max:18',
         'nombre' => 'required|string',
         'apellido_paterno' => 'required|string',
         'apellido_materno' => 'required|string',
@@ -63,6 +63,8 @@ class CrearEstudiante extends Component
     protected $messages = [
         'CURP.required' => 'El campo CURP es requerido',
         'CURP.unique' => 'El CURP ya existe',
+        'CURP.min' => 'El CURP debe tener 18 caracteres',
+        'CURP.max' => 'El CURP debe tener 18 caracteres',
         'nombre.required' => 'El campo nombre es requerido',
         'nombre.string' => 'El campo nombre debe ser una cadena de texto',
         'apellido_paterno.required' => 'El campo apellido paterno es requerido',

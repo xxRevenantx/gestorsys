@@ -1,4 +1,12 @@
 <div class="rounded-lg shadow-lg px-4 py-4">
+
+    {{-- <div  class="relative items-center block max-w-sm p-6 bg-white border border-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-800 dark:hover:bg-gray-700">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white opacity-20">Noteworthy technology acquisitions 2021</h5>
+        <p class="font-normal text-gray-700 dark:text-gray-400 opacity-20">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+
+    </div> --}}
+
+
     <div class="w-full mx-auto px-4 sm:px-6 ">
 
             <div class="md:grid md:grid-cols-4 gap-5">
@@ -37,17 +45,26 @@
             </div>
 
             <div class="mb-5">
-                <label
-                    class="block mb-1 text-sm text-gray-700 uppercase font-bold "
-                    for="termino">Término de Búsqueda
-                </label>
-                <input
-                    wire:model.live="termino"
-                    id="termino"
-                    type="text"
-                    placeholder="Buscar por Nombre, CURP o Matrícula"
-                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full"
-                />
+
+                        <label
+                            class="block mb-1 text-sm text-gray-700 uppercase font-bold "
+                            for="termino">Término de Búsqueda
+                        </label>
+
+                        <div class="flex justify-between items-center">
+                            <input
+                            wire:model.live="termino"
+                            id="termino"
+                            type="text"
+                            placeholder="Buscar por Nombre, CURP o Matrícula"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full"
+                        />
+
+
+                </div>
+
+
+
             </div>
 
 
@@ -61,7 +78,8 @@
             <h3 class="text-lg font-semibold text-slate-800">Listado de Alumnos</h3>
 
             <h3 class="text-lg font-semibold text-slate-800">
-               Total:  {{ $contarAlumnos }} {{ $contarAlumnos == 1 ? 'Alumno' : 'Alumnos' }}
+               Total:  {{ $totalAlumnos }} {{ $totalAlumnos == 1 ? 'Alumno' : 'Alumnos' }} |
+                <span class="text-indigo-700"> Alumnos filtrados: {{ $contarAlumnos }} {{ $contarAlumnos == 1 ? 'Alumno' : 'Alumnos' }}</span>
             </h3>
 
 
@@ -75,17 +93,10 @@
 
 
         <!-- LOADER  -->
-        <div v wire:loading class="h-screen fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-50">
-            <div class="flex justify-center items-center h-full">
-            <svg class="h-60 w-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="#4338CA" stroke="#4338CA" stroke-width="2" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
-            </div>
-            </div>
+        @include('admin.partials.loader')
 
 
         <table class="w-full text-left table-auto min-w-max">
-
-
-
           <thead class="bg-slate-100 text-slate-800">
             <tr>
                 @foreach ($headers as $header)
