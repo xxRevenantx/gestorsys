@@ -1,5 +1,5 @@
 ##NOTAS
-<p>Agregar matrícula del estudiante</p>
+
 <p>Agregar los campos faltantes a mostrar estudiante</p>
 
 

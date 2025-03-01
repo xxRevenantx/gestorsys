@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('CURP', 18)->unique();
+            $table->string('matricula', 13)->unique();
             $table->string('nombre');
             $table->string('apellido_paterno');
             $table->string('apellido_materno');
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->enum('genero', ['H', 'M']);
             $table->string('imagen')->nullable();
             $table->boolean('status');
+            $table->enum('turno', ["Matutino", "Vespertino"]);
             $table->unsignedBigInteger('level_id');
             $table->unsignedBigInteger('grade_id');
             $table->unsignedBigInteger('group_id');

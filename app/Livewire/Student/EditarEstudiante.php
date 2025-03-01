@@ -10,6 +10,8 @@ use App\Models\Student;
 use App\Models\Tutor;
 use Livewire\Component;
 
+use Illuminate\Support\Str;
+
 class EditarEstudiante extends Component
 {
 
@@ -17,6 +19,7 @@ class EditarEstudiante extends Component
 
     public $student;
     public $student_id;
+    public $matricula;
     public $CURP;
     public $nombre;
     public $apellido_paterno;
@@ -30,6 +33,7 @@ class EditarEstudiante extends Component
     public $group_id;
     public $tutor_id;
     public $status;
+    public $turno;
     public $imagen;
     public $imagen_nueva;
 
@@ -99,17 +103,19 @@ class EditarEstudiante extends Component
     public function mount($student){
         $this->student_id = $student->id;
         $this->student = $student;
+        $this->matricula = $student->matricula;
         $this->CURP = $student->CURP;
         $this->nombre = $student->nombre;
         $this->apellido_paterno = $student->apellido_paterno;
         $this->apellido_materno = $student->apellido_materno;
-        $this->fecha_nacimiento = $student->fecha_nacimiento;
+        $this->fecha_nacimiento = \Carbon\Carbon::parse($student->fecha_nacimiento)->format('Y-m-d');
         $this->edad = $student->edad;
         $this->genero = $student->genero;
         $this->level_id = $student->level_id;
         $this->generation_id = $student->generation_id;
         $this->grade_id = $student->grade_id;
         $this->group_id = $student->group_id;
+        $this->turno = $student->turno;
         $this->tutor_id = $student->tutor_id;
         $this->status = $student->status;
         $this->imagen = $student->imagen;
@@ -128,67 +134,94 @@ class EditarEstudiante extends Component
         $this->tutor_estudiantes = \App\Models\Student::where('tutor_id', $this->tutor_id)->count();
     }
 
+
+    public function generarMatricula($curp)
+    {
+        if (strlen($curp) >= 10) {
+            $base = substr($curp, 0, 10);
+            if (empty($this->matricula) || strlen($this->matricula) < 13) {
+                $randomStr = Str::upper(Str::random(3)); // 3 caracteres aleatorios (letras y números)
+                $this->matricula = $base . $randomStr;
+            } else {
+                $randomStr = substr($this->matricula, 10, 3);
+                $this->matricula = $base . $randomStr;
+            }
+        } else {
+            $this->matricula = "NO VÁLIDO";
+        }
+    }
+
     public function updated($propertyName)
     {
+        // Si el campo está vacío, no intentar validar
+        if (empty($this->$propertyName)) {
+            if ($propertyName === 'CURP') {
+                $this->matricula = ''; // Limpiar matrícula si el CURP está vacío
+            }
+            return;
+        }
+
+        // Validar solo si el campo tiene valor
         $this->validateOnly($propertyName);
 
-        if($propertyName == 'fecha_nacimiento'){
-            $this->edad = \Carbon\Carbon::parse($this->fecha_nacimiento)->age;
+        // Generar matrícula automáticamente si CURP tiene al menos 10 caracteres
+        if ($propertyName === 'CURP' && strlen($this->CURP) >= 10) {
+            $this->generarMatricula($this->CURP);
         }
 
 
+        // CUANDO CAMBIE LA FECHA DE NACIMIENTO
+        if ($propertyName == 'fecha_nacimiento') {
+            $this->edad = \Carbon\Carbon::parse($this->fecha_nacimiento)->age;
+        }
 
         if ($propertyName == 'level_id') {
-                    $this->generation_id = null; // Reset generation_id
-                    $this->generacion_nombre = null; // Reset generacion_nombre
-                    $this->generaciones = Generation::where('level_id', $this->level_id)
-                            ->where('status', 1)
-                            ->get();
+            $this->generation_id = null; // Reset generation_id
+            $this->generacion_nombre = null; // Reset generacion_nombre
+            $this->generaciones = Generation::where('level_id', $this->level_id)
+                ->where('status', 1)
+                ->get();
 
             $this->nivel_nombre = Level::find($this->level_id)->level;
-
-            }
+        }
 
         if ($propertyName == 'generation_id') {
             $this->grade_id = "";
             $this->group_id = "";
             $this->grado_nombre = "";
             $this->grados = Grade::where('generation_id', $this->generation_id)
-                    ->get();
+                ->get();
 
             $generation = Generation::find($this->generation_id);
             $this->generacion_nombre = $generation->anio_inicio . ' - ' . $generation->anio_termino;
-
         }
 
         if ($propertyName == 'grade_id') {
             $this->group_id = "";
             $this->grupos = Grade::find($this->grade_id)->groups; // RELACION INVERSA CON GRUPOS
 
-            $this->grado_nombre = Grade::find($this->grade_id)->grado.'° grado';
-
+            $this->grado_nombre = Grade::find($this->grade_id)->grado . '° grado';
         }
 
         if ($propertyName == 'group_id') {
             $this->grupo_name = Group::find($this->group_id)->grupo;
         }
 
-        if($propertyName == 'tutor_id'){
+        if ($propertyName == 'tutor_id') {
             $tutor = Tutor::find($this->tutor_id);
-            $this->tutor_nombre = $tutor->nombre.' '.$tutor->apellido_paterno.' '.$tutor->apellido_materno;
+            $this->tutor_nombre = $tutor->nombre . ' ' . $tutor->apellido_paterno . ' ' . $tutor->apellido_materno;
 
             $this->tutor_estudiantes = ' (Estudiantes: ' . $tutor->students()->count() . ')';
         }
-
-
-
-
     }
+
+
 
     public function actualizarEstudiante(){
 
         $datos = $this->validate([
-            'CURP' => 'required|unique:students,CURP,'.$this->student_id,
+            'matricula' => 'required|min:13|max:13|unique:students,matricula,'.$this->student_id,
+            'CURP' => 'required|min:18|max:18|unique:students,CURP,'.$this->student_id,
             'nombre' => 'required|string',
             'apellido_paterno' => 'required|string',
             'apellido_materno' => 'required|string',
@@ -203,7 +236,13 @@ class EditarEstudiante extends Component
             'status' => 'required|in:0,1',
             'imagen_nueva' => 'image|nullable|max:2048|mimes:jpeg,jpg,png',
         ],[
+            'matricula.required' => 'El campo matrícula es requerido',
+            'matricula.min' => 'La matrícula debe tener 13 caracteres',
+            'matricula.max' => 'La matrícula debe tener 13 caracteres',
+            'matricula.unique' => 'La matrícula ya existe',
             'CURP.required' => 'El campo CURP es requerido',
+            'CURP.min' => 'El CURP debe tener 18 caracteres',
+            'CURP.max' => 'El CURP debe tener 18 caracteres',
             'CURP.unique' => 'El CURP ya existe',
             'nombre.required' => 'El campo nombre es requerido',
             'nombre.string' => 'El campo nombre debe ser una cadena de texto',
@@ -245,6 +284,7 @@ class EditarEstudiante extends Component
 
 
         $student = Student::find($this->student_id);
+        $student->matricula = strtoupper(trim($this->matricula));
         $student->CURP =  strtoupper(trim($this->CURP));
         $student->nombre = trim($this->nombre);
         $student->apellido_paterno = trim($this->apellido_paterno);
@@ -258,6 +298,7 @@ class EditarEstudiante extends Component
         $student->group_id = $this->group_id;
         $student->tutor_id = $this->tutor_id;
         $student->status = $this->status;
+        $student->turno = $this->turno;
         $student->imagen = $datos['imagen'] ?? $student->imagen;
 
         $student->save();

@@ -15,6 +15,7 @@ class Student extends Model
 
     protected $fillable = [
         'CURP',
+        'matricula',
         'nombre',
         'apellido_paterno',
         'apellido_materno',
@@ -31,6 +32,7 @@ class Student extends Model
         'fecha_nacimiento',
         'sexo',
         'status',
+        'turno',
         'level_id',
         'grade_id',
         'group_id',

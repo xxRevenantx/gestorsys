@@ -9,6 +9,8 @@ use App\Models\Level;
 use App\Models\Student;
 use App\Models\Tutor;
 use Livewire\Component;
+use Illuminate\Support\Str;
+
 
 class CrearEstudiante extends Component
 {
@@ -16,6 +18,7 @@ class CrearEstudiante extends Component
     use \Livewire\WithFileUploads;
 
     public $CURP;
+    public $matricula;
     public $nombre;
     public $apellido_paterno;
     public $apellido_materno;
@@ -28,6 +31,7 @@ class CrearEstudiante extends Component
     public $group_id;
     public $tutor_id;
     public $status;
+    public $turno;
     public $imagen;
 
     public $generaciones = [];
@@ -45,6 +49,7 @@ class CrearEstudiante extends Component
 
     protected $rules = [
         'CURP' => 'required|unique:students,CURP|min:18|max:18',
+        'matricula' => 'required|unique:students,matricula|min:13|max:13',
         'nombre' => 'required|string',
         'apellido_paterno' => 'required|string',
         'apellido_materno' => 'required|string',
@@ -57,6 +62,7 @@ class CrearEstudiante extends Component
         'group_id' => 'required|exists:groups,id',
         'tutor_id' => 'required|exists:tutors,id',
         'status' => 'required|in:0,1',
+        'turno' => 'required|in:Matutino,Vespertino',
         'imagen' => 'image|nullable|max:2048|mimes:jpeg,jpg,png',
     ];
 
@@ -65,6 +71,10 @@ class CrearEstudiante extends Component
         'CURP.unique' => 'El CURP ya existe',
         'CURP.min' => 'El CURP debe tener 18 caracteres',
         'CURP.max' => 'El CURP debe tener 18 caracteres',
+        'matricula.required' => 'El campo matricula es requerido',
+        'matricula.unique' => 'La matricula ya existe',
+        'matricula.min' => 'La matricula debe tener 13 caracteres',
+        'matricula.max' => 'La matricula debe tener 13 caracteres',
         'nombre.required' => 'El campo nombre es requerido',
         'nombre.string' => 'El campo nombre debe ser una cadena de texto',
         'apellido_paterno.required' => 'El campo apellido paterno es requerido',
@@ -89,6 +99,8 @@ class CrearEstudiante extends Component
         'tutor_id.required' => 'El campo tutor es requerido',
         'status.required' => 'El campo status es requerido',
         'status.in' => 'El campo status no es válido',
+        'turno.required' => 'El campo turno es requerido',
+        'turno.in' => 'El campo turno no es válido',
         'imagen.image' => 'El archivo debe ser una imagen',
         'imagen.max' => 'El archivo no debe pesar más de 2MB',
         'imagen.mimes' => 'El archivo debe ser formato jpeg, jpg o png',
@@ -96,15 +108,40 @@ class CrearEstudiante extends Component
 
     ];
 
+    public function generarMatricula($curp)
+    {
+        if (strlen($curp) >= 10) {
+            $base = substr($curp, 0, 10);
+            $randomStr = Str::upper(Str::random(3)); // 3 caracteres aleatorios (letras y números)
+            $this->matricula = $base . $randomStr;
+        } else {
+            $this->matricula = "NO VÁLIDO";
+        }
+    }
+
+
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName);
+        // Si el campo está vacío, no intentar validar
+    if (empty($this->$propertyName)) {
+        if ($propertyName === 'CURP') {
+            $this->matricula = ''; // Limpiar matrícula si el CURP está vacío
+        }
+        return;
+    }
+
+    // Validar solo si el campo tiene valor
+    $this->validateOnly($propertyName);
+
+    // Generar matrícula automáticamente si CURP tiene al menos 10 caracteres
+    if ($propertyName === 'CURP' && strlen($this->CURP) >= 10) {
+        $this->generarMatricula($this->CURP);
+
+    }
 
         if($propertyName == 'fecha_nacimiento'){
             $this->edad = \Carbon\Carbon::parse($this->fecha_nacimiento)->age;
         }
-
-
 
         if ($propertyName == 'level_id') {
                     $this->generation_id = null; // Reset generation_id
@@ -163,10 +200,11 @@ class CrearEstudiante extends Component
         }
 
         Student::create([
-            'CURP' => $this->CURP,
-            'nombre' => $this->nombre,
-            'apellido_paterno' => $this->apellido_paterno,
-            'apellido_materno' => $this->apellido_materno,
+            'matricula' => trim($this->matricula),
+            'CURP' => trim($this->CURP),
+            'nombre' => trim($this->nombre),
+            'apellido_paterno' => trim($this->apellido_paterno),
+            'apellido_materno' => trim($this->apellido_materno),
             'fecha_nacimiento' => $this->fecha_nacimiento,
             'edad' => $this->edad,
             'genero' => $this->genero,
@@ -176,6 +214,7 @@ class CrearEstudiante extends Component
             'group_id' => $this->group_id,
             'tutor_id' => $this->tutor_id,
             'status' => $this->status,
+            'turno' => $this->turno,
             'imagen' => $datos["imagen"],
         ]);
 
@@ -185,6 +224,7 @@ class CrearEstudiante extends Component
         $this->dispatch('resetImagePreview');
 
         $this->reset([
+            'matricula',
             'CURP',
             'nombre',
             'apellido_paterno',
@@ -198,6 +238,7 @@ class CrearEstudiante extends Component
             'group_id',
             'tutor_id',
             'status',
+            'turno',
             'imagen',
 
             'nivel_nombre',

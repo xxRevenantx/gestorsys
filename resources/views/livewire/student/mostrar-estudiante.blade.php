@@ -29,7 +29,7 @@
 
                 <div class="p-4 flex flex-row items-center">
 
-                    <p class="font-bold"><i class="fas fa-user"></i> Estudiante {{ $student->nombre}} {{$student->apellido_paterno}} {{$student->apellido_materno}}  </p>
+                    <p class="font-bold"><i class="fas fa-user"></i> Estudiante {{ $student->nombre}} {{$student->apellido_paterno}} {{$student->apellido_materno}} | {{$student->CURP}} | {{$student->matricula}} </p>
 
 
                 </div>
