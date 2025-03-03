@@ -15,10 +15,11 @@
         </div>
     @endif
 
-    @include('admin.partials.loader')
 
 
     <div class="flow-root">
+
+
         <!-- component -->
         <style>
             :root {
@@ -44,7 +45,7 @@
 
                 <div class="p-4 flex flex-row items-center">
 
-                    <p class="font-bold"><i class="fas fa-user"></i> Modificar estudiante | {{ $student->apellido_paterno}} {{ $student->apellido_materno }} {{ $student->nombre }} | {{ $student->level->level }} {{ $student->grade->grado }}° "{{ $student->group->grupo }}" | {{  $student->CURP }} </p>
+                    <p class="font-bold"><i class="fas fa-user"></i> Asigna un Nuevo Estudiante</p>
 
 
                 </div>
@@ -54,7 +55,7 @@
             <!-- End of Navbar -->
 
 
-            <form wire:submit.prevent="actualizarEstudiante" enctype="multipart/form-data">
+
             <div class="container mx-auto my-5 p-5">
                 <div class="md:flex no-wrap md:-mx-2 ">
                     <!-- Left Side -->
@@ -64,59 +65,28 @@
                             <div>
                             <div class="image overflow-hidden" >
 
-                                <div>
-                                    <div class="my-2 m-auto flex flex-col items-center">
-                                        <div>
-                                    @if($imagen)
-                                        <img src="{{ asset('storage/students/'.$imagen) }}" alt="Vista previa" style="max-width: 100px;">
-                                    @else
-                                        <img src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png" alt="Vista previa" style="max-width: 100px;">
-                                    @endif
-                                </div>
-
-                                <div class="my-4">
-
-                                        <label for="fileInput" class="btn bg-blue-700 me-2 mb-4 text-white p-3" tabindex="0">
-                                            <span class="d-none d-sm-block my-3">Subir nueva foto</span>
-                                            <i class="bx bx-upload d-block d-sm-none"></i>
-                                            <input type="file" wire:model="imagen_nueva" id="fileInput"
-                                             accept="image/png, image/jpeg" hidden="hidden"></label>
-                                            </div>
-                                    </div>
+                                @if ($imagen)
+                                <img class="h-auto mx-auto"  src="{{ $imagen->temporaryUrl() }}" width="150px">
+                                @else
+                                <img class="h-auto mx-auto" width="150px"
+                                    src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
+                                    alt="">
+                                 @endif
 
 
-                                    <div class="my-5  flex justify-center items-center flex-col">
-                                        @if($imagen_nueva)
-                                            <p class="text-sm">Imagen Nueva:</p>
-                                            <img src="{{ $imagen_nueva->temporaryUrl() }}" alt="Vista previa" style="max-width: 100px;">
-
-
-                                        @endif
-
-                                        <div wire:loading wire:target="imagen_nueva" class="text-sm text-gray-500 italic">
-                                            <div class="p-3" style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100" height="100">
-                                                    <circle fill="none" stroke-opacity="1" stroke="#1E40AF" stroke-width=".5" cx="100" cy="100" r="0">
-                                                        <animate attributeName="r" calcMode="spline" dur="1.4" values="1;80" keyTimes="0;1" keySplines="0 .2 .5 1" repeatCount="indefinite"></animate>
-                                                        <animate attributeName="stroke-width" calcMode="spline" dur="1.4" values="0;25" keyTimes="0;1" keySplines="0 .2 .5 1" repeatCount="indefinite"></animate>
-                                                        <animate attributeName="stroke-opacity" calcMode="spline" dur="1.4" values="1;0" keyTimes="0;1" keySplines="0 .2 .5 1" repeatCount="indefinite"></animate>
-                                                    </circle>
-                                                </svg>
-                                            </div>
-                                        </div>
-
-
-                                        @error('imagen')
-                                        <div class="text-red-500">{{ $message }}</div>
-
-                                        @enderror
-                                    </div>
-
-
-                                </div>
-
+                                {{-- <img wire:model="preview" id="preview" class="h-auto mx-auto" style="width: 150px"
+                                    src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
+                                    alt=""> --}}
                             </div>
 
+
+                            <div class="my-4 m-auto flex justify-center">
+                            <label for="fileInput" class="btn bg-blue-700 me-2 mb-4 text-white p-3" tabindex="0">
+                                <span class="d-none d-sm-block my-3">Subir foto</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file" wire:model="imagen" id="fileInput"
+                                 accept="image/png, image/jpeg" hidden="hidden"></label>
+                                </div>
                             </div>
                             <ul
                                 class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
@@ -159,7 +129,7 @@
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Turno: </span>
-                                    <span class="ml-auto">{{ $turno }}</span>
+                                    <span class="ml-auto">{{ $turno}}</span>
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Generación: </span>
@@ -214,12 +184,13 @@
                     </div>
                     <!-- Right Side -->
                     <div class="w-full md:w-7/12 mx-2 ">
+                      
                         <!-- Profile tab -->
                         <!-- About Section -->
                         <div class="bg-white p-3 shadow-sm rounded-sm">
                             <div class="flex items-center justify-between space-x-2 font-semibold text-gray-900 leading-8 pb-4">
                                <div>
-                                <span class="tracking-wide"> <i class="fas fa-user"></i> EDITAR ESTUDIANTE</span>
+                                <span class="tracking-wide"> <i class="fas fa-user"></i> INSCRIBE UN ESTUDIANTE</span>
                                 </div>
                                 <div>
                                     <a href="{{ route('admin.tutors.index') }}" target="_blank" class="text-white font-bold bg-blue-600 p-2 rounded-lg hover:bg-blue-800">
@@ -229,9 +200,9 @@
 
                             </div>
                             <div class="text-gray-700">
+                                @include('admin.partials.loader')
 
-
-
+                                <form wire:submit.prevent="guardarEstudiante">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                         <div>
 
@@ -239,13 +210,12 @@
                                                 <label for="matricula"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Matrícula</label>
                                                 <input readonly type="text" id="matricula" wire:model.live="matricula"
-                                                    placeholder="Ingrese la matrícula"
-                                                    class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                                    placeholder="Ingrese el matricula"
+                                                    class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                                                 @error('matricula')
                                                     <div class="text-red-500">{{ $message }}</div>
                                                 @enderror
                                             </div>
-
                                             <div class="mb-5">
                                                 <label for="CURP"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CURP</label>
@@ -311,7 +281,7 @@
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Edad</label>
                                                 <input type="number" id="edad" wire:model.live="edad"
                                                     placeholder="Ingrese la edad"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                                    class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                                                 @error('edad')
                                                     <div class="text-red-500">{{ $message }}</div>
                                                 @enderror
@@ -343,23 +313,20 @@
                                         </div>
 
                                         <div>
-
-
-
                                             <div class="mb-5">
                                                 <label for="level_id"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>
-                                                <select id="level_id" wire:model.live="level_id"
-                                                    class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    <option value="">--Seleccione un nivel--</option>
+                                                <select disabled  id="level_id" wire:model.live="level_id"
+                                                    class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                     @foreach ($niveles as $nivel)
-                                                        <option value="{{ $nivel->id }}">{{ $nivel->level }}
-                                                        </option>
+                                                        <option readonly value="{{ $nivel->id }}">{{ $nivel->level }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('level_id')
                                                     <div class="text-red-500">{{ $message }}</div>
                                                 @enderror
+
+                                            
                                             </div>
 
                                             <div class="mb-5">
@@ -377,7 +344,6 @@
                                                 @enderror
                                             </div>
 
-                                            
                                             <div class="mb-5">
                                                 <label for="grade_id"
                                                     class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grado</label>
@@ -386,6 +352,7 @@
                                                     <option value="">--Seleccione un grado--</option>
                                                     @foreach ($grados as $grado)
                                                         <option value="{{ $grado->id }}">
+
                                                             {{ $grado->grado }}°
                                                         </option>
                                                     @endforeach
@@ -396,7 +363,7 @@
                                             </div>
 
 
-                                                    <div class="mb-5">
+                                            <div class="mb-5">
                                                         <label for="group_id"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo</label>
                                                         <select id="group_id" wire:model.live="group_id"
@@ -409,9 +376,10 @@
                                                         @error('group_id')
                                                             <div class="text-red-500">{{ $message }}</div>
                                                         @enderror
-                                                    </div>
-                                                    <div class="mb-5">
+                                            </div>
 
+
+                                            <div class="mb-5">
                                                         <label for="turno"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Turno</label>
                                                         <select id="turno" wire:model.live="turno"
@@ -424,6 +392,10 @@
                                                             <div class="text-red-500">{{ $message }}</div>
                                                         @enderror
                                             </div>
+
+
+
+
 
                                             <div class="mb-5" >
                                                 <label for="tutor_id"
@@ -467,7 +439,7 @@
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
                                 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
                                 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                    Actualizar Estudiante
+                                                    Agregar Estudiante
                                                     <svg wire:loading
                                                         style="width: 30px; height: 40px; margin-left: 5px;"
                                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
@@ -517,7 +489,7 @@
         });
     </script>
 @endpush --}}
-@push('scripts')
+{{-- @push('scripts')
 
 <script>
    document.addEventListener('livewire:initialized', () => {
@@ -553,4 +525,4 @@ Livewire.on('resetImagePreview', () => {
 
 </script>
 
-@endpush
+@endpush --}}

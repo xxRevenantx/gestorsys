@@ -52,7 +52,7 @@ Route::resource('grados', GradeController::class)->names('grades');
 Route::resource('tutores', TutorController::class)->names('tutors');
 
 // RUTAS DEL ESTUDIANTE
-Route::resource('inscripcion-alumnos', StudentController::class)->names('students');
+Route::resource('matricula-general', StudentController::class)->names('students');
 
 
 Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');
@@ -66,3 +66,5 @@ Route::get('/niveles', [MostrarNivelController::class, 'index'])->name('level.in
 Route::get('/niveles/{nivel}', [MostrarNivelController::class, 'nivel'])->name('level.nivel');
 
 Route::get('/niveles/{nivel}/{action}', [MostrarNivelController::class, 'action'])->name('level.action');
+
+

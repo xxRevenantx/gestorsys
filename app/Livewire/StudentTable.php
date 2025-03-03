@@ -23,9 +23,7 @@ class StudentTable extends DataTableComponent
     {
         $this->setPrimaryKey('id')
         ->setFilterLayoutSlideDown()
-        ->setReorderEnabled();
-
-        $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los alumnos seleccionados?');
+        ->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los alumnos seleccionados?');
 
 
         $this->setAdditionalSelects(['students.nombre as nombre', 'students.apellido_paterno as apellido_paterno', 'students.apellido_materno as apellido_materno']);
@@ -56,6 +54,19 @@ class StudentTable extends DataTableComponent
                 ->sortable(),
             Column::make("#", "sort")
                 ->sortable(),
+
+                Column::make('Editar')
+                ->label(
+                    fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
+                        [
+                            'editLink' => route('admin.students.edit', $row),
+                            'viewLink' => route('admin.students.show', $row),
+
+                        ]
+                    )
+                )->html(),
+
+
             ImageColumn::make('Foto', 'imagen')
                 ->location(
                     fn($row) => $row->imagen
@@ -70,20 +81,6 @@ class StudentTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
 
-                Column::make('Nombre', 'nombre')
-                // ->label(
-                //     fn($row, Column $column)  => '<strong>' . $row->nombre . ' ' . $row->apellido_paterno . ' ' . $row->apellido_materno . '</strong>'
-                // )
-                // ->html()
-                ->searchable()
-                ->sortable(),
-                // ->searchable(
-                //     fn(Builder $query, $searchTerm) => $query->where('nombre', 'like', '%' . $searchTerm . '%')
-                //         ->orWhere('apellido_paterno', 'like', '%' . $searchTerm . '%')
-                //         ->orWhere('apellido_materno', 'like', '%' . $searchTerm . '%')
-
-
-                //   ),
             Column::make("Apellido paterno", "apellido_paterno")
                 ->sortable()
                 ->searchable(),
@@ -91,16 +88,10 @@ class StudentTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
 
-
-                Column::make("Status", "status")
-                ->format(function($value) {
-                    return $value == 1 ? '<span class="bg-blue-500 p-1 rounded-lg text-white">Activo</span>' : '<span style="color: red;">Inactivo</span>';
-                })
-                ->html()
+            Column::make('Nombre', 'nombre')
                 ->searchable()
                 ->sortable(),
-
-            Column::make("Edad", "edad")
+                Column::make("Edad", "edad")
                 ->sortable(),
             DateColumn::make('Fecha nacimiento', 'fecha_nacimiento')
             ->searchable()
@@ -139,6 +130,17 @@ class StudentTable extends DataTableComponent
             ->sortable(),
 
 
+                Column::make("Status", "status")
+                ->format(function($value) {
+                    return $value == 1 ? '<span class="bg-blue-500 p-1 rounded-lg text-white">Activo</span>' : '<span style="color: red;">Inactivo</span>';
+                })
+                ->html()
+                ->searchable()
+                ->sortable(),
+
+  
+
+
             LinkColumn::make("Tutor", 'tutor_id')
             ->title(fn($row) => $row->tutor->nombre . ' ' . $row->tutor->apellido_paterno . ' ' . $row->tutor->apellido_materno)
             ->location(fn($row) => route('admin.tutors.show', $row->tutor->id))
@@ -168,16 +170,7 @@ class StudentTable extends DataTableComponent
                 )
                 ->sortable(),
 
-                Column::make('Editar')
-                ->label(
-                    fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
-                        [
-                            'editLink' => route('admin.students.edit', $row),
-                            'viewLink' => route('admin.students.show', $row),
 
-                        ]
-                    )
-                )->html(),
 
 
         ];
@@ -234,18 +227,15 @@ class StudentTable extends DataTableComponent
     }
 
 
-    public function reorder($items): void
-    {
-        foreach ($items as $item) {
-            Student::find($item[$this->getPrimaryKey()])->update(['sort' => (int)$item[$this->getDefaultReorderColumn()]]);
-        }
-    }
-
 
     public function builder(): Builder
 {
     return Student::query()
-    ->orderBy('sort', 'asc');
+    ->orderBy('students.level_id', 'asc')
+    ->orderBy('students.grade_id', 'asc')
+    ->orderBy('students.group_id', 'asc')
+    ->orderBy('students.apellido_paterno', 'asc')
+    ->orderBy('students.apellido_materno', 'asc');
 }
 
 }

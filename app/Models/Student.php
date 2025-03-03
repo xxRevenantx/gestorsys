@@ -30,7 +30,7 @@ class Student extends Model
         'CP',
         'edad',
         'fecha_nacimiento',
-        'sexo',
+        'genero',
         'status',
         'turno',
         'level_id',

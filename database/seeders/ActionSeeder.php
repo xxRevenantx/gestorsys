@@ -18,6 +18,10 @@ class ActionSeeder extends Seeder
                     'slug' => 'matricula-escolar'
                 ],
                 [
+                    'accion' => 'Inscribir alumno',
+                    'slug' => 'inscribir-alumno'
+                ],
+                [
                     'accion' => 'Datos del alumno',
                     'slug' => 'datos-del-alumno'
                 ],

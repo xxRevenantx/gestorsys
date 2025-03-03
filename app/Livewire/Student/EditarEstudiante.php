@@ -158,7 +158,54 @@ class EditarEstudiante extends Component
             if ($propertyName === 'CURP') {
                 $this->matricula = ''; // Limpiar matrícula si el CURP está vacío
             }
-            return;
+
+            
+        // CUANDO CAMBIE LA FECHA DE NACIMIENTO
+        if ($propertyName == 'fecha_nacimiento') {
+            $this->edad = \Carbon\Carbon::parse($this->fecha_nacimiento)->age;
+        }
+
+        if ($propertyName == 'level_id') {
+            $this->generation_id = null; // Reset generation_id
+            $this->grade_id = null; // Reset grade_id
+            $this->group_id = null; // Reset group_id
+            $this->grado_nombre = ""; // Reset grado_nombre
+            $this->grupo_name = null; // Reset grupo_name
+            $this->generacion_nombre = null; // Reset generacion_nombre
+            $this->generaciones = []; // Reset generaciones
+            $this->grados = []; // Reset grados
+            $this->grupos = []; // Reset grupos
+
+            $this->nivel_nombre = null; // Reset nivel_nombre
+        }
+
+        if ($propertyName == 'generation_id') {
+            $this->grade_id = null;
+            $this->group_id = null;
+            $this->grado_nombre = "";
+            $this->grados = []; // Reset grados
+            $this->grupos = []; // Reset grupos
+            
+            $this->generacion_nombre = null; // Reset generacion_nombre
+        }
+
+        
+        if ($propertyName === 'grade_id') {
+            $this->group_id = null;
+            $this->grado_nombre = "";
+            $this->grupos = []; // Reset grupos
+        }
+
+        if ($propertyName === 'group_id') {
+            $this->grupo_name = null; // Reset grupo_name
+        }
+
+        if ($propertyName === 'tutor_id') {
+            $this->tutor_nombre = null; // Reset tutor_nombre
+            $this->tutor_estudiantes = null; // Reset tutor_estudiantes
+        }
+
+        return;
         }
 
         // Validar solo si el campo tiene valor
@@ -169,13 +216,11 @@ class EditarEstudiante extends Component
             $this->generarMatricula($this->CURP);
         }
 
-
-        // CUANDO CAMBIE LA FECHA DE NACIMIENTO
-        if ($propertyName == 'fecha_nacimiento') {
+        if ($propertyName === 'fecha_nacimiento') {
             $this->edad = \Carbon\Carbon::parse($this->fecha_nacimiento)->age;
         }
 
-        if ($propertyName == 'level_id') {
+        if ($propertyName === 'level_id') {
             $this->generation_id = null; // Reset generation_id
             $this->generacion_nombre = null; // Reset generacion_nombre
             $this->generaciones = Generation::where('level_id', $this->level_id)
@@ -185,9 +230,8 @@ class EditarEstudiante extends Component
             $this->nivel_nombre = Level::find($this->level_id)->level;
         }
 
-        if ($propertyName == 'generation_id') {
-            $this->grade_id = "";
-            $this->group_id = "";
+        if ($propertyName === 'generation_id') {
+            $this->grade_id = null;
             $this->grado_nombre = "";
             $this->grados = Grade::where('generation_id', $this->generation_id)
                 ->get();
@@ -196,12 +240,13 @@ class EditarEstudiante extends Component
             $this->generacion_nombre = $generation->anio_inicio . ' - ' . $generation->anio_termino;
         }
 
-        if ($propertyName == 'grade_id') {
-            $this->group_id = "";
+        if ($propertyName === 'grade_id') {
+            $this->group_id = null;
             $this->grupos = Grade::find($this->grade_id)->groups; // RELACION INVERSA CON GRUPOS
 
             $this->grado_nombre = Grade::find($this->grade_id)->grado . '° grado';
         }
+
 
         if ($propertyName == 'group_id') {
             $this->grupo_name = Group::find($this->group_id)->grupo;

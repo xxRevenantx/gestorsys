@@ -26,6 +26,19 @@ class MatriculaEscolar extends Component
     public $totalAlumnos = 0;
 
 
+    public $showModal = false;
+
+    public function openModal()
+    {
+        $this->showModal = true;
+    }
+
+    public function closeModal()
+    {
+        $this->showModal = false;
+    }
+
+
     public function placeholder(){
         return view('placeholder');
     }
@@ -162,11 +175,13 @@ class MatriculaEscolar extends Component
                 ->orWhere('nombre', 'like', '%' . $this->termino . '%')
                 ->orWhere('apellido_paterno', 'like', '%' . $this->termino . '%')
                 ->orWhere('apellido_materno', 'like', '%' . $this->termino . '%');
-                $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) like ?", ['%' . $this->termino . '%']);
+            $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) like ?", ['%' . $this->termino . '%']);
             })
+            ->orderBy('apellido_paterno')
+            ->orderBy('apellido_materno')
 
 
-            ->paginate(10);
+            ->paginate(20);
 
         $level_nombre = \App\Models\Level::find($this->level_id)->level;
 

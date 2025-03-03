@@ -149,12 +149,11 @@
             ),
             'submenu' => [
                 [
-                    'name' => 'Inscripción',
+                    'name' => 'Matrícula General',
                     'icon' => 'fa-regular fa-circle',
                     'route' => route('admin.students.index'),
                     'active' => request()->routeIs(
                         'admin.students.index',
-                        'admin.students.create',
                         'admin.students.edit',
                         'admin.students.show',
 

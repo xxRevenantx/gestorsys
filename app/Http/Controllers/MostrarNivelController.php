@@ -15,15 +15,17 @@ class MostrarNivelController extends Controller
         return view('admin.level.index', compact('niveles'));
     }
 
-    // public function nivel($level_id)
-    // {
+    public function nivel($level_slug)
+    {
 
-    //     $nivel = Level::where('slug', $level_id)->first();
+        return redirect()->route('admin.level.action', ['nivel' => $level_slug, 'action' => "matricula-escolar"]);
+
+        // $nivel = Level::where('slug', $level_id)->first();
 
 
-    //     $acciones = Action::all();
-    //     return view('admin.level.action', compact('nivel', 'acciones'));
-    // }
+        // $acciones = Action::all();
+        // return view('admin.level.action', compact('nivel', 'acciones'));
+    }
 
 
     public function action($level_slug, $action_slug){
@@ -37,6 +39,15 @@ class MostrarNivelController extends Controller
         $level_id = $nivel->id; // OBTENER EL ID DEL NIVEL
 
         return view('admin.level.action', compact('nivel',  'action', 'acciones', 'level_id'));
+    }
+
+    public function pdfLevel($level_slug)
+    {
+        dd("PDF");
+        // $nivel = Level::where('slug', $level_slug)->firstOrFail();
+        // $students = Student::where('level_id', $nivel->id)->get();
+        // $pdf = \PDF::loadView('admin.level.pdf', compact('nivel', 'students'));
+        // return $pdf->download('matricula.pdf');
     }
 
 }

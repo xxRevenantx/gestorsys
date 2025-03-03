@@ -25,7 +25,7 @@ class MostrarGeneracion extends Component
 
 
     #[On('generacion')]
-    public function updateGenerationList()
+    public function updateGenerationList() // Esta función se ejecutará cuando se emita el evento 'generacion' desde el componente hijo 'CrearGeneracion' 
     {
         $this->contarGeneracion = Generation::count();
     }
