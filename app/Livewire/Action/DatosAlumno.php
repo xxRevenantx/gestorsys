@@ -15,6 +15,7 @@ class DatosAlumno extends Component
     public $alumnoSeleccionadoId = null; // ID del alumno seleccionado
 
 
+    public $matricula;
     public $apellido_materno;
     public $apellido_paterno;
     public $nombre;
@@ -56,6 +57,7 @@ class DatosAlumno extends Component
             }
         } else {
             $this->alumnos = [];
+            $this->matricula = '';
             $this->nombre = '';
             $this->apellido_paterno = '';
             $this->apellido_materno = '';
@@ -86,6 +88,7 @@ class DatosAlumno extends Component
             $alumno = Student::find($this->alumnoSeleccionadoId);
 
             if ($alumno) {
+                $this->matricula = $alumno->matricula;
                 $this->nombre = $alumno->nombre;
                 $this->apellido_paterno = $alumno->apellido_paterno;
                 $this->apellido_materno = $alumno->apellido_materno;
@@ -125,12 +128,6 @@ class DatosAlumno extends Component
         $alumno = Student::find($this->alumnoSeleccionadoId);
 
             $alumno->update([
-                'nombre' => $this->nombre,
-                'apellido_paterno' => $this->apellido_paterno,
-                'apellido_materno' => $this->apellido_materno,
-                'CURP' => $this->CURP,
-                'genero' => $this->genero,
-                'fecha_nacimiento' => $this->fecha_nacimiento,
                 'pais_nacimiento' => $this->pais_nacimiento,
                 'estado_nacimiento' => $this->estado_nacimiento,
                 'municipio_nacimiento' => $this->municipio_nacimiento,
@@ -145,9 +142,9 @@ class DatosAlumno extends Component
             ]);
 
 
-        $this->reset(['nombre', 'apellido_paterno', 'apellido_materno', 'CURP', 'genero', 'fecha_nacimiento',
-        'pais_nacimiento', 'estado_nacimiento', 'municipio_nacimiento', 'estado_vive', 'municipio_vive', 'colonia', 'calle', 'numero', 'CP',
-        'query', 'alumnoSeleccionadoId', 'alumnos']);
+        // $this->reset(['matricula','nombre', 'apellido_paterno', 'apellido_materno', 'CURP', 'genero', 'fecha_nacimiento',
+        // 'pais_nacimiento', 'estado_nacimiento', 'municipio_nacimiento', 'estado_vive', 'municipio_vive', 'colonia', 'calle', 'numero', 'CP',
+        // 'query', 'alumnoSeleccionadoId', 'alumnos']);
 
         $this->dispatch('swal', [
             'title' => 'Datos del alumno actualizado correctamente',

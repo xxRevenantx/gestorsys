@@ -72,7 +72,7 @@
                                 </div>
 
                                     <div class="flex-1">
-                                    <a href="{{route('admin.students.edit', $student->id)}}" class="text-white font-bold bg-indigo-700 p-2 rounded-lg hover:bg-indigo-800 mb-3 mt-3">Alumno: {{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno }}</a>
+                                    <a href="{{route('admin.students.show', $student->id)}}" class="text-white font-bold bg-indigo-700 p-2 rounded-lg hover:bg-indigo-800 mb-3 mt-3">Alumno: {{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno }}</a>
 
 
                                     <p class="p-1 mt-2">
@@ -90,7 +90,7 @@
                                 </p>
                                 <p class="p-1" >
                                     <span class="text-gray-700 font-bold">Grado:</span>
-                                    <span class="text-gray-700">{{ $student->grade->grado_numero }}° Grado </span>
+                                    <span class="text-gray-700">{{ $student->grade->grado }}° Grado </span>
                                 </p>
                                 <p class="p-1">
                                     <span class="text-gray-700 font-bold">Grupo:</span>

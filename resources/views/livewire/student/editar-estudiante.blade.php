@@ -121,6 +121,10 @@
                             <ul
                                 class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                 <li class="flex items-center py-3">
+                                    <span>Ver detalles del alumno:</span>
+                                    <span class="ml-auto"><a class="bg-blue-700 px-3 py-2 rounded text-white" href="{{route('admin.students.show', $student->id)}}"> <i class="fas fa-eye"></i> Ver</a></span>
+                                </li>
+                                <li class="flex items-center py-3">
                                     <span>Matrícula:</span>
                                     <span class="ml-auto">{{ $matricula }}</span>
                                 </li>
@@ -377,7 +381,7 @@
                                                 @enderror
                                             </div>
 
-                                            
+
                                             <div class="mb-5">
                                                 <label for="grade_id"
                                                     class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grado</label>

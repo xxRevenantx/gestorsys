@@ -13,6 +13,6 @@
 
 
 
-<livewire:tutor.mostrar-tutor :tutor="$tutor"  />
+<livewire:tutor.mostrar-tutor :tutor="$tutor" lazy  />
 
 </x-admin-layout>

@@ -16,7 +16,7 @@
 ]">
 
 
-<livewire:student.mostrar-estudiante :student="$student" />
+<livewire:student.mostrar-estudiante :student="$student" lazy />
 
 </x-admin-layout>
 

@@ -54,14 +54,26 @@
 		</h2>
 
 		<div id="accordion-collapse-body-1" aria-labelledby="accordion-collapse-heading-1">
-			<div class="p-5 border border-gray-200 dark:border-gray-700 dark:bg-gray-900 border-b-0">
+			<div class="p-5 border border-gray-200 dark:border-gray-700 dark:bg-gray-900 ">
 
-                <div class="w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
+                <div class="w-full mx-auto  p-6 rounded-lg shadow-lg">
+
+
+                    @isset($alumnoSeleccionadoId)
+                   <div class="flex justify-end">
+                    <a href="{{route('admin.students.show', $alumnoSeleccionadoId)}}" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                        <i class="fas fa-eye"></i> Ver información completa
+                    </a>
+                   </div>
+
+                    @endisset
+
+
                     <form  wire:submit.prevent="guardarAlumno" class="grid grid-cols-2 gap-4">
                         <!-- Primera columna -->
                         <div>
                             <label class="block text-gray-700">Matrícula:</label>
-                            <input type="text" class="w-full bg-gray-100 border-gray-300 rounded-md shadow-sm p-2">
+                            <input type="text" readonly wire:model="matricula" class="w-full bg-gray-100 border-gray-300 rounded-md shadow-sm p-2">
                         </div>
                         <div>
                             <label class="block text-gray-700">Primer Apellido:</label>

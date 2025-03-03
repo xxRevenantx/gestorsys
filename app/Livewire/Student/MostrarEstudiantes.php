@@ -8,7 +8,6 @@ class MostrarEstudiantes extends Component
 {
 
 
-
     public function placeholder()
     {
         return view('placeholder');
