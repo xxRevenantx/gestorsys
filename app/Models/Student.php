@@ -70,10 +70,14 @@ class Student extends Model
     }
 
 
-
     public function tutor()
     {
         return $this->belongsTo(Tutor::class);
+    }
+
+    public function pagoInscripcion()
+    {
+        return $this->hasOne(PagoInscripcion::class);
     }
 
 }

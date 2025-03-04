@@ -1,8 +1,8 @@
 <x-admin-layout>
 
-<div class="p-1">
+<div>
     <figure class="w-full flex justify-between items-center bg-gray-100 rounded  md:p-0 dark:bg-slate-800 shadow-md">
-      <div class="pt-6 md:px-5 md:py-2 text-center md:text-left space-y-4">
+      <div class="md:px-5 md:py-2 text-center md:text-left space-y-4">
           <p class="text-lg font-medium dark:text-slate-100">
                 <span class="font-bold"> Nivel: </span> {{ $nivel->level }} <br>
                 <span class="font-bold"> C.C.T.: </span> {{ $nivel->cct }} <br>

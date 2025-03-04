@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Level;
+use App\Models\PagoInscripcion;
 use App\Models\Student;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -43,6 +44,19 @@ class PDFLevelController extends Controller
         ];
         $pdf = Pdf::loadView('admin.PDF.lista-alumnos', $data)->setPaper('letter', 'portrait');
         return $pdf->stream("Lista de alumnos de ". $level->level.".pdf");
+    }
+
+    public function reciboInscripcion($student_id)
+    {
+        $pago = PagoInscripcion::where('student_id', $student_id)->firstOrFail();
+
+
+        $data = [
+            'pago' => $pago
+        ];
+        $pdf = Pdf::loadView('admin.PDF.recibo-inscripcion', $data)->setPaper('letter', 'portrait');
+        return $pdf->stream("Recibo de inscripción de ". $pago->student->nombre." ".$pago->student->apellido_paterno. " ".$pago->student->apellido_materno. " - ".$pago->student->CURP .".pdf");
+
     }
 
 

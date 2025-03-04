@@ -61,6 +61,7 @@ Route::resource('matricula-general', StudentController::class)->names('students'
 // Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');
 Route::get('expediente-alumno/{alumno}', [PDFLevelController::class, 'expedienteAlumno'])->name('expediente.alumno');
 Route::get('lista-alumnos/{alumno}', [PDFLevelController::class, 'listaAlumnos'])->name('lista.alumnos');
+Route::get('recibo-inscripcion/{alumno}', [PDFLevelController::class, 'reciboInscripcion'])->name('recibo.inscripcion');
 
 
 

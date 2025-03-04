@@ -228,7 +228,7 @@ class InscribirAlumno extends Component
 
         Student::create([
             'matricula' => trim($this->matricula),
-            'CURP' => trim($this->CURP),
+            'CURP' => Str::upper(trim($this->CURP)),
             'nombre' => trim($this->nombre),
             'apellido_paterno' => trim($this->apellido_paterno),
             'apellido_materno' => trim($this->apellido_materno),
@@ -315,5 +315,5 @@ class InscribirAlumno extends Component
         $niveles = Level::all();
         return view('livewire.action.inscribir-alumno', compact('tutores', 'niveles'));
     }
-   
+
 }
