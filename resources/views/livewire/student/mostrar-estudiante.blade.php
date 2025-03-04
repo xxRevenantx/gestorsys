@@ -37,9 +37,16 @@
                 <!-- Profile Card -->
                 <div class="bg-white p-3 border-t-4 border-green-400">
                     <div class="image overflow-hidden">
+                        @if ($imagen)
+                        <img class=" mx-auto" width="200px"
+                            src="{{ asset('storage/students/'.$imagen) }}"
+                            alt="">
+                        @else
                         <img class=" mx-auto" width="150px"
                             src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
-                            alt="">
+                            alt="{{ $nombre }} {{ $apellido_paterno }} {{ $apellido_materno }}">
+
+                        @endif
                     </div>
                     <h1 class="text-gray-900 font-bold text-xl text-center leading-8 my-1">{{ $nombre }} {{ $apellido_paterno }} {{ $apellido_materno }}</h1>
                     <ul
@@ -59,12 +66,16 @@
                         </li>
                         <li class="flex items-center py-3">
                             <span>Status</span>
-                            <span class="ml-auto"><span
-                                    class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                            <span class="ml-auto">
+                                <span class="py-1 px-2 rounded text-white text-sm {{ $status === null ? 'bg-gray-500' : ($status == 1 ? 'bg-green-500' : 'bg-red-500') }}">
+                                    {{ $status === null ? 'No seleccionado' : ($status == 1 ? 'Activo' : 'Inactivo') }}
+                                </span>
+
+                            </span>
                         </li>
                         <li class="flex justify-center items-center py-3">
 
-                                <a target="_blank" href="{{route('admin.expedienteAlumno', $student->id)}}"  class="flex items-center px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700">
+                                <a target="_blank" href="{{route('admin.expediente.alumno', $student->id)}}"  class="flex items-center px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700">
                                     <i class="fa-solid fa-file-pdf"></i>  Expediente
                                 </a>
 

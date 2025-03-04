@@ -25,20 +25,24 @@ class PDFLevelController extends Controller
 
     public function expedienteAlumno ($student_id)
     {
-
-
         $student = Student::findOrFail($student_id);
-
         $data = [
             'student' => $student
         ];
+        $pdf = Pdf::loadView('admin.PDF.expediente-alumno', $data)->setPaper('letter', 'landscape');
+        return $pdf->stream("Expediente de ". $student->nombre." ".$student->apellido_paterno. " ".$student->apellido_materno. " - ".$student->CURP .".pdf");
+    }
 
-        $pdf = Pdf::loadView('admin.PDF.expedienteAlumno', $data)->setPaper('letter', 'portrait');
+    public function listaAlumnos($level_id)
+    {
 
-
-
-        return $pdf->stream("archivo.pdf");
-
+        $level = Level::findOrFail($level_id);
+        $students = $level->students;
+        $data = [
+            'students' => $students,
+        ];
+        $pdf = Pdf::loadView('admin.PDF.lista-alumnos', $data)->setPaper('letter', 'portrait');
+        return $pdf->stream("Lista de alumnos de ". $level->level.".pdf");
     }
 
 

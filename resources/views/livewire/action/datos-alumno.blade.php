@@ -37,7 +37,7 @@
             <p class="text-indigo-700"> {{ $alumno->level->level }} {{ $alumno->grade->grado }}° "{{ $alumno->group->grupo }}" | {{  $alumno->CURP }} </p>
             </li>
             @empty
-            <li class="p-2">No hay alumnos encontrados.</li>
+            <li class="p-2">No se encontraron alumnos.</li>
             @endforelse
         </ul>
     @endif

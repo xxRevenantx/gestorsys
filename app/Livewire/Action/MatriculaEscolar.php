@@ -26,18 +26,6 @@ class MatriculaEscolar extends Component
     public $totalAlumnos = 0;
 
 
-    public $showModal = false;
-
-    public function openModal()
-    {
-        $this->showModal = true;
-    }
-
-    public function closeModal()
-    {
-        $this->showModal = false;
-    }
-
 
     public function placeholder(){
         return view('placeholder');

@@ -27,7 +27,7 @@ class ActionSeeder extends Seeder
                 ],
                 [
                     'accion' => 'Pago de inscripción',
-                    'slug' => 'pago-de-inscripcion'
+                    'slug' => 'pago-inscripcion'
                 ],
                 [
                     'accion' => 'Pago de Colegiaturas',

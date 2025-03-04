@@ -10,10 +10,10 @@
 
           </p>
 
-          
+
 
             <livewire:action.contar-alumnos :level_id="$level_id" />
-         
+
 
 
         </div>
@@ -25,7 +25,7 @@
             <span class="font-bold">Supervisor: </span> <a class="underline"  href="{{route('admin.supervisores.edit', $nivel->supervisor->id)}}">{{ $nivel->supervisor->nombre }} {{ $nivel->supervisor->apellido_paterno }} {{ $nivel->supervisor->apellido_materno }}</a>
           </div>
         </figcaption>
-      
+
 
     </figure>
   </div>
@@ -58,11 +58,11 @@
              <livewire:action.matricula-escolar :level_id="$level_id" lazy />
 
         @elseif ($action->slug == 'inscribir-alumno')
-            <livewire:action.inscribir-alumno :level_id="$level_id" lazy />    
+            <livewire:action.inscribir-alumno :level_id="$level_id" lazy />
         @elseif ($action->slug == 'datos-del-alumno')
             <livewire:action.datos-alumno :level_id="$level_id" lazy />
-        @else
-            {{$action->slug}}
+        @elseif ($action->slug == 'pago-inscripcion')
+            <livewire:action.pago-inscripcion :level_id="$level_id" lazy />
         @endif
 </div>
 

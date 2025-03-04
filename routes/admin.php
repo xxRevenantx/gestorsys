@@ -8,6 +8,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LevelPDFController;
 use App\Http\Controllers\MostrarNivelController;
+use App\Http\Controllers\PagoInscripcionController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PDFLevelController;
 use App\Http\Controllers\StudentController;
@@ -58,7 +59,8 @@ Route::resource('matricula-general', StudentController::class)->names('students'
 // PDFS
 
 // Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');
-Route::get('expedienteAlumno/{alumno}', [PDFLevelController::class, 'expedienteAlumno'])->name('expedienteAlumno');
+Route::get('expediente-alumno/{alumno}', [PDFLevelController::class, 'expedienteAlumno'])->name('expediente.alumno');
+Route::get('lista-alumnos/{alumno}', [PDFLevelController::class, 'listaAlumnos'])->name('lista.alumnos');
 
 
 
@@ -71,3 +73,5 @@ Route::get('/niveles/{nivel}', [MostrarNivelController::class, 'nivel'])->name('
 Route::get('/niveles/{nivel}/{action}', [MostrarNivelController::class, 'action'])->name('level.action');
 
 
+// RUTAS DE PAGO DE INSCRIPCIÓN
+Route::resource('/pago-inscripcion', PagoInscripcionController::class)->names('pago-inscripcion');
