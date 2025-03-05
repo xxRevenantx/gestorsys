@@ -4,7 +4,7 @@
 
     <section class="bg-white  antialiased dark:bg-gray-900 md:py-4">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <div class="mx-auto max-w-7xl">
+          <div class="mx-auto w-full">
 
             <div class="flex justify-between items-center">
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Pago de inscripción</h2>
@@ -15,7 +15,7 @@
 
                         <!-- Main modal -->
                         <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                            <div class="relative p-4 w-full max-w-7xl max-h-full">
+                            <div class="relative p-4  w-full max-h-full">
                                 <!-- Modal content -->
                                 <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
                                     <!-- Modal header -->
@@ -23,15 +23,10 @@
                                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                            Recibos de Pago
                                         </h3>
-                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crypto-modal">
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                            <span class="sr-only">Close modal</span>
-                                        </button>
+
                                     </div>
                                     <!-- Modal body -->
-                                    <livewire:action.pago-inscripcion.mostrar-pagos-inscripcion :level_id="$level_id" lazy />
+                                    <livewire:action.pago-inscripcion.mostrar-pagos-inscripcion :level_id="$level_id" />
                                 </div>
                             </div>
                         </div>
@@ -48,13 +43,13 @@
                 <div class="mb-3">
                     <label
                     class="block mb-1 text-sm text-gray-700 uppercase font-bold "
-                    for="query">Buscar por nombre, matrícula o CURP:
+                    for="query">Buscar por alumno nombre, matrícula o CURP:
                 </label>
                 <input
                     wire:model.live.debounce.500ms="query"
                     id="query"
                     type="text"
-                    placeholder="Buscar por nombre, matrícula o CURP:"
+                    placeholder="Buscar alumno por nombre, matrícula o CURP:"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full"
 
                     wire:keydown.arrow-down="selectedIndex = (selectedIndex + 1) % count($alumnos)"
@@ -87,7 +82,7 @@
 
                 <div class="mb-6 grid grid-cols-2 gap-4">
                   <div class="col-span-2 sm:col-span-1">
-                    <label for="nombre_pago" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Nombre completo</label>
+                    <label for="nombre_pago" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Recibimos de                    </label>
                     <input type="text"  wire:model.live="nombre_pago" id="nombre_pago" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"  />
                     @error('nombre_pago')
                     <span class="text-red-500">{{ $message }}</span>

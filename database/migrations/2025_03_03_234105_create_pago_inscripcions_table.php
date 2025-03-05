@@ -15,19 +15,21 @@ return new class extends Migration
             $table->id();
             $table->string('nombre_pago');
             $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('level_id');
             $table->decimal('monto', 8, 2);
             $table->decimal('descuento', 8, 2)->nullable();
             $table->decimal('total', 8, 2);
             $table->enum('tipo_pago', ['Efectivo', 'Tarjeta', 'Transferencia']);
             $table->string('comprobante')->nullable();
             $table->string('folio');
+            $table->text('observaciones')->nullable();
             $table->timestamp('fecha_pago');
-
 
             $table->timestamps();
 
 
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
 
         });
     }

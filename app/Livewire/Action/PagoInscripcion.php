@@ -31,6 +31,7 @@ class PagoInscripcion extends Component
     public $monto;
     public $descuento;
     public $fecha_pago;
+    public $observaciones;
 
     protected $rules = [
         'query' => 'required',
@@ -39,6 +40,7 @@ class PagoInscripcion extends Component
         'monto' => 'required|numeric|min:1',
         'descuento' => 'nullable|numeric|min:0',
         'fecha_pago' => 'required|date',
+        'observaciones' => 'nullable|string',
 
     ];
 
@@ -57,6 +59,7 @@ class PagoInscripcion extends Component
         'monto.numeric' => 'El campo monto debe ser un número',
         'fecha_pago.required' => 'El campo fecha es obligatorio',
         'fecha_pago.date' => 'El campo fecha debe ser una fecha válida',
+        'observaciones.string' => 'El campo observaciones debe ser una cadena de texto',
     ];
 
     public function updatedQuery()
@@ -66,6 +69,7 @@ class PagoInscripcion extends Component
             $this->alumnos = Student::where('level_id', $this->level_id)
                 ->where(function($query) {
                     $query->where('CURP', 'like', '%' . $this->query . '%')
+                          ->orWhere('matricula', 'like', '%' . $this->query . '%')
                           ->orWhere('nombre', 'like', '%' . $this->query . '%')
                           ->orWhere('apellido_paterno', 'like', '%' . $this->query . '%')
                           ->orWhere('apellido_materno', 'like', '%' . $this->query . '%')
@@ -87,6 +91,7 @@ class PagoInscripcion extends Component
             $this->monto = 0;
             $this->descuento = 0;
             $this->fecha_pago = '';
+            $this->observaciones = '';
 
 
         } else {
@@ -103,6 +108,9 @@ class PagoInscripcion extends Component
             $this->monto = 0;
             $this->descuento = 0;
             $this->fecha_pago = '';
+            $this->observaciones = '';
+
+            $this->textoPago = "$ Pagar";
 
         }
     }
@@ -126,6 +134,7 @@ class PagoInscripcion extends Component
             $this->apellido_materno = $alumno->apellido_materno;
             $this->CURP = $alumno->CURP;
 
+
             // Verifica si el alumno tiene un pago existente, si ya hay un pago se llenan los datos del fomrulario para editar
             $this->pagoExistente = ModelsPagoInscripcion::where('student_id', $this->alumnoSeleccionadoId)->first();
             if ($this->pagoExistente) {
@@ -135,6 +144,7 @@ class PagoInscripcion extends Component
                 $this->monto = $this->pagoExistente->monto;
                 $this->descuento = $this->pagoExistente->descuento;
                 $this->fecha_pago = $this->pagoExistente->fecha_pago->format('d/m/Y');
+                $this->observaciones = $this->pagoExistente->observaciones;
             }
             }
         }
@@ -163,16 +173,17 @@ class PagoInscripcion extends Component
 
         if ($alumno) {
             $pagoExistente = ModelsPagoInscripcion::where('student_id', $this->alumnoSeleccionadoId)
-            ->where('nombre_pago', $this->nombre_pago)
             ->first();
 
             if ($pagoExistente) {
             $pagoExistente->update([
+                'nombre_pago' => $this->nombre_pago,
                 'monto' => $this->monto,
                 'descuento' => $this->descuento,
                 'total' => $total,
                 'tipo_pago' => $this->tipo_pago,
                 'fecha_pago' => $this->fecha_pago,
+                'observaciones' => $this->observaciones,
             ]);
 
             $this->dispatch('swal', [
@@ -180,6 +191,11 @@ class PagoInscripcion extends Component
                 'icon' => 'success',
                 'position' => 'top',
             ]);
+
+
+            $this->dispatch('refreshInscripcion');
+
+
             } else {
             ModelsPagoInscripcion::create([
                 'nombre_pago' => $this->nombre_pago,
@@ -189,6 +205,8 @@ class PagoInscripcion extends Component
                 'tipo_pago' => $this->tipo_pago,
                 'fecha_pago' => $this->fecha_pago,
                 'student_id' => $this->alumnoSeleccionadoId,
+                'level_id' => $this->level_id,
+                'observaciones' => $this->observaciones,
             ]);
 
             $this->dispatch('swal', [
@@ -196,6 +214,7 @@ class PagoInscripcion extends Component
                 'icon' => 'success',
                 'position' => 'top',
             ]);
+            $this->dispatch('refreshInscripcion');
             }
 
             $this->reset([
@@ -211,6 +230,8 @@ class PagoInscripcion extends Component
             'apellido_paterno',
             'apellido_materno',
             'CURP',
+            'observaciones',
+            'pagoExistente',
             ]);
         } else {
             $this->dispatch('swal', [

@@ -41,6 +41,7 @@ class DatosAlumno extends Component
             $this->alumnos = Student::where('level_id', $this->level_id)
                 ->where(function($query) {
                     $query->where('CURP', 'like', '%' . $this->query . '%')
+                          ->orWhere('matricula', 'like', '%' . $this->query . '%')
                           ->orWhere('nombre', 'like', '%' . $this->query . '%')
                           ->orWhere('apellido_paterno', 'like', '%' . $this->query . '%')
                           ->orWhere('apellido_materno', 'like', '%' . $this->query . '%')

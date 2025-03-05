@@ -30,7 +30,7 @@ class PDFLevelController extends Controller
         $data = [
             'student' => $student
         ];
-        $pdf = Pdf::loadView('admin.PDF.expediente-alumno', $data)->setPaper('letter', 'landscape');
+        $pdf = Pdf::loadView('admin.PDF.expediente-alumno', $data)->setPaper('letter', 'portrait');
         return $pdf->stream("Expediente de ". $student->nombre." ".$student->apellido_paterno. " ".$student->apellido_materno. " - ".$student->CURP .".pdf");
     }
 

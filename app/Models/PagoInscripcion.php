@@ -16,12 +16,14 @@ class PagoInscripcion extends Model
     protected $fillable = [
         'nombre_pago',
         'student_id',
+        'level_id',
         'monto',
         'descuento',
         'total',
         'tipo_pago',
         'comprobante',
         'folio',
+        'observaciones',
         'fecha_pago',
     ];
 
