@@ -40,7 +40,7 @@
         </style>
 
 
-        <div class="bg-gray-100">
+        <div class="bg-white ">
             <div class="w-full text-white bg-main-color">
 
                 <div class="p-4 flex flex-row items-center">
@@ -184,7 +184,7 @@
                     </div>
                     <!-- Right Side -->
                     <div class="w-full md:w-7/12 mx-2 ">
-                      
+
                         <!-- Profile tab -->
                         <!-- About Section -->
                         <div class="bg-white p-3 shadow-sm rounded-sm">
@@ -326,7 +326,7 @@
                                                     <div class="text-red-500">{{ $message }}</div>
                                                 @enderror
 
-                                            
+
                                             </div>
 
                                             <div class="mb-5">

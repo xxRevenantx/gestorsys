@@ -80,4 +80,9 @@ class Student extends Model
         return $this->hasOne(PagoInscripcion::class);
     }
 
+    public function colegiaturas()
+    {
+        return $this->hasMany(Colegiatura::class); // Este estudiantes tiene muchas colegiaturas (pagos)
+    }
+
 }

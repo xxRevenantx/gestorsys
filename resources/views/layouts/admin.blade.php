@@ -42,10 +42,21 @@
           <div class="p-4 sm:ml-64 ">
             <div class="mt-14">
                 @include('layouts.partials.admin.breadcrumb')
-                <div class="p-4 rounded-lg dark:border-gray-700">
+                <div class="rounded-lg dark:border-gray-700">
                         {{ $slot }}
                  </div>
             </div>
+
+
+
+
+        <footer class="bg-white rounded-lg shadow-sm  dark:bg-gray-800">
+            <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {{ date('Y') }} <a href="#" class="hover:underline">Carlos Nuñez</a>. Todos los derechos reservados.            </span>
+            </div>
+
+
+        </footer>
 
 
           </div>

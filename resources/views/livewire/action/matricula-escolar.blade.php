@@ -1,4 +1,4 @@
-<div class="rounded-lg shadow-lg px-4 py-4">
+<div class="rounded-lg shadow-lg px-4 py-4 bg-white dark:bg-gray-800">
 
     {{-- <div  class="relative items-center block max-w-sm p-6 bg-white border border-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-800 dark:hover:bg-gray-700">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white opacity-20">Noteworthy technology acquisitions 2021</h5>
@@ -7,7 +7,7 @@
     </div> --}}
 
 
-    <div class="w-full mx-auto px-4 sm:px-6 ">
+    <div class="w-full mx-auto px-4 sm:px-6  rounded-lg">
 
             <div class="md:grid md:grid-cols-4 gap-5">
                 <div class="mb-5">

@@ -1,10 +1,8 @@
-<div>
+<div class="rounded-lg shadow-lg px-4 py-4 bg-white dark:bg-gray-800">
     <!-- component -->
 <!-- This is an example component -->
 <div class="w-full mx-auto bg-white rounded">
 
-     <!-- LOADER  -->
-     @include('admin.partials.loader')
 
 
     <div class="mb-5">
@@ -70,7 +68,9 @@
 
 
                     <form  wire:submit.prevent="guardarAlumno" class="grid grid-cols-2 gap-4">
-                        <!-- Primera columna -->
+                            <!-- LOADER  -->
+                      @include('admin.partials.loader')
+
                         <div>
                             <label class="block text-gray-700">Matrícula:</label>
                             <input type="text" readonly wire:model="matricula" class="w-full bg-gray-100 border-gray-300 rounded-md shadow-sm p-2">
@@ -143,8 +143,12 @@
                         <div class="mt-4">
                             <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
                                 Guardar
+                                <svg wire:loading style="width: 30px; height: 40px; margin-left: 5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="6" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
+
                             </button>
                         </div>
+
+
                     </form>
 
                 </div>

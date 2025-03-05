@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             // GradeSeeder::class,
             // StudentSeeder::class,
             ActionSeeder::class,
+            MonthSeeder::class,
         ]);
 
 
