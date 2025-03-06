@@ -29,7 +29,7 @@
 
                                </div>
                                <!-- Modal body -->
-                               {{-- <livewire:action.pago-inscripcion.mostrar-pagos-inscripcion :level_id="$level_id" /> --}}
+                               <livewire:action.pago-colegiatura.mostrar-colegiaturas :level_id="$level_id" />
                            </div>
                        </div>
                    </div>
@@ -41,7 +41,7 @@
        <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
 
          <form  wire:submit.prevent="guardarPago" class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8">
-
+            {{-- {{$alumnos}} --}}
            <div class="mb-3">
                <label
                class="block mb-1 text-sm text-gray-700 uppercase font-bold "
@@ -81,6 +81,8 @@
 
                @enderror
            </div>
+
+
 
            {{-- {{ $meses }} --}}
            <div class="mb-3">
@@ -255,16 +257,20 @@
            <div class="space-y-4 rounded-lg border border-gray-100 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
              <div class="space-y-2">
 
-              @isset($pagoExistente)
-              <dl class="flex items-center justify-end gap-4">
-                   <dd class="text-base font-medium text-gray-900 dark:text-white">
-                     <a target="_blank" href="{{route('admin.recibo.inscripcion', $alumnoSeleccionadoId)}}" class="flex items-center justify-end mt-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
-                         <i class="mdi mdi-file-pdf-outline mr-2"></i>
-                         Descargar Recibo
-                     </a>
-                 </dd>
-                 </dl>
-              @endisset
+            @if ($month_id)
+                @isset($existingPayment)
+                    <dl class="flex items-center justify-end gap-4">
+                        <dd class="text-base font-medium text-gray-900 dark:text-white">
+                            <a target="_blank" href="{{route('admin.recibo.colegiatura', ['alumno' => $alumnoSeleccionadoId, 'mes' => $month_id])}}" class="flex items-center justify-end mt-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                <i class="mdi mdi-file-pdf-outline mr-2"></i>
+                                Descargar Recibo
+                            </a>
+                        </dd>
+                    </dl>
+                @endisset
+            @endif
+
+
                <dl class="flex items-center justify-between gap-4">
                  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Padre O Tutor de: </dt>
                  <dd class="text-base font-medium text-gray-900 dark:text-white">

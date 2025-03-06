@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Colegiatura;
 use App\Models\Level;
+use App\Models\Month;
 use App\Models\PagoInscripcion;
 use App\Models\Student;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -49,8 +51,6 @@ class PDFLevelController extends Controller
     public function reciboInscripcion($student_id)
     {
         $pago = PagoInscripcion::where('student_id', $student_id)->firstOrFail();
-
-
         $data = [
             'pago' => $pago
         ];
@@ -58,6 +58,19 @@ class PDFLevelController extends Controller
         return $pdf->stream("Recibo de inscripción de ". $pago->student->nombre." ".$pago->student->apellido_paterno. " ".$pago->student->apellido_materno. " - ".$pago->student->CURP .".pdf");
 
     }
+
+    public function reciboColegiatura ($alumno, $mes)
+    {
+        $student = Student::findOrFail($alumno);
+        $colegiatura = Colegiatura::where('student_id', $alumno)->where('month_id', $mes)->firstOrFail();
+        $data = [
+            'colegiatura' => $colegiatura,
+            'student' => $student,
+        ];
+        $pdf = Pdf::loadView('admin.PDF.recibo-colegiatura', $data)->setPaper('letter', 'portrait');
+        return $pdf->stream("Recibo de colegiatura de ". $student->nombre." ".$student->apellido_paterno. " ".$student->apellido_materno. " - ".$student->CURP .".pdf");
+    }
+
 
 
 

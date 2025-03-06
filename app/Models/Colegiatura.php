@@ -36,4 +36,11 @@ class Colegiatura extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
+    }
+
 }

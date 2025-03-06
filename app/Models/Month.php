@@ -9,4 +9,14 @@ class Month extends Model
 {
     /** @use HasFactory<\Database\Factories\MonthFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'month',
+    ];
+
+    public function colegiaturas()
+    {
+        return $this->hasMany(Colegiatura::class);
+    }
+
 }

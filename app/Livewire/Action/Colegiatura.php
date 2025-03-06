@@ -14,7 +14,7 @@ class Colegiatura extends Component
 
     public $alumnos; // Resultados de la búsqueda
     public $selectedIndex = 0; // Índice para navegación con teclado
-    public $alumnoSeleccionadoId = null; // ID del alumno seleccionado
+    public $alumnoSeleccionadoId = null; // ID del alumno encontrando
 
     public $matricula;
     public $apellido_materno;
@@ -25,6 +25,7 @@ class Colegiatura extends Component
 
     // VARIABLES DE PAGO
     public $pagoExistente = null;
+    public $existingPayment;
     public $textoPago = "$ Pagar";
     public $query = ''; // Input del usuario
     public $nombre_pago;
@@ -104,11 +105,12 @@ class Colegiatura extends Component
             $this->descuento = 0;
             $this->fecha_pago = '';
             $this->observaciones = '';
-            $this->habilitarInput = true; //Habilitar los input al selecciona un alumnos
+            // $this->habilitarInput = true; //Habilitar los input al selecciona un alumnos
 
         } else {
 
             // Limpia los resultados si el input está vacío o tiene menos de 2 caracteres de longitud
+            $this->month_id = '';
             $this->alumnos = [];
             $this->matricula = '';
             $this->nombre = '';
@@ -117,7 +119,7 @@ class Colegiatura extends Component
             $this->CURP = '';
             $this->nombre_pago = '';
             $this->tipo_pago = '';
-            $this->month_id = '';
+
             $this->monto = 0;
             $this->descuento = 0;
             $this->fecha_pago = '';
@@ -125,6 +127,8 @@ class Colegiatura extends Component
 
             $this->textoPago = "$ Pagar";
             $this->habilitarInput = false; //Desabillitarlos inputs  si no hay nada en el input de alumno
+
+
 
         }
     }
@@ -136,7 +140,7 @@ class Colegiatura extends Component
             $this->query = $this->alumnos[$index]['nombre'] . ' ' . $this->alumnos[$index]['apellido_paterno'] . ' ' . $this->alumnos[$index]['apellido_materno'];
             $this->alumnoSeleccionadoId = $this->alumnos[$index]['id']; // Obtiene el ID del alumno seleccionado
             $this->alumnos = []; // Limpia los resultados
-
+            $this->habilitarInput = true; //Habilitar los input al selecciona un alumnos
             $alumno = Student::find($this->alumnoSeleccionadoId);
 
             // Llena los campos del formulario con los datos del alumno seleccionado si el alumnoexiste en la base de datos
@@ -147,7 +151,7 @@ class Colegiatura extends Component
             $this->apellido_paterno = $alumno->apellido_paterno;
             $this->apellido_materno = $alumno->apellido_materno;
             $this->CURP = $alumno->CURP;
-
+            $this->habilitarInput = true; //Habilitar los input al selecciona un alumnos
             // HABILIDAD LOS INPUT CUANDO SE ENCUENTRE UN ALUMNO
             // $this->inputNombrePago = true;
 
@@ -190,11 +194,11 @@ class Colegiatura extends Component
 
 
         if ($propertyName === 'month_id') {
-            $existingPayment = ModelsColegiatura::where('student_id', $this->alumnoSeleccionadoId) // Verifica si ya existe un pago para el alumno y el mes seleccionado
+            $this->existingPayment = ModelsColegiatura::where('student_id', $this->alumnoSeleccionadoId) // Verifica si ya existe un pago para el alumno y el mes seleccionado
             ->where('month_id', $this->month_id)
             ->first();
 
-            if ($existingPayment) {
+            if ($this->existingPayment) {
             $this->dispatch('swal', [
                 'title' => 'El alumno ya tiene un pago registrado para este mes. Puedes actualizarlo si lo deseas',
                 'text' => 'Si deseas registrar un nuevo pago, selecciona otro mes',
@@ -202,12 +206,12 @@ class Colegiatura extends Component
                 'position' => 'top',
             ]);
             $this->textoPago = "$ Actualizar pago";
-            $this->nombre_pago = $existingPayment->nombre_pago;
-            $this->tipo_pago = $existingPayment->tipo_pago;
-            $this->monto = $existingPayment->monto;
-            $this->descuento = $existingPayment->descuento;
-            $this->fecha_pago = $existingPayment->fecha_pago;
-            $this->observaciones = $existingPayment->observaciones;
+            $this->nombre_pago = $this->existingPayment->nombre_pago;
+            $this->tipo_pago = $this->existingPayment->tipo_pago;
+            $this->monto = $this->existingPayment->monto;
+            $this->descuento = $this->existingPayment->descuento;
+            $this->fecha_pago = $this->existingPayment->fecha_pago;
+            $this->observaciones = $this->existingPayment->observaciones;
 
             } else {
                 // Si no existe un pago, se muestra un mensaje de que se puede registrar un nuevo pago
@@ -300,25 +304,32 @@ class Colegiatura extends Component
                 'position' => 'top',
             ]);
             $this->dispatch('refreshColegiatura'); // actualizar la tabla
-            }
+
 
             $this->reset([
-            'query',
-            'nombre_pago',
-            'tipo_pago',
-            'month_id',
-            'monto',
-            'descuento',
-            'fecha_pago',
-            'alumnoSeleccionadoId',
-            'matricula',
-            'nombre',
-            'apellido_paterno',
-            'apellido_materno',
-            'CURP',
-            'observaciones',
-            'pagoExistente',
-            ]);
+                'query',
+                'nombre_pago',
+                'tipo_pago',
+                'month_id',
+                'monto',
+                'descuento',
+                'fecha_pago',
+                'alumnoSeleccionadoId',
+                'matricula',
+                'nombre',
+                'apellido_paterno',
+                'apellido_materno',
+                'CURP',
+                'observaciones',
+                'pagoExistente',
+                ]);
+
+
+
+
+
+            }
+
         } else {
             $this->dispatch('swal', [
             'title' => 'No se encontró el alumno seleccionado',

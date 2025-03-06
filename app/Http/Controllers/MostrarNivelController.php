@@ -41,13 +41,6 @@ class MostrarNivelController extends Controller
         return view('admin.level.action', compact('nivel',  'action', 'acciones', 'level_id'));
     }
 
-    public function pdfLevel($level_slug)
-    {
-        dd("PDF");
-        // $nivel = Level::where('slug', $level_slug)->firstOrFail();
-        // $students = Student::where('level_id', $nivel->id)->get();
-        // $pdf = \PDF::loadView('admin.level.pdf', compact('nivel', 'students'));
-        // return $pdf->download('matricula.pdf');
-    }
+
 
 }
