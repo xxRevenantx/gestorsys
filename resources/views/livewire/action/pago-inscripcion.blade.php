@@ -137,7 +137,7 @@
                           />
                         </svg>
                       </div>
-                      <input wire:model.live.debounce.500ms='fecha_pago'  id="fecha_pago"  type="datetime-local" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"  />
+                      <input wire:model.live.debounce.500ms='fecha_pago'  id="fecha_pago"  type="date" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"  />
                     </div>
                     @error('fecha_pago')
                     <span class="text-red-500">{{ $message }}</span>

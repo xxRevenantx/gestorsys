@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('comprobante')->nullable();
             $table->string('folio');
             $table->text('observaciones')->nullable();
-            $table->timestamp('fecha_pago');
+            $table->date('fecha_pago');
 
             $table->timestamps();
 

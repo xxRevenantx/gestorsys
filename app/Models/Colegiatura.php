@@ -28,6 +28,10 @@ class Colegiatura extends Model
         'fecha_pago',
     ];
 
+    // protected $casts = [
+    //     'fecha_pago' => 'date',
+    // ];
+
     public function student()
     {
         return $this->belongsTo(Student::class);

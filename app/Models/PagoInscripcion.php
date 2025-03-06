@@ -27,9 +27,9 @@ class PagoInscripcion extends Model
         'fecha_pago',
     ];
 
-    protected $casts = [
-        'fecha_pago' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'fecha_pago' => 'date',
+    // ];
 
     public function student()
     {

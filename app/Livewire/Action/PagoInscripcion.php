@@ -143,7 +143,7 @@ class PagoInscripcion extends Component
                 $this->tipo_pago = $this->pagoExistente->tipo_pago;
                 $this->monto = $this->pagoExistente->monto;
                 $this->descuento = $this->pagoExistente->descuento;
-                $this->fecha_pago = $this->pagoExistente->fecha_pago->format('d/m/Y');
+                $this->fecha_pago = $this->pagoExistente->fecha_pago;
                 $this->observaciones = $this->pagoExistente->observaciones;
             }
             }

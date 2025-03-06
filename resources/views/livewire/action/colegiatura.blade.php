@@ -61,19 +61,19 @@
 
 
            @if (!empty($alumnos))
-           <ul class="absolute bg-white border mt-1 rounded shadow">
-               @forelse ($alumnos as $index => $alumno)
-               <li
-                   class="p-2 cursor-pointer {{ $selectedIndex === $index ? 'bg-blue-200' : '' }}"
-                   wire:click="selectAlumno({{ $index }})"
-               >
-               <p class="font-bold text-indigo-600">{{ $alumno->apellido_paterno}} {{ $alumno->apellido_materno }} {{ $alumno->nombre }}</p>
-               <p class="text-indigo-700"> {{ $alumno->level->level }} {{ $alumno->grade->grado }}° "{{ $alumno->group->grupo }}" | {{  $alumno->CURP }} </p>
-               </li>
-               @empty
-               <li class="p-2">No se encontraron alumnos.</li>
-               @endforelse
-           </ul>
+        <ul class="absolute bg-white border mt-1 rounded shadow z-10">
+            @forelse ($alumnos as $index => $alumno)
+            <li
+                class="p-2 cursor-pointer {{ $selectedIndex === $index ? 'bg-blue-200' : '' }}"
+                wire:click="selectAlumno({{ $index }})"
+            >
+            <p class="font-bold text-indigo-600">{{ $alumno->apellido_paterno}} {{ $alumno->apellido_materno }} {{ $alumno->nombre }}</p>
+            <p class="text-indigo-700"> {{ $alumno->level->level }} {{ $alumno->grade->grado }}° "{{ $alumno->group->grupo }}" | {{  $alumno->CURP }} </p>
+            </li>
+            @empty
+            <li class="p-2">No se encontraron alumnos.</li>
+            @endforelse
+        </ul>
        @endif
 
                @error('query')
@@ -82,10 +82,47 @@
                @enderror
            </div>
 
+           {{-- {{ $meses }} --}}
+           <div class="mb-3">
+            <label for="month_id" class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900 dark:text-white">
+              Mes de pago
+
+            </label>
+         <select  id="month_id" wire:model.live="month_id" class="py-3 px-4 pe-9
+         block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500
+          disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700
+           dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600
+           @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+               @if(!$habilitarInput) disabled  @endif
+           >
+             <option value="">--Selecciona el mes de pago--</option>
+             @foreach ($meses as $mes)
+                 <option class="@if ($mes->hasPayment) bg-green-500 text-white @else bg-gray-700 text-white @endif"
+                     value="{{ $mes->id }}">{{ $mes->mes }} @if ($mes->hasPayment) -
+                      Pagado  @endif
+                    </option>
+             @endforeach
+         </select>
+            @error('month_id')
+            <span class="text-red-500">{{ $message }}</span>
+            @enderror
+        </div>
+
+
+
            <div class="mb-6 grid grid-cols-2 gap-4">
              <div class="col-span-2 sm:col-span-1">
                <label for="nombre_pago" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Recibimos de</label>
-               <input type="text"  wire:model.live="nombre_pago" id="nombre_pago" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"  />
+               <input type="text"
+
+               wire:model.live="nombre_pago" id="nombre_pago"
+               class="block w-full rounded-lg border border-gray-300
+               p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600
+                dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500
+                dark:focus:ring-primary-500
+                @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+               @if(!$habilitarInput) disabled  @endif
+               />
                @error('nombre_pago')
                <span class="text-red-500">{{ $message }}</span>
              @enderror
@@ -94,7 +131,15 @@
 
              <div class="col-span-2 sm:col-span-1">
                <label for="card-number-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Tipo de pago </label>
-               <select id="tipo_pago" wire:model.live="tipo_pago"  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" >
+               <select id="tipo_pago" wire:model.live="tipo_pago"
+               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:
+               border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white
+                dark:placeholder:text-gray-400 dark:focus:border-primary-500
+                dark:focus:ring-primary-500
+                @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+               @if(!$habilitarInput) disabled  @endif
+
+                >
                    <option value="">--Selecciona el tipo de pago---</option>
                    <option value="Efectivo">Efectivo</option>
                    <option value="Tarjeta">Tarjeta</option>
@@ -106,27 +151,19 @@
                @enderror
            </div>
 
-           <div>
-               <label for="month_id" class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900 dark:text-white">
-                 Mes de pago
 
-
-               </label>
-            <select  id="month_id" wire:model.live="month_id" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
-                <option value="">--Selecciona el mes de pago--</option>
-                @foreach ($meses as $mes)
-                    <option value="{{ $mes->id }}">{{ $mes->mes }}</option>
-                @endforeach
-            </select>
-               @error('month_id')
-               <span class="text-red-500">{{ $message }}</span>
-               @enderror
-           </div>
            <div>
                <label for="monto" class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900 dark:text-white">
                  Monto
                </label>
-               <input type="number" wire:model.live='monto' id="monto" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" />
+               <input type="number" wire:model.live='monto' id="monto" aria-describedby="helper-text-explanation"
+               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm
+                text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600
+                 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500
+                 dark:focus:ring-primary-500
+                 @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+               @if(!$habilitarInput) disabled  @endif
+                 />
                @error('monto')
                <span class="text-red-500">{{ $message }}</span>
                @enderror
@@ -134,14 +171,24 @@
            <div>
                <label for="descuento" class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900 dark:text-white">
                  descuento
-                 <button data-tooltip-target="cvv-desc" data-tooltip-trigger="hover" class="text-gray-400 hover:text-gray-900 dark:text-gray-500 dark:hover:text-white">
-                   <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                     <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.408-5.5a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1h-2Z" clip-rule="evenodd" />
-                   </svg>
+                 <button data-tooltip-target="cvv-desc" data-tooltip-trigger="hover" class="text-gray-400
+                  hover:text-gray-900 dark:text-gray-500 dark:hover:text-white
+                  @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                 @if(!$habilitarInput) disabled  @endif
+                  >
+
                  </button>
 
                </label>
-               <input type="number" min="0" wire:model.live='descuento' id="descuento" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" />
+               <input type="number" min="0" wire:model.live='descuento' id="descuento" aria-describedby="helper-text-explanation"
+                class="block w-full rounded-lg border border-gray-300
+                  p-2.5 text-sm text-gray-900 focus:border-primary-500
+                 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400
+                 dark:focus:border-primary-500 dark:focus:ring-primary-500
+                 @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+               @if(!$habilitarInput) disabled  @endif
+
+                 />
                @error('descuento')
                <span class="text-red-500">{{ $message }}</span>
                @enderror
@@ -159,7 +206,13 @@
                      />
                    </svg>
                  </div>
-                 <input wire:model.live.debounce.500ms='fecha_pago'  id="fecha_pago"  type="datetime-local" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"  />
+                 <input wire:model.live.debounce.500ms='fecha_pago'  id="fecha_pago" type="date" class="block w-full
+                  rounded-lg border border-gray-300 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500
+                   focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400
+                    dark:focus:border-blue-500 dark:focus:ring-blue-500
+                    @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                     @if(!$habilitarInput) disabled  @endif
+                    />
                </div>
                @error('fecha_pago')
                <span class="text-red-500">{{ $message }}</span>
@@ -168,16 +221,30 @@
            </div>
 
            <div class="w-full mb-3">
-            <label for="observaciones" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
+            <label for="observaciones"
+            class="mb-2 block text-sm font-medium text-gray-900
+             dark:text-white"
+            >
+                Observaciones</label>
             <div class="relative">
-              <textarea wire:model.live='observaciones' id="observaciones" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"></textarea>
+              <textarea wire:model.live='observaciones' id="observaciones"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900
+              focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white
+               dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500
+               @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+               @if(!$habilitarInput) disabled  @endif
+               ></textarea>
             </div>
             @error('observaciones')
             <span class="text-red-500">{{ $message }}</span>
             @enderror
           </div>
 
-           <button type="submit" class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4  focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+           <button type="submit" class="
+           flex w-full items-center justify-center rounded-lg bg-indigo-500 hover:bg-indigo-600  px-5 py-2.5 text-sm font-medium
+           text-white  focus:outline-none focus:ring-4  focus:ring-blue-300 dark:bg-blue-600
+           dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+           >
                {{$textoPago}}
                <svg wire:loading style="width: 30px; height: 40px; margin-left: 5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="6" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
 

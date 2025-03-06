@@ -35,6 +35,11 @@ class Colegiatura extends Component
     public $fecha_pago;
     public $observaciones;
 
+    // INPUT HABILIDATADOS
+    public $habilitarInput = false; // Estado del botón
+
+    public $pagado = false;
+
 
     protected $rules = [
         'query' => 'required',
@@ -91,7 +96,7 @@ class Colegiatura extends Component
                 ]);
             }
 
-            // LIMPIAR VARIABLES DE PAGO AL BUSCAR UN NUEVO ALUMNO
+            // LIMPIAR VARIABLES DE PAGO AL BUSCAR UN NUEVO ALUMNO para rellenar neuvament el formulario
             $this->nombre_pago = '';
             $this->tipo_pago = '';
             $this->monto = 0;
@@ -99,7 +104,7 @@ class Colegiatura extends Component
             $this->descuento = 0;
             $this->fecha_pago = '';
             $this->observaciones = '';
-
+            $this->habilitarInput = true; //Habilitar los input al selecciona un alumnos
 
         } else {
 
@@ -119,6 +124,7 @@ class Colegiatura extends Component
             $this->observaciones = '';
 
             $this->textoPago = "$ Pagar";
+            $this->habilitarInput = false; //Desabillitarlos inputs  si no hay nada en el input de alumno
 
         }
     }
@@ -133,7 +139,7 @@ class Colegiatura extends Component
 
             $alumno = Student::find($this->alumnoSeleccionadoId);
 
-            // Llena los campos del formulario con los datos del alumno seleccionado si existe en la base de datos
+            // Llena los campos del formulario con los datos del alumno seleccionado si el alumnoexiste en la base de datos
             if ($alumno) {
             $this->textoPago = "$ Pagar";
             $this->matricula = $alumno->matricula;
@@ -142,9 +148,15 @@ class Colegiatura extends Component
             $this->apellido_materno = $alumno->apellido_materno;
             $this->CURP = $alumno->CURP;
 
+            // HABILIDAD LOS INPUT CUANDO SE ENCUENTRE UN ALUMNO
+            // $this->inputNombrePago = true;
+
 
             // Verifica si el alumno tiene un pago existente, si ya hay un pago se llenan los datos del fomrulario para editar
-            $this->pagoExistente = ModelsColegiatura::where('student_id', $this->alumnoSeleccionadoId)->first();
+            $this->pagoExistente = ModelsColegiatura::where('student_id', $this->alumnoSeleccionadoId)
+                ->where('month_id', $this->month_id)
+                ->latest()
+                ->first();
             if ($this->pagoExistente) {
                 $this->textoPago = "$ Actualizar pago";
                 $this->nombre_pago = $this->pagoExistente->nombre_pago;
@@ -152,38 +164,96 @@ class Colegiatura extends Component
                 $this->monto = $this->pagoExistente->monto;
                 $this->month_id = $this->pagoExistente->month_id;
                 $this->descuento = $this->pagoExistente->descuento;
-                $this->fecha_pago = $this->pagoExistente->fecha_pago->format('d/m/Y');
+                $this->fecha_pago = $this->pagoExistente->fecha_pago;
                 $this->observaciones = $this->pagoExistente->observaciones;
             }
             }
         }
     }
 
-    public function updatedDescuento($value){ // Se ejecuta al modificar el descuento para validar que no sea nulo y asignar 0 si es así (para evitar errores)
-        if (empty($value)) {
+    public function updated($propertyName){ // Se ejecuta al modificar el descuento para validar que no sea nulo y asignar 0 si es así (para evitar errores)
+
+        if (empty($this->descuento)) {
             $this->descuento = 0;
-        } else {
-            $this->descuento = $value;
         }
+        if(empty($this->monto)){
+            $this->monto = 0;
+            }
+
+            // SI SE SELECCIONÓ UN ALUMNO QUE SE HABILITEN LOS BOTONES
+        if ($this->alumnoSeleccionadoId) {
+            $this->habilitarInput = true;
+        } else {
+            $this->habilitarInput = false;
+        }
+
+
+
+        if ($propertyName === 'month_id') {
+            $existingPayment = ModelsColegiatura::where('student_id', $this->alumnoSeleccionadoId) // Verifica si ya existe un pago para el alumno y el mes seleccionado
+            ->where('month_id', $this->month_id)
+            ->first();
+
+            if ($existingPayment) {
+            $this->dispatch('swal', [
+                'title' => 'El alumno ya tiene un pago registrado para este mes. Puedes actualizarlo si lo deseas',
+                'text' => 'Si deseas registrar un nuevo pago, selecciona otro mes',
+                'icon' => 'warning',
+                'position' => 'top',
+            ]);
+            $this->textoPago = "$ Actualizar pago";
+            $this->nombre_pago = $existingPayment->nombre_pago;
+            $this->tipo_pago = $existingPayment->tipo_pago;
+            $this->monto = $existingPayment->monto;
+            $this->descuento = $existingPayment->descuento;
+            $this->fecha_pago = $existingPayment->fecha_pago;
+            $this->observaciones = $existingPayment->observaciones;
+
+            } else {
+                // Si no existe un pago, se muestra un mensaje de que se puede registrar un nuevo pago
+                $this->dispatch('swal', [
+                    'title' => 'Colegiatura disponible. Puedes registrar un nuevo pago',
+                    'icon' => 'success',
+                    'position' => 'top',
+                ]);
+            $this->textoPago = "$ Pagar";
+            $this->nombre_pago = '';
+            $this->tipo_pago = '';
+            $this->monto = 0;
+            $this->descuento = 0;
+            $this->fecha_pago = '';
+            $this->observaciones = '';
+            }
+        }
+
+        $this->validateOnly($propertyName);
+
     }
 
     public function mount() // Se ejecuta al cargar el componente
     {
         $this->descuento = 0;
+        $this->monto = 0;
+
+
+
     }
 
 
     public function guardarPago(){
 
-
-       dd($this->validate());
+        $this->validate();
 
         $alumno = Student::find($this->alumnoSeleccionadoId);
 
         $total = $this->monto - $this->descuento;
 
         if ($alumno) {
+
+            // Verifica si ya existe un pago para el alumno y el mes seleccionado para actualizarlo
             $pagoExistente = ModelsColegiatura::where('student_id', $this->alumnoSeleccionadoId)
+            ->where('month_id', $this->month_id)
+            ->latest()
             ->first();
 
             if ($pagoExistente) {
@@ -205,11 +275,13 @@ class Colegiatura extends Component
             ]);
 
 
-            $this->dispatch('refreshInscripcion');
+            $this->dispatch('refreshColegiatura'); // actualizar la tabla
 
 
             } else {
-            ModelsColegiatura::create([
+
+
+            ModelsColegiatura::create([ // Si no existe un pago, se crea uno nuevo con los datos del formulario
                 'nombre_pago' => $this->nombre_pago,
                 'monto' => $this->monto,
                 'descuento' => $this->descuento,
@@ -227,7 +299,7 @@ class Colegiatura extends Component
                 'icon' => 'success',
                 'position' => 'top',
             ]);
-            $this->dispatch('refreshInscripcion');
+            $this->dispatch('refreshColegiatura'); // actualizar la tabla
             }
 
             $this->reset([
@@ -263,7 +335,23 @@ class Colegiatura extends Component
 
     public function render()
     {
-        $meses = Month::all();
+        /**
+         * Recupera todos los meses y verifica si existe un pago para el estudiante seleccionado y cada mes.
+         *
+         * Esta función obtiene todos los meses del modelo Month y mapea cada mes para determinar
+         * si existe un pago para el estudiante seleccionado (alumnoSeleccionadoId) y el mes actual.
+         * Agrega una propiedad 'hasPayment' a cada mes indicando si existe un pago.
+         *
+         * @return \Illuminate\Support\Collection Una colección de meses con una propiedad adicional 'hasPayment'.
+         */
+        $meses = Month::all()->map(function ($month) {
+            $month->hasPayment = ModelsColegiatura::where('student_id', $this->alumnoSeleccionadoId) // Verifica si ya existe un pago para el alumno y el mes seleccionado para actualizarlo
+            ->where('month_id', $month->id)
+            ->exists();
+            return $month;
+        });
+
+
         return view('livewire.action.colegiatura', compact('meses'));
     }
 }

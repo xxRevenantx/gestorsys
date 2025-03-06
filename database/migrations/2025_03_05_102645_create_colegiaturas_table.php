@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('comprobante')->nullable();
             $table->string('folio');
             $table->text('observaciones')->nullable();
-            $table->timestamp('fecha_pago');
+            $table->date('fecha_pago');
 
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
