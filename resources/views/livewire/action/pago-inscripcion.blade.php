@@ -59,7 +59,7 @@
 
 
                 @if (!empty($alumnos))
-                <ul class="absolute bg-white border mt-1 rounded shadow">
+                <ul class="absolute bg-white border mt-1 rounded shadow z-10">
                     @forelse ($alumnos as $index => $alumno)
                     <li
                         class="p-2 cursor-pointer {{ $selectedIndex === $index ? 'bg-blue-200' : '' }}"
@@ -83,7 +83,13 @@
                 <div class="mb-6 grid grid-cols-2 gap-4">
                   <div class="col-span-2 sm:col-span-1">
                     <label for="nombre_pago" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Recibimos de                    </label>
-                    <input type="text"  wire:model.live="nombre_pago" id="nombre_pago" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"  />
+                    <input type="text"  wire:model.live="nombre_pago" id="nombre_pago"
+                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500
+                     focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500
+                      dark:focus:ring-primary-500
+                      @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                      @if(!$habilitarInput) disabled  @endif
+                       />
                     @error('nombre_pago')
                     <span class="text-red-500">{{ $message }}</span>
                   @enderror
@@ -92,7 +98,13 @@
 
                   <div class="col-span-2 sm:col-span-1">
                     <label for="card-number-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Tipo de pago </label>
-                    <select id="tipo_pago" wire:model.live="tipo_pago"  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" >
+                    <select id="tipo_pago" wire:model.live="tipo_pago"
+                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500
+                     focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400
+                     dark:focus:border-primary-500 dark:focus:ring-primary-500
+                     @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                      @if(!$habilitarInput) disabled  @endif
+                     >
                         <option value="">--Selecciona el tipo de pago---</option>
                         <option value="Efectivo">Efectivo</option>
                         <option value="Tarjeta">Tarjeta</option>
@@ -109,7 +121,13 @@
                       Monto
 
                     </label>
-                    <input type="number" wire:model.live='monto' id="monto" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" />
+                    <input type="number" wire:model.live='monto' id="monto" aria-describedby="helper-text-explanation"
+                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5
+                      text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600
+                       dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500
+                       @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                       @if(!$habilitarInput) disabled  @endif
+                       />
                     @error('monto')
                     <span class="text-red-500">{{ $message }}</span>
                     @enderror
@@ -119,7 +137,13 @@
                       descuento
 
                     </label>
-                    <input type="number" min="0" wire:model.live='descuento' id="descuento" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" />
+                    <input type="number" min="0" wire:model.live='descuento' id="descuento" aria-describedby="helper-text-explanation"
+                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500
+                     focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500
+                      dark:focus:ring-primary-500
+                      @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                      @if(!$habilitarInput) disabled  @endif
+                      />
                     @error('descuento')
                     <span class="text-red-500">{{ $message }}</span>
                     @enderror
@@ -137,7 +161,12 @@
                           />
                         </svg>
                       </div>
-                      <input wire:model.live.debounce.500ms='fecha_pago'  id="fecha_pago"  type="date" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"  />
+                      <input wire:model.live.debounce.500ms='fecha_pago'  id="fecha_pago"  type="date" class="block w-full rounded-lg border
+                       border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600
+                        dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500
+                        @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                        @if(!$habilitarInput) disabled  @endif
+                         />
                     </div>
                     @error('fecha_pago')
                     <span class="text-red-500">{{ $message }}</span>
@@ -146,7 +175,12 @@
                   <div>
                     <label for="observaciones" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
                     <div class="relative">
-                      <textarea wire:model.live='observaciones' id="observaciones" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"></textarea>
+                      <textarea wire:model.live='observaciones' id="observaciones" class="block w-full rounded-lg border border-gray-300
+                       bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700
+                        dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500
+                        @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                        @if(!$habilitarInput) disabled  @endif
+                        ></textarea>
                     </div>
                     @error('observaciones')
                     <span class="text-red-500">{{ $message }}</span>
@@ -166,6 +200,7 @@
                 <div class="space-y-4 rounded-lg border border-gray-100 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
                   <div class="space-y-2">
 
+                    @if ($alumnoSeleccionadoId)
                    @isset($pagoExistente)
                    <dl class="flex items-center justify-end gap-4">
                         <dd class="text-base font-medium text-gray-900 dark:text-white">
@@ -176,6 +211,7 @@
                       </dd>
                       </dl>
                    @endisset
+                   @endif
                     <dl class="flex items-center justify-between gap-4">
                       <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Padre O Tutor de: </dt>
                       <dd class="text-base font-medium text-gray-900 dark:text-white">

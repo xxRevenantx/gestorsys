@@ -38,6 +38,10 @@ class MatriculaEscolar extends Component
         if ($propertyName == 'grade_id') {
             $this->resetPage();
             $this->termino = "";
+            if (empty($this->grade_id)) {
+            $this->grupos = [];
+            $this->contarAlumnos = 0;
+            } else {
             $grade = Grade::find($this->grade_id);
             $this->grupos = $grade ? $grade->groups : [];
             $this->contarAlumnos = Student::where('level_id', $this->level_id)
@@ -51,25 +55,29 @@ class MatriculaEscolar extends Component
                 $query->where('genero', $this->genero);
             })
             ->count();
+            }
         }
 
 
         // CUANDO CAMBIE EL CAMPO genero, VOLVER A CONTAR LOS ALUMNOS QUE HAY EN LA TABLA
         if($propertyName == 'genero'){
             $this->resetPage();
-             $this->termino = "";
+            $this->termino = "";
+            if (empty($this->genero)) {
+            $this->contarAlumnos = 0;
+            } else {
             $this->contarAlumnos = Student::where('level_id', $this->level_id)
             ->when($this->genero, function ($query) {
-            $query->where('genero', $this->genero);
+                $query->where('genero', $this->genero);
             })
             ->when($this->grade_id, function ($query) {
-            $query->where('grade_id', $this->grade_id);
+                $query->where('grade_id', $this->grade_id);
             })
             ->when($this->group_id, function ($query) {
-            $query->where('group_id', $this->group_id);
+                $query->where('group_id', $this->group_id);
             })
-
             ->count();
+            }
         }
 
 
@@ -77,32 +85,33 @@ class MatriculaEscolar extends Component
         if($propertyName == 'group_id'){
             $this->resetPage();
             $this->termino = "";
+            if (empty($this->group_id)) {
+            $this->contarAlumnos = 0;
+            } else {
             $this->contarAlumnos = Student::where('level_id', $this->level_id)
             ->when($this->group_id, function ($query) {
-            $query->where('group_id', $this->group_id);
+                $query->where('group_id', $this->group_id);
             })
             ->when($this->grade_id, function ($query) {
-            $query->where('grade_id', $this->grade_id);
+                $query->where('grade_id', $this->grade_id);
             })
             ->when($this->genero, function ($query) {
-            $query->where('genero', $this->genero);
+                $query->where('genero', $this->genero);
             })
-
             ->count();
+            }
         }
 
 
         if($propertyName == 'termino'){
             if (empty($this->termino)) {
                 $this->resetPage();
-            $this->contarAlumnos = Student::where('level_id', $this->level_id)->count();
+                $this->contarAlumnos = 0;
             } else {
                 $this->resetPage();
                 $this->grade_id = null;
                 $this->group_id = null;
                 $this->genero = null;
-                $this->contarAlumnos = 0;
-
 
             $this->contarAlumnos = Student::where('level_id', $this->level_id)
             ->where(function ($query) {

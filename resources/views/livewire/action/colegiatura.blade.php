@@ -22,8 +22,8 @@
                            <!-- Modal content -->
                            <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
                                <!-- Modal header -->
-                               <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                                   <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                               <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200 bg-indigo-700">
+                                   <h3 class="text-lg font-semibold text-white dark:text-white ">
                                       Recibos de Pago
                                    </h3>
 
@@ -257,18 +257,32 @@
            <div class="space-y-4 rounded-lg border border-gray-100 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
              <div class="space-y-2">
 
-            @if ($month_id)
-                @isset($existingPayment)
+
                     <dl class="flex items-center justify-end gap-4">
+
+                        @if ($month_id)
+                        @isset($existingPayment)
                         <dd class="text-base font-medium text-gray-900 dark:text-white">
                             <a target="_blank" href="{{route('admin.recibo.colegiatura', ['alumno' => $alumnoSeleccionadoId, 'mes' => $month_id])}}" class="flex items-center justify-end mt-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
                                 <i class="mdi mdi-file-pdf-outline mr-2"></i>
                                 Descargar Recibo
                             </a>
                         </dd>
+                        @endisset
+                        @endif
+                        @isset($alumnoSeleccionadoId)
+                        <dd class="text-base font-medium text-gray-900 dark:text-white">
+                            <a target="_blank" href="{{route('admin.estado.cuenta', $alumnoSeleccionadoId )}}" class="flex items-center justify-end mt-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                <i class="mdi mdi-file-pdf-outline mr-2"></i>
+                                Descargar estado de cuenta
+                            </a>
+                        </dd>
+                        @endisset
                     </dl>
-                @endisset
-            @endif
+
+
+
+
 
 
                <dl class="flex items-center justify-between gap-4">

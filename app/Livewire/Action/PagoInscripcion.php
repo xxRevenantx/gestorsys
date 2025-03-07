@@ -24,6 +24,7 @@ class PagoInscripcion extends Component
 
     // VARIABLES DE PAGO
     public $pagoExistente = null;
+    public $habilitarInput = false; // Estado del botón de pago
     public $textoPago = "$ Pagar";
     public $query = ''; // Input del usuario
     public $nombre_pago;
@@ -92,12 +93,16 @@ class PagoInscripcion extends Component
             $this->descuento = 0;
             $this->fecha_pago = '';
             $this->observaciones = '';
+            $this->habilitarInput = false; //Desabilitar los input cuando se escriba, solo hasta que seleccione un alumno
 
 
         } else {
 
             // Limpia los resultados si el input está vacío o tiene menos de 2 caracteres de longitud
             $this->alumnos = [];
+            $this->alumnoSeleccionadoId = null;
+            $this->selectedIndex = 0;
+            $this->query = '';
             $this->matricula = '';
             $this->nombre = '';
             $this->apellido_paterno = '';
@@ -111,6 +116,7 @@ class PagoInscripcion extends Component
             $this->observaciones = '';
 
             $this->textoPago = "$ Pagar";
+            $this->habilitarInput = false; //Desabillitarlos inputs  si no hay nada en el input de alumno
 
         }
     }
@@ -122,7 +128,7 @@ class PagoInscripcion extends Component
             $this->query = $this->alumnos[$index]['nombre'] . ' ' . $this->alumnos[$index]['apellido_paterno'] . ' ' . $this->alumnos[$index]['apellido_materno'];
             $this->alumnoSeleccionadoId = $this->alumnos[$index]['id']; // Obtiene el ID del alumno seleccionado
             $this->alumnos = []; // Limpia los resultados
-
+            $this->habilitarInput = true; //Habilitar los input al selecciona un alumnos
             $alumno = Student::find($this->alumnoSeleccionadoId);
 
             // Llena los campos del formulario con los datos del alumno seleccionado si existe en la base de datos
@@ -133,6 +139,7 @@ class PagoInscripcion extends Component
             $this->apellido_paterno = $alumno->apellido_paterno;
             $this->apellido_materno = $alumno->apellido_materno;
             $this->CURP = $alumno->CURP;
+            $this->habilitarInput = true; //Habilitar los input al selecciona un alumnos
 
 
             // Verifica si el alumno tiene un pago existente, si ya hay un pago se llenan los datos del fomrulario para editar
@@ -150,12 +157,23 @@ class PagoInscripcion extends Component
         }
     }
 
-    public function updatedDescuento($value){ // Se ejecuta al modificar el descuento para validar que no sea nulo y asignar 0 si es así (para evitar errores)
-        if (empty($value)) {
+    public function updated($propertyName){ // Se ejecuta al modificar el descuento para validar que no sea nulo y asignar 0 si es así (para evitar errores)
+
+        if (empty($this->descuento)) {
             $this->descuento = 0;
-        } else {
-            $this->descuento = $value;
         }
+        if(empty($this->monto)){
+            $this->monto = 0;
+            }
+
+            // SI SE SELECCIONÓ UN ALUMNO QUE SE HABILITEN LOS BOTONES
+        if ($this->alumnoSeleccionadoId) {
+            $this->habilitarInput = true;
+        } else {
+            $this->habilitarInput = false;
+        }
+
+        $this->validateOnly($propertyName);
     }
 
     public function mount() // Se ejecuta al cargar el componente

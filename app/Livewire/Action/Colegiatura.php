@@ -47,7 +47,7 @@ class Colegiatura extends Component
         'nombre_pago' => 'required|string',
         'tipo_pago' => 'required|string|in:Efectivo,Tarjeta,Transferencia',
         'month_id' => 'required|exists:months,id',
-        'monto' => 'required|numeric|min:1',
+        'monto' => 'required|numeric|min:1|max:999999',
         'descuento' => 'nullable|numeric|min:0',
         'fecha_pago' => 'required|date',
         'observaciones' => 'nullable|string',
@@ -65,6 +65,7 @@ class Colegiatura extends Component
         'month_id.exists' => 'El mes seleccionado no es válido',
         'monto.required' => 'El campo monto es obligatorio',
         'monto.min' => 'El campo monto debe ser mayor a 0',
+        'monto.max' => 'El campo monto debe ser menor a 999999',
         'descuento.numeric' => 'El campo descuento debe ser un número',
         'descuento.min' => 'El campo descuento debe ser mayor o igual a 0',
         'descuento.required' => 'El campo descuento es obligatorio',
@@ -105,7 +106,7 @@ class Colegiatura extends Component
             $this->descuento = 0;
             $this->fecha_pago = '';
             $this->observaciones = '';
-            // $this->habilitarInput = true; //Habilitar los input al selecciona un alumnos
+            $this->habilitarInput = false; //Desabilitar los input cuando se escriba, solo hasta que seleccione un alumno
 
         } else {
 
@@ -297,6 +298,8 @@ class Colegiatura extends Component
                 'level_id' => $this->level_id,
                 'observaciones' => $this->observaciones,
             ]);
+
+            $this->habilitarInput = false; //Habilitar los input al selecciona un alumnos
 
             $this->dispatch('swal', [
                 'title' => '¡Pago registrado correctamente!',

@@ -71,6 +71,19 @@ class PDFLevelController extends Controller
         return $pdf->stream("Recibo de colegiatura de ". $student->nombre." ".$student->apellido_paterno. " ".$student->apellido_materno. " - ".$student->CURP .".pdf");
     }
 
+    // ESTADO DE CUENTA DE LAS COLEGIATURAS
+    public function estadoCuenta ($alumno)
+    {
+        $student = Student::findOrFail($alumno);
+        $colegiaturas = Colegiatura::where('student_id', $alumno)->orderBy('month_id', 'asc')->get();
+        $data = [
+            'colegiaturas' => $colegiaturas,
+            'student' => $student,
+        ];
+        $pdf = Pdf::loadView('admin.PDF.estado-cuenta', $data)->setPaper('legal', 'landscape');
+        return $pdf->stream("Estado de cuenta de ". $student->nombre." ".$student->apellido_paterno. " ".$student->apellido_materno. " - ".$student->CURP .".pdf");
+    }
+
 
 
 

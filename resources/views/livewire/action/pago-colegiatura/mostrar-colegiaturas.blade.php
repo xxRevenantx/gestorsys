@@ -14,7 +14,7 @@
             wire:model.live="termino"
             id="termino"
             type="text"
-            placeholder="Buscar por Nombre, CURP, Matrícula, Folio, Tipo de pago"
+            placeholder="Buscar por Nombre, CURP, Matrícula, Folio, Tipo de pago, Fecha de pago, Mes de pago"
             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full"
         />
 
@@ -24,7 +24,10 @@
 
 
 </div>
-<p class="text-sm font-normal text-gray-500 dark:text-gray-400">Recibos de pago</p>
+<h3 class="text-lg font-semibold text-slate-800 text-center my-3">
+    Total:  {{ $totalRegistros }} {{ $totalRegistros == 1 ? 'registro' : 'registros' }} |
+     <span class="text-indigo-700">  {{ $contar }} {{ $contar == 1 ? 'Registro' : 'Registros' }} filtrados</span>
+ </h3>
 
 @include('admin.partials.loader')
 <table class="min-w-full divide-y divide-gray-200">
@@ -33,13 +36,24 @@
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
            Folio
         </th>
-
-        {{-- @foreach ($meses as $mes)
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {{$mes->mes}}
-         </th>
-        @endforeach --}}
-
+            Matrícula
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            CURP
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Nombre
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Fecha de Pago
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+           Tipo de pago
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Mes de Pago
+        </th>
 
 
 
@@ -59,15 +73,23 @@
             {{ $colegiatura->student->matricula }}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-            {{ $colegiatura->student->nombre }} {{ $colegiatura->student->apellido_paterno }} {{ $colegiatura->student->apellido_materno }}
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
             {{ $colegiatura->student->CURP }}
         </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            {{ $colegiatura->student->nombre }} {{ $colegiatura->student->apellido_paterno }} {{ $colegiatura->student->apellido_materno }}
+        </td>
+
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            {{ \Carbon\Carbon::parse($colegiatura->fecha_pago)->format('d/m/Y') }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            {{ $colegiatura->tipo_pago }}
+
+        </td>
 
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
 
-            <button class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600">  {{ $colegiatura->month->mes }}</button>
+            <a target="_blank" href="{{route('admin.recibo.colegiatura', ['alumno' => $colegiatura->student->id, 'mes' => $colegiatura->month_id])}}"  class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600">  {{ $colegiatura->month->mes }}</a>
         </td>
 
 
@@ -77,5 +99,12 @@
     @endforeach
 </tbody>
 </table>
+
+<div class="mt-4">
+    {{ $colegiaturas->links() }}
+ </div>
+
 </div>
+
+
 </div>
