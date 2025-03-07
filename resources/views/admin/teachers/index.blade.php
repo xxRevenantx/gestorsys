@@ -5,7 +5,7 @@
 
     ],
     [
-        'name' => 'Tutores',
+        'name' => 'Profesores',
         'url' => '#',
     ],
 
@@ -26,7 +26,7 @@
 @endif
 
 
-@livewire('tutor.crear-tutor', ['lazy' => true])
-@livewire('tutor.mostrar-tutores', ['lazy' => true])
+{{-- @livewire('tutor.crear-tutor', ['lazy' => true])
+@livewire('tutor.mostrar-tutores', ['lazy' => true]) --}}
 
 </x-admin-layout>

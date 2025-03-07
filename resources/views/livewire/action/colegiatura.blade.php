@@ -37,11 +37,15 @@
 
        <hr class="my-3">
 
+       <button type="button" onclick="location.reload()" class="text-white bg-indigo-500 hover:bg-indigo-600 border border-indigo-200 focus:ring-4 focus:outline-none focus:ring-indigo-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-indigo-600 dark:bg-indigo-800 dark:border-indigo-700 dark:text-white dark:hover:bg-indigo-700">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+    </button>
 
-       <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
+       <div class="mt-3 sm:mt-4 lg:flex lg:items-start lg:gap-12">
+
 
          <form  wire:submit.prevent="guardarPago" class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8">
-            {{-- {{$alumnos}} --}}
+
            <div class="mb-3">
                <label
                class="block mb-1 text-sm text-gray-700 uppercase font-bold "

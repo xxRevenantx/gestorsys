@@ -11,9 +11,12 @@ use App\Http\Controllers\MostrarNivelController;
 use App\Http\Controllers\PagoInscripcionController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PDFLevelController;
+use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TutorController;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,6 +54,12 @@ Route::resource('grados', GradeController::class)->names('grades');
 
 // RUTAS DEL TUTOR
 Route::resource('tutores', TutorController::class)->names('tutors');
+
+//RUTAS DEL PERSONAL
+Route::resource('personal', PersonnelController::class)->names('personnels');
+
+// RUTAS DEL PROFESOR
+Route::resource('profesor', TeacherController::class)->names('teachers');
 
 // RUTAS DEL ESTUDIANTE
 Route::resource('matricula-general', StudentController::class)->names('students');

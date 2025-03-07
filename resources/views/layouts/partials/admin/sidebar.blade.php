@@ -173,6 +173,7 @@
 
                     ),
                 ],
+
                 [
                     'name' => 'Tutores',
                     'icon' => 'fa-regular fa-circle',
@@ -184,6 +185,38 @@
                         'admin.tutors.show',
                     ),
                 ],
+            ]
+        ],
+
+        [
+            'header' => 'PERSONAL',
+            'color' => '#7267EF'
+        ],
+
+        [
+            'name' => 'Personal escolar',
+            'icon' => 'fa-regular fa-user',
+            'active' => request()->routeIs(
+                    'admin.techers.index',
+                    'admin.techers.create',
+                    'admin.techers.edit',
+                    'admin.techers.show',
+            ),
+            'submenu' => [
+
+
+                [
+                    'name' => 'Personal',
+                    'icon' => 'fa-regular fa-circle',
+                    'route' => route('admin.personnels.index'),
+                    'active' => request()->routeIs(
+                        'admin.personnels.index',
+                        'admin.personnels.create',
+                        'admin.personnels.edit',
+                        'admin.personnels.show',
+                    ),
+                ],
+
             ]
         ],
 

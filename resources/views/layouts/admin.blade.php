@@ -9,7 +9,7 @@
 
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-        <link rel="icon" href="/path/to/your/icon.ico" type="image/x-icon">
+        <link rel="icon" href="{{asset('storage/icon.png')}}" type="image/png">
 
         <!-- Fonts -->
         {{-- <link rel="preconnect" href="https://fonts.bunny.net">
@@ -54,8 +54,6 @@
             <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
             <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {{ date('Y') }} <a href="#" class="hover:underline">Carlos Nuñez</a>. Todos los derechos reservados.            </span>
             </div>
-
-
         </footer>
 
 

@@ -261,6 +261,7 @@
             <th class="desc" colspan="1">FECHA DE PAGO</th>
             <th class="desc" colspan="1">MES DE PAGO</th>
             <th class="desc" colspan="1">RECIBIMOS DE</th>
+            <th class="desc" colspan="1">TIPO DE PAGO</th>
             <th class="desc" colspan="1">$ MONTO</th>
             <th class="desc" colspan="1">$ DESCUENTO</th>
             <th class="desc" colspan="1">$ TOTAL</th>
@@ -273,6 +274,7 @@
                 <td class="unit">{{ \Carbon\Carbon::parse($colegiatura->fecha_pago)->format('d/m/Y') }}</td>
                 <td class="unit">{{$colegiatura->month->mes}}</td>
                 <td class="unit">{{$colegiatura->nombre_pago}}</td>
+                <td class="unit">{{$colegiatura->tipo_pago}}</td>
                 <td class="unit">${{number_format($colegiatura->monto, 2)}}</td>
                 <td class="unit">${{number_format($colegiatura->descuento, 2)}}</td>
                 <td class="unit">${{ number_format($colegiatura->total, 2) }}</td>
@@ -286,12 +288,15 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="2"></td>
+            <td colspan="3"></td>
             <td colspan="2">TOTALES</td>
             <td colspan="1">${{ number_format($colegiaturas->sum('monto'), 2) }}</td>
             <td style="color:red" colspan="1">-${{ number_format($colegiaturas->sum('descuento'), 2) }}</td>
             <td colspan="1">
-                <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 227.096 227.096" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <polygon style="fill:#010002;" points="152.835,39.285 146.933,45.183 211.113,109.373 0,109.373 0,117.723 211.124,117.723 146.933,181.902 152.835,187.811 227.096,113.55 "></polygon> </g> </g> </g></svg>
+
+
+
+                <img src="{{ public_path('storage/arrow-up.png') }}" alt="abajo" height="15px" width="15px">
                 ${{ number_format($colegiaturas->sum('total'), 2) }}</td>
           </tr>
         </tfoot>
