@@ -73,9 +73,17 @@
 
     <div class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
             <div class="flex justify-end p-4">
-                <a target="_blank" href="{{ route('admin.lista.alumnos', $level_id) }}" class="flex items-center px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700">
+                @if($grade_id)
+                <a target="_blank" href="{{ route('admin.lista.alumnos', ["level" => $level_id, "grade" => $grade_id,  "gender" =>  $genero]) }}" class="flex items-center px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700">
                     <i class="mdi mdi-file-pdf-outline mr-2"></i> Descargar lista
                 </a>
+
+                @elseif ($genero && $grade_id )
+                <a target="_blank" href="{{ route('admin.lista.alumnos', ["level" => $level_id, "grade" => $grade_id, "gender" => $genero]) }}" class="flex items-center px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700">
+                    <i class="mdi mdi-file-pdf-outline mr-2"></i> Descargar lista
+                </a>
+                @endif
+
             </div>
 
 
@@ -134,7 +142,7 @@
             <tr class="hover:bg-slate-50">
               <td class="p-4 border-b border-slate-200">
                 <p class="block text-sm text-slate-800">
-                    {{ $key+1 }}
+                   {{ $key+1 }}  <i class="fas fa-user"></i>
                 </p>
               </td>
               <td class="p-4 border-b border-slate-200">

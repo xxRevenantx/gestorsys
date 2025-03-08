@@ -174,8 +174,11 @@ class MatriculaEscolar extends Component
                 ->orWhere('apellido_materno', 'like', '%' . $this->termino . '%');
             $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) like ?", ['%' . $this->termino . '%']);
             })
-            ->orderBy('apellido_paterno')
-            ->orderBy('apellido_materno')
+            ->orderByDesc('level_id')
+            ->orderBy('grade_id')
+            ->orderByDesc('apellido_paterno')
+            ->orderByDesc('apellido_materno')
+
 
 
             ->paginate(20);

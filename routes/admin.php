@@ -69,7 +69,7 @@ Route::resource('matricula-general', StudentController::class)->names('students'
 
 // Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');
 Route::get('/expediente-alumno/{alumno}', [PDFLevelController::class, 'expedienteAlumno'])->name('expediente.alumno');
-Route::get('/lista-alumnos/{alumno}', [PDFLevelController::class, 'listaAlumnos'])->name('lista.alumnos');
+Route::get('/lista-alumnos/{level}/{grade}/{gender}', [PDFLevelController::class, 'listaAlumnos'])->name('lista.alumnos');
 Route::get('/recibo-inscripcion/{alumno}', [PDFLevelController::class, 'reciboInscripcion'])->name('recibo.inscripcion');
 
 Route::get('/recibo-colegiatura/{alumno}/{mes}', [PDFLevelController::class, 'reciboColegiatura'])->name('recibo.colegiatura');
@@ -84,6 +84,8 @@ Route::get('/niveles', [MostrarNivelController::class, 'index'])->name('level.in
 Route::get('/niveles/{nivel}', [MostrarNivelController::class, 'nivel'])->name('level.nivel');
 
 Route::get('/niveles/{nivel}/{action}', [MostrarNivelController::class, 'action'])->name('level.action');
+
+
 
 
 // RUTAS DE PAGO DE INSCRIPCIÓN

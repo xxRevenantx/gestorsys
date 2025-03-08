@@ -65,6 +65,10 @@ footer {
     background: #ddd;
     border-radius: 0 0 8px 8px;
 }
+footer p{
+    margin: 0;
+    padding: 0;
+}
 .sm{
     font-size: 8px;
 }
@@ -87,25 +91,30 @@ p{
 
         <h2 class="titulo">ESCUELA</h2>
         <p>LISTA DE EVALUACIÓN</p>
+        <p>GRADO: {{$grade->grado}}° GRUPO:  </p>
 
         <table>
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Matrícula</th>
                     <th>CURP</th>
                     <th>Nombre</th>
+                    <th>Fecha de Nacimiento</th>
                     <th>Edad</th>
-                    <th>Grado</th>
+                    <th>Género</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($students as $student)
+                @foreach($students as $key =>  $student)
                     <tr>
+                        <td>{{ $key+1 }}</td>
                         <td>{{ $student->matricula }}</td>
                         <td>{{ $student->CURP }}</td>
                         <td>{{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno  }} </td>
+                        <td>{{ $student->fecha_nacimiento }}</td>
                         <td>{{ $student->edad }}</td>
-                        <td>{{ $student->grado }}</td>
+                        <td>{{ $student->genero }}</td>
                     </tr>
                 @endforeach
             </tbody>

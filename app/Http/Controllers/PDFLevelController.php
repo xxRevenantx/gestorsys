@@ -36,16 +36,29 @@ class PDFLevelController extends Controller
         return $pdf->stream("Expediente de ". $student->nombre." ".$student->apellido_paterno. " ".$student->apellido_materno. " - ".$student->CURP .".pdf");
     }
 
-    public function listaAlumnos($level_id)
+    public function listaAlumnos($level_id, $grade_id, $genero)
     {
 
+        $students = Student::where('level_id', $level_id)
+            ->where('grade_id', $grade_id)
+            ->where('genero', $genero)
+            ->orderBy('apellido_paterno')
+            ->orderBy('apellido_materno')
+            ->get();
+
         $level = Level::findOrFail($level_id);
-        $students = $level->students;
+        $grade = $level->grades->find($grade_id);
+
+
         $data = [
             'students' => $students,
+            'level' => $level,
+            'grade' => $grade,
         ];
-        $pdf = Pdf::loadView('admin.PDF.lista-alumnos', $data)->setPaper('letter', 'portrait');
-        return $pdf->stream("Lista de alumnos de ". $level->level.".pdf");
+
+        $pdf = Pdf::loadView('admin.PDF.lista-alumnos', $data)->setPaper('letter', 'landscape');
+        return $pdf->stream("Lista de alumnos de ". $level->level." ".$grade->grade.".pdf");
+
     }
 
     public function reciboInscripcion($student_id)
