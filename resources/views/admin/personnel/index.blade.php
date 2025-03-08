@@ -26,7 +26,7 @@
 @endif
 
 
-@livewire('personnel.crear-personal', ['lazy' => true])
-{{-- @livewire('personnel.mostrar-personal', ['lazy' => true]) --}}
+@livewire('personnel.crear-personal')
+@livewire('personnel.mostrar-personal', ['lazy' => true])
 
 </x-admin-layout>

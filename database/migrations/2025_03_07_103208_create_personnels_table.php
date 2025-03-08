@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('personnels', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
+            $table->string('titulo')->nullable();
             $table->string('nombre');
             $table->string('apellido_paterno');
             $table->string('apellido_materno');
-            $table->string('CURP', 18)->unique();
-            $table->string('RFC', 13)->unique();
-            $table->string('email')->unique();
-            $table->string('telefono', 10)->unique();
-            $table->string('direccion');
-            $table->string('perfil');
+            $table->string('CURP', 18)->unique()->nullable();
+            $table->string('RFC', 13)->unique()->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('telefono', 10)->unique()->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('perfil')->nullable();
             $table->timestamps();
         });
     }
