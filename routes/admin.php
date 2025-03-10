@@ -83,7 +83,10 @@ Route::get('/niveles', [MostrarNivelController::class, 'index'])->name('level.in
 
 Route::get('/niveles/{nivel}', [MostrarNivelController::class, 'nivel'])->name('level.nivel');
 
-Route::get('/niveles/{nivel}/{action}', [MostrarNivelController::class, 'action'])->name('level.action');
+Route::get('/niveles/{nivel}/{action}/{grade}', [MostrarNivelController::class, 'action'])->name('level.action');
+
+
+Route::get('/niveles/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'matricula'])->name('level.matricula');
 
 
 

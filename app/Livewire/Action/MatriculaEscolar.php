@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Action;
 
+use App\Models\Action;
 use App\Models\Grade;
 use App\Models\Group;
+use App\Models\Level;
 use App\Models\Student;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -15,6 +17,7 @@ class MatriculaEscolar extends Component
 
     public $level_id;
     public $grade_id;
+
     public $group_id;
     public $genero;
     public $termino;
@@ -25,6 +28,10 @@ class MatriculaEscolar extends Component
     public $contarAlumnos = 0;
     public $totalAlumnos = 0;
 
+    // VARIABLES GET
+    public $level;
+    public $action;
+    public $grade; // GRADO SELECCIONADO
 
 
     public function placeholder(){
@@ -35,28 +42,28 @@ class MatriculaEscolar extends Component
     public function updated($propertyName)
     {
         // OBTENER LOS GRUPOS DE ACUERDO AL GRADO SELECCIONADO Y VOLVER A CONTAR LOS ALUMNOS QUE HAY EN LA TABLA
-        if ($propertyName == 'grade_id') {
-            $this->resetPage();
-            $this->termino = "";
-            if (empty($this->grade_id)) {
-            $this->grupos = [];
-            $this->contarAlumnos = 0;
-            } else {
-            $grade = Grade::find($this->grade_id);
-            $this->grupos = $grade ? $grade->groups : [];
-            $this->contarAlumnos = Student::where('level_id', $this->level_id)
-            ->when($this->grade_id, function ($query) {
-                $query->where('grade_id', $this->grade_id);
-            })
-            ->when($this->group_id, function ($query) {
-                $query->where('group_id', $this->group_id);
-            })
-            ->when($this->genero, function ($query) {
-                $query->where('genero', $this->genero);
-            })
-            ->count();
-            }
-        }
+        // if ($propertyName == 'grade_id') {
+        //     $this->resetPage();
+        //     $this->termino = "";
+        //     if (empty($this->grade_id)) {
+        //     $this->grupos = [];
+        //     $this->contarAlumnos = 0;
+        //     } else {
+        //     $grade = Grade::find($this->grade_id);
+        //     $this->grupos = $grade ? $grade->groups : [];
+        //     $this->contarAlumnos = Student::where('level_id', $this->level_id)
+        //     ->when($this->grade_id, function ($query) {
+        //         $query->where('grade_id', $this->grade_id);
+        //     })
+        //     ->when($this->group_id, function ($query) {
+        //         $query->where('group_id', $this->group_id);
+        //     })
+        //     ->when($this->genero, function ($query) {
+        //         $query->where('genero', $this->genero);
+        //     })
+        //     ->count();
+        //     }
+        // }
 
 
         // CUANDO CAMBIE EL CAMPO genero, VOLVER A CONTAR LOS ALUMNOS QUE HAY EN LA TABLA
@@ -149,17 +156,26 @@ class MatriculaEscolar extends Component
     }
 
     public function mount(){
+
+        // return ($this->grade);
         // CUANDO SE CARGUE EL COMPONENTE QUE LLAME EL TOTAL DE ALUMNOS
         $this->totalAlumnos = Student::where('level_id', $this->level_id)
             ->count();
+
+        $this->level = Level::find($this->level_id);
+        $this->action = Action::where('slug', 'matricula-escolar')->first();
+        $this->grade_id = $this->grade->id; // GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRADOS EN LA VISTA DE MATRICULA ESCOLAR
+
+
     }
 
 
     public function render()
     {
+
         $alumnos = Student::where('level_id', $this->level_id)
-            ->when($this->grade_id, function ($query) {
-            $query->where('grade_id', $this->grade_id);
+            ->when($this->grade->id, function ($query) {
+                $query->where('grade_id', $this->grade->id);
             })
             ->when($this->group_id, function ($query) {
             $query->where('group_id', $this->group_id);
@@ -175,7 +191,7 @@ class MatriculaEscolar extends Component
             $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) like ?", ['%' . $this->termino . '%']);
             })
             ->orderByDesc('level_id')
-            ->orderBy('grade_id')
+            // ->orderBy('grade_id')
             ->orderByDesc('apellido_paterno')
             ->orderByDesc('apellido_materno')
 
@@ -185,9 +201,8 @@ class MatriculaEscolar extends Component
 
         $level_nombre = \App\Models\Level::find($this->level_id)->level;
 
+
         $grados = Grade::where('level_id', $this->level_id)->get();
-
-
 
         return view('livewire.action.matricula-escolar', compact('alumnos', 'level_nombre', 'grados'));
     }

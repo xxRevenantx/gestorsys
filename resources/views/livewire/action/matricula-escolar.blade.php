@@ -1,10 +1,19 @@
 <div class="rounded-lg shadow-lg px-4 py-4 bg-white dark:bg-gray-800">
 
-    {{-- <div  class="relative items-center block max-w-sm p-6 bg-white border border-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-800 dark:hover:bg-gray-700">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white opacity-20">Noteworthy technology acquisitions 2021</h5>
-        <p class="font-normal text-gray-700 dark:text-gray-400 opacity-20">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+<nav
+        class="flex items-center justify-center flex-wrap bg-white py-2 mb-4 lg:px-12 shadow border-solid border-t-2 border-blue-700">
+        <div class="menu w-full lg:block lg:flex lg:items-center lg:w-auto lg:px-3 px-8 justify-center">
+            <div class="text-md font-bold text-blue-700 lg: justify-center">
+                @foreach ($grados as $grado)
+                    <a href="{{ route('admin.level.matricula', ["nivel" => $level, "action" => $action, "grado" => $grado->grado]) }}"
+                       class=" @if ($grado->grado == $grade->grado) text-white bg-blue-700 @else text-blue-700 @endif block mt-4 lg:inline-block lg:mt-0   hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
+                        {{ $grado->grado }}° GRADO
+                    </a>
+                @endforeach
+            </div>
+        </div>
 
-    </div> --}}
+    </nav>
 
 
     <div class="w-full mx-auto px-4 sm:px-6  rounded-lg">
@@ -15,13 +24,10 @@
                     <x-input class="bg-gray-200 w-full" disabled  value="{{$level_nombre}}" />
                 </div>
                 <div class="mb-5">
+
                     <label class="block mb-1 text-sm text-gray-700 uppercase font-bold">Grado</label>
-                    <select wire:model.live="grade_id"  class="block w-full mt-1 bg-gray-200 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        <option value="">--Selecciona un grado--</option>
-                        @foreach ($grados as $grado)
-                            <option value="{{$grado->id}}">{{$grado->grado}}°</option>
-                        @endforeach
-                    </select>
+                        <div class="block h-11 p-3 w-full mt-1 bg-gray-200 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200
+                        focus:ring-opacity-50">{{$grade->grado}}° grado </div>
 
                 </div>
 
@@ -72,7 +78,7 @@
     </div>
 
     <div class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-            <div class="flex justify-end p-4">
+            {{-- <div class="flex justify-end p-4">
                 @if($grade_id)
                 <a target="_blank" href="{{ route('admin.lista.alumnos', ["level" => $level_id, "grade" => $grade_id,  "gender" =>  $genero]) }}" class="flex items-center px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700">
                     <i class="mdi mdi-file-pdf-outline mr-2"></i> Descargar lista
@@ -84,7 +90,7 @@
                 </a>
                 @endif
 
-            </div>
+            </div> --}}
 
 
 

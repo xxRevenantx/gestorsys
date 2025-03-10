@@ -19,5 +19,11 @@ class Action extends Model
 
 
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+
 
 }
