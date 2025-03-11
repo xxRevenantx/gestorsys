@@ -70,9 +70,7 @@ class MatriculaEscolar extends Component
         if($propertyName == 'genero'){
             $this->resetPage();
             $this->termino = "";
-            if (empty($this->genero)) {
-            $this->contarAlumnos = 0;
-            } else {
+
             $this->contarAlumnos = Student::where('level_id', $this->level_id)
             ->when($this->genero, function ($query) {
                 $query->where('genero', $this->genero);
@@ -84,7 +82,7 @@ class MatriculaEscolar extends Component
                 $query->where('group_id', $this->group_id);
             })
             ->count();
-            }
+
         }
 
 
@@ -92,9 +90,7 @@ class MatriculaEscolar extends Component
         if($propertyName == 'group_id'){
             $this->resetPage();
             $this->termino = "";
-            if (empty($this->group_id)) {
-            $this->contarAlumnos = 0;
-            } else {
+
             $this->contarAlumnos = Student::where('level_id', $this->level_id)
             ->when($this->group_id, function ($query) {
                 $query->where('group_id', $this->group_id);
@@ -106,7 +102,7 @@ class MatriculaEscolar extends Component
                 $query->where('genero', $this->genero);
             })
             ->count();
-            }
+
         }
 
 
@@ -121,6 +117,8 @@ class MatriculaEscolar extends Component
                 $this->genero = null;
 
             $this->contarAlumnos = Student::where('level_id', $this->level_id)
+            ->where('status', 1)
+            ->where('grade_id', $this->grade->id)
             ->where(function ($query) {
                 $query->where('CURP', 'like', '%' . $this->termino . '%')
                 ->orWhere('nombre', 'like', '%' . $this->termino . '%')
@@ -135,8 +133,6 @@ class MatriculaEscolar extends Component
 
 
     }
-
-
 
 
     #[On('refreshAlumnos')]
@@ -160,7 +156,15 @@ class MatriculaEscolar extends Component
         // return ($this->grade);
         // CUANDO SE CARGUE EL COMPONENTE QUE LLAME EL TOTAL DE ALUMNOS
         $this->totalAlumnos = Student::where('level_id', $this->level_id)
+            ->where('status', 1)
+            ->where('grade_id', $this->grade->id)
             ->count();
+
+        // GRUPOS
+        $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
+
+
+
 
         $this->level = Level::find($this->level_id);
         $this->action = Action::where('slug', 'matricula-escolar')->first();
@@ -174,8 +178,9 @@ class MatriculaEscolar extends Component
     {
 
         $alumnos = Student::where('level_id', $this->level_id)
+            ->where('status', 1)
             ->when($this->grade->id, function ($query) {
-                $query->where('grade_id', $this->grade->id);
+            $query->where('grade_id', $this->grade->id);
             })
             ->when($this->group_id, function ($query) {
             $query->where('group_id', $this->group_id);
@@ -191,12 +196,10 @@ class MatriculaEscolar extends Component
             $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) like ?", ['%' . $this->termino . '%']);
             })
             ->orderByDesc('level_id')
-            // ->orderBy('grade_id')
-            ->orderByDesc('apellido_paterno')
-            ->orderByDesc('apellido_materno')
-
-
-
+            ->orderByDesc('grade_id')
+            ->orderByDesc('group_id')
+            ->orderBy('apellido_paterno')
+            ->orderBy('apellido_materno')
             ->paginate(20);
 
         $level_nombre = \App\Models\Level::find($this->level_id)->level;

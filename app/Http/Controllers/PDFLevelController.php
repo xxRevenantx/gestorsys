@@ -36,12 +36,11 @@ class PDFLevelController extends Controller
         return $pdf->stream("Expediente de ". $student->nombre." ".$student->apellido_paterno. " ".$student->apellido_materno. " - ".$student->CURP .".pdf");
     }
 
-    public function listaAlumnos($level_id, $grade_id, $genero)
+    public function listaAlumnosGrade($level_id, $grade_id)
     {
 
         $students = Student::where('level_id', $level_id)
             ->where('grade_id', $grade_id)
-            ->where('genero', $genero)
             ->orderBy('apellido_paterno')
             ->orderBy('apellido_materno')
             ->get();
@@ -54,12 +53,69 @@ class PDFLevelController extends Controller
             'students' => $students,
             'level' => $level,
             'grade' => $grade,
+            'group' => null,
         ];
 
         $pdf = Pdf::loadView('admin.PDF.lista-alumnos', $data)->setPaper('letter', 'landscape');
         return $pdf->stream("Lista de alumnos de ". $level->level." ".$grade->grade.".pdf");
 
     }
+    public function listaAlumnosGroup($level_id, $grade_id, $group_id)
+    {
+
+        $students = Student::where('level_id', $level_id)
+            ->where('grade_id', $grade_id)
+            ->where('group_id', $group_id)
+            ->orderBy('apellido_paterno')
+            ->orderBy('apellido_materno')
+            ->get();
+
+        $level = Level::findOrFail($level_id);
+        $grade = $level->grades->find($grade_id);
+        $group = $level->groups->find($group_id);
+
+
+        $data = [
+            'students' => $students,
+            'level' => $level,
+            'grade' => $grade,
+            'group' => $group,
+        ];
+
+        $pdf = Pdf::loadView('admin.PDF.lista-alumnos', $data)->setPaper('letter', 'landscape');
+        return $pdf->stream("Lista de alumnos de ". $level->level." ".$grade->grade.".pdf");
+
+    }
+
+    public function listaAlumnosGroupGender($level_id, $grade_id, $group_id, $gender)
+    {
+
+        $students = Student::where('level_id', $level_id)
+            ->where('grade_id', $grade_id)
+            ->where('group_id', $group_id)
+            ->where('genero', $gender)
+            ->orderBy('apellido_paterno')
+            ->orderBy('apellido_materno')
+            ->get();
+
+        $level = Level::findOrFail($level_id);
+        $grade = $level->grades->find($grade_id);
+        $group = $level->groups->find($group_id);
+
+
+        $data = [
+            'students' => $students,
+            'level' => $level,
+            'grade' => $grade,
+            'group' => $group,
+        ];
+
+        $pdf = Pdf::loadView('admin.PDF.lista-alumnos', $data)->setPaper('letter', 'landscape');
+        return $pdf->stream("Lista de alumnos de ". $level->level." ".$grade->grade.".pdf");
+
+}
+
+
 
     public function reciboInscripcion($student_id)
     {

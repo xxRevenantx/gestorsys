@@ -9,6 +9,7 @@ use Livewire\Component;
 class MostrarMaterias extends Component
 {
     public $level_id;
+    public $grade;
 
 
     public function placeholder(){

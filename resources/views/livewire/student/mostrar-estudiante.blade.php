@@ -176,7 +176,7 @@
                                     <div>
                                         <span class="tracking-wide font-semibold"> <i class="fas fa-user"></i> DATOS DE CONTACTO DEL ALUMNO</span>
                                     </div>
-                                    <a  href="{{route('admin.level.action', ['nivel' => $student->level->slug, 'action' => "datos-del-alumno"]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3  px-4 mb-3 rounded">
+                                    <a  href="{{route('admin.level.action', ['nivel' => $student->level->slug, 'action' => "datos-del-alumno", 'grade' => "1"]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3  px-4 mb-3 rounded">
                                         <i class="fas fa-edit"></i> Modificar datos del alumno
                                     </a>
                                 </div>

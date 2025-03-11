@@ -56,7 +56,7 @@
     @elseif ($action->slug == 'pago-de-colegiaturas')
        <livewire:action.colegiatura :level_id="$level_id" lazy />
     @elseif ($action->slug == 'materias')
-         <livewire:action.materia.mostrar-materias :level_id="$level_id" lazy />
+         <livewire:action.materia.mostrar-materias :level_id="$level_id"  :grade="$grade" lazy />
 
    @endif
 

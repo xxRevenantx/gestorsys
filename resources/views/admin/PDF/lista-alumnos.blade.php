@@ -9,89 +9,90 @@
     <title>Lista de Alumnos</title>
 </head>
 <style>
-    body {
-    /* width: 21.59cm;
-    height: 27.94cm; */
-    /* padding: 20px; */
-    font-family: 'figtree', sans-serif;
-    margin: auto;
-    font-size: 13px;
-}
+        body {
+        /* width: 21.59cm;
+        height: 27.94cm; */
+        /* padding: 20px; */
+        font-family: 'figtree', sans-serif;
+        margin: auto;
+        font-size: 13px;
+    }
 
-.container {
-    margin: -30px auto 0;
-    background: white;
-    /* border-radius: 8px; */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-
-.fecha {
-    font-size: 16px;
-    font-weight: bold;
-}
+    .container {
+        margin: -30px auto 0;
+        background: white;
+        /* border-radius: 8px; */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 10px 0;
-}
+    .fecha {
+        font-size: 16px;
+        font-weight: bold;
+    }
 
-th, td {
-    border: 1px solid #8a8a8a;
-    padding: 8px;
-    text-align: left;
-}
-td{
-    text-align: center;
-}
 
-th {
-    background: #ccc;
-    font-weight: bold;
-    text-align: center
-}
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+    }
 
-p.nota {
-    font-size: 14px;
-    color: red;
-}
+    th, td {
+        border: 1px solid #8a8a8a;
+        padding: 8px;
+        text-align: left;
+    }
+    td{
+        text-align: center;
+    }
 
-footer {
-    text-align: center;
-    font-size: 12px;
-    padding: 5px;
-    background: #ddd;
-    border-radius: 0 0 8px 8px;
-}
-footer p{
-    margin: 0;
-    padding: 0;
-}
-.sm{
-    font-size: 8px;
-}
-.titulo{
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    margin: 10px 0;
-}
-p{
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-}
+    th {
+        background: #ccc;
+        font-weight: bold;
+        text-align: center
+    }
+
+    p.nota {
+        font-size: 14px;
+        color: red;
+    }
+
+    footer {
+        text-align: center;
+        font-size: 12px;
+        padding: 5px;
+        background: #ddd;
+        border-radius: 0 0 8px 8px;
+    }
+    footer p{
+        margin: 0;
+        padding: 0;
+    }
+    .sm{
+        font-size: 8px;
+    }
+    .titulo{
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+    p{
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
 
 </style>
 <body>
+
 
     <div class="container">
 
         <h2 class="titulo">ESCUELA</h2>
         <p>LISTA DE EVALUACIÓN</p>
-        <p>GRADO: {{$grade->grado}}° GRUPO:  </p>
+        <p>GRADO: {{$grade->grado}}° GRUPO: {{ $group != null ? $group->grupo : "TODOS" }} </p>
 
         <table>
             <thead>
@@ -112,7 +113,7 @@ p{
                         <td>{{ $student->matricula }}</td>
                         <td>{{ $student->CURP }}</td>
                         <td>{{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno  }} </td>
-                        <td>{{ $student->fecha_nacimiento }}</td>
+                        <td>{{ \Carbon\Carbon::parse($student->fecha_nacimiento)->format('d/m/Y') }}</td>
                         <td>{{ $student->edad }}</td>
                         <td>{{ $student->genero }}</td>
                     </tr>
