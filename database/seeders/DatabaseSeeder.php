@@ -34,6 +34,8 @@ class DatabaseSeeder extends Seeder
             // StudentSeeder::class,
             ActionSeeder::class,
             MonthSeeder::class,
+            CamposFormativoSeeder::class,
+            // MateriaSeeder::class,
         ]);
 
 

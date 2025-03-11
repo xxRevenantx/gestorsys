@@ -92,10 +92,13 @@ Route::get('/niveles/{nivel}', [MostrarNivelController::class, 'nivel'])->name('
 Route::get('/niveles/{nivel}/{action}/{grade}', [MostrarNivelController::class, 'action'])->name('level.action');
 
 
-Route::get('/niveles/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'matricula'])->name('level.matricula');
+Route::get('/niveles/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'matricula'])->name('level.grados');
 
 
 
 
 // RUTAS DE PAGO DE INSCRIPCIÓN
 Route::resource('/pago-inscripcion', PagoInscripcionController::class)->names('pago-inscripcion');
+
+// RUTAS DE LAS MATERIAS
+// Route::get('/niveles/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'materias'])->name('level.materias');

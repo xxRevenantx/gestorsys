@@ -13,6 +13,22 @@ return new class extends Migration
     {
         Schema::create('materias', function (Blueprint $table) {
             $table->id();
+            $table->string('materia');
+            $table->string('slug')->unique();
+            $table->string('clave')->unique()->nullable();
+            $table->unsignedBigInteger('level_id')->nullable();
+            $table->unsignedBigInteger('grade_id')->nullable();
+            $table->unsignedBigInteger('campo_formativo_id')->nullable();
+            $table->enum('calificacion', ['0', '1']);
+            $table->integer('sort');
+
+
+
+
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('cascade');
+            $table->foreign('campo_formativo_id')->references('id')->on('campos_formativos')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
