@@ -5,20 +5,55 @@ namespace App\Livewire;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Personnel;
+use Illuminate\Database\Eloquent\Builder;
 
 class PersonnelTable extends DataTableComponent
 {
     protected $model = Personnel::class;
 
+    protected $listeners = ['resfreshTable' => '$refresh'];
+
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id')
+        ->setReorderEnabled();
+        $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que deseas eliminar el personal seleccionado(s)?');
+
+
+        $this->setBulkActions([
+            'deleteSelected' => 'Eliminar',
+        ]);
+    }
+
+    public function deleteSelected()
+    {
+        foreach($this->getSelected() as $item)
+        {
+           $eliminar = Personnel::find($item);
+              $eliminar->delete();
+
+            // $this->dispatch('generacion');
+        }
+        $this->clearSelected();
     }
 
     public function columns(): array
     {
         return [
+            Column::make('Acciones')
+                ->label(
+                    fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
+                        [
+                            'editLink' => route('admin.personnels.edit', $row),
+                            'viewLink' => route('admin.personnels.show', $row),
+
+                        ]
+                    )
+                )->html(),
+
             Column::make("Id", "id")
+                ->sortable(),
+            Column::make("#", "sort")
                 ->sortable(),
             Column::make("Titulo", "titulo")
                 ->sortable(),
@@ -45,5 +80,18 @@ class PersonnelTable extends DataTableComponent
             Column::make("Updated at", "updated_at")
                 ->sortable(),
         ];
+    }
+
+    public function reorder($items): void
+    {
+        foreach ($items as $item) {
+            Personnel::find($item[$this->getPrimaryKey()])->update(['sort' => (int)$item[$this->getDefaultReorderColumn()]]);
+        }
+    }
+
+    public function builder(): Builder
+    {
+        return Personnel::query()
+        ->orderBy('personnels.sort', 'asc');
     }
 }

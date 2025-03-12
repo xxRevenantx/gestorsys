@@ -2,12 +2,11 @@
 
 namespace App\Livewire\Personnel;
 
-use App\Models\Personnel;
-use Faker\Provider\ar_EG\Person;
 use Livewire\Component;
 
-class CrearPersonal extends Component
+class EditarPersonal extends Component
 {
+    public $personnel;
     public $titulo;
     public $nombre;
     public $apellido_paterno;
@@ -21,15 +20,27 @@ class CrearPersonal extends Component
     public $genero;
 
 
+    public function mount($personnel)
+    {
+        $this->personnel = $personnel;
+        $this->titulo = $personnel->titulo;
+        $this->nombre = $personnel->nombre;
+        $this->apellido_paterno = $personnel->apellido_paterno;
+        $this->apellido_materno = $personnel->apellido_materno;
+        $this->CURP = $personnel->CURP;
+        $this->RFC = $personnel->RFC;
+        $this->email = $personnel->email;
+        $this->telefono = $personnel->telefono;
+        $this->direccion = $personnel->direccion;
+        $this->perfil = $personnel->perfil;
+        $this->genero = $personnel->genero;
+    }
+
     protected $rules = [
         'titulo' => 'required',
         'nombre' => 'required',
         'apellido_paterno' => 'required',
         'apellido_materno' => 'required',
-        'CURP' => 'nullable|unique:personnels,CURP|max:18|min:18',
-        'RFC' => 'nullable|unique:personnels,RFC',
-        'email' => 'nullable|email|unique:personnels,email',
-        'telefono' => 'nullable|unique:personnels,telefono|max:10|min:10',
         'direccion' => 'nullable|max:255',
         'perfil' => 'required',
         'genero' => 'required|in:H,M',
@@ -40,19 +51,6 @@ class CrearPersonal extends Component
         'nombre.required' => 'El campo nombre es requerido',
         'apellido_paterno.required' => 'El campo apellido paterno es requerido',
         'apellido_materno.required' => 'El campo apellido materno es requerido',
-        'CURP.required' => 'El campo CURP es requerido',
-        'CURP.unique' => 'El CURP ya existe',
-        'CURP.max' => 'El CURP debe tener 18 caracteres',
-        'CURP.min' => 'El CURP debe tener 18 caracteres',
-        'RFC.required' => 'El campo RFC es requerido',
-        'RFC.unique' => 'El RFC ya existe',
-        'email.email' => 'El email no es válido',
-        'email.unique' => 'El email ya existe',
-        'telefono.required' => 'El campo teléfono es requerido',
-        'telefono.numeric' => 'El teléfono debe ser numérico',
-        'telefono.unique' => 'El teléfono ya existe',
-        'telefono.max' => 'El teléfono debe tener 10 caracteres',
-        'telefono.min' => 'El teléfono debe tener 10 caracteres',
         'direccion.required' => 'El campo dirección es requerido',
         'direccion.max' => 'La dirección debe tener máximo 255 caracteres',
         'perfil.required' => 'El campo perfil es requerido',
@@ -61,11 +59,26 @@ class CrearPersonal extends Component
     ];
 
 
+    public function actualizarPersonal(){
+        $this->validate([
+            'CURP' => 'nullable|unique:personnels,CURP,'.$this->personnel->id.'|max:18|min:18',
+            'RFC' => 'nullable|unique:personnels,RFC,'.$this->personnel->id,
+            'email' => 'nullable|email|unique:personnels,email,'.$this->personnel->id,
+            'telefono' => 'nullable|unique:personnels,telefono,'.$this->personnel->id.'|max:10|min:10',
+        ],[
+            'CURP.unique' => 'El CURP ya existe',
+            'CURP.max' => 'El CURP debe tener 18 caracteres',
+            'CURP.min' => 'El CURP debe tener 18 caracteres',
+            'RFC.unique' => 'El RFC ya existe',
+            'email.email' => 'El email no es válido',
+            'email.unique' => 'El email ya existe',
+            'telefono.unique' => 'El teléfono ya existe',
+            'telefono.max' => 'El teléfono debe tener 10 caracteres',
+            'telefono.min' => 'El teléfono debe tener 10 caracteres',
 
-    public function guardarPersonal(){
-        $this->validate();
+        ]);
 
-        Personnel::create([
+        $this->personnel->update([
             'titulo' => $this->titulo,
             'nombre' => trim(strtoupper($this->nombre)),
             'apellido_paterno' => trim(strtoupper($this->apellido_paterno)),
@@ -77,25 +90,17 @@ class CrearPersonal extends Component
             'direccion' => trim(strtoupper($this->direccion)),
             'perfil' => trim(strtoupper($this->perfil)),
             'genero' => $this->genero,
-
         ]);
 
-
-        $this->reset();
         $this->dispatch('swal', [
-            'title' => 'Nuevo personal adscrito',
+            'title' => 'Personal Actualizado correctamente',
             'icon' => 'success',
             'position' => 'top',
         ]);
-
-        $this->dispatch('resfreshTable');
     }
-
-
-
 
     public function render()
     {
-        return view('livewire.personnel.crear-personal');
+        return view('livewire.personnel.editar-personal');
     }
 }

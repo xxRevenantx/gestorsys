@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+#[ObservedBy(\App\Observers\PersonnelObserver::class)]
 
 class Personnel extends Model
 {
@@ -21,11 +24,16 @@ class Personnel extends Model
         'telefono',
         'direccion',
         'perfil',
+        'genero',
+        'foto',
+        'sort',
     ];
 
     public function teacher(){
         return $this->hasOne(Teacher::class);
     }
+
+
 
 
 

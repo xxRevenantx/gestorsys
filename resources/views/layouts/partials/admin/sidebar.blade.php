@@ -197,14 +197,16 @@
             'name' => 'Personal escolar',
             'icon' => 'fa-regular fa-user',
             'active' => request()->routeIs(
-                    'admin.techers.index',
-                    'admin.techers.create',
-                    'admin.techers.edit',
-                    'admin.techers.show',
+                    'admin.teachers.index',
+                    'admin.teachers.create',
+                    'admin.teachers.edit',
+                    'admin.teachers.show',
+                    'admin.personnels.index',
+                        'admin.personnels.create',
+                        'admin.personnels.edit',
+                        'admin.personnels.show',
             ),
             'submenu' => [
-
-
                 [
                     'name' => 'Personal',
                     'icon' => 'fa-regular fa-circle',
@@ -214,6 +216,17 @@
                         'admin.personnels.create',
                         'admin.personnels.edit',
                         'admin.personnels.show',
+                    ),
+                ],
+                [
+                    'name' => 'Asignación de personal',
+                    'icon' => 'fa-regular fa-circle',
+                    'route' => route('admin.teachers.index'),
+                    'active' => request()->routeIs(
+                        'admin.teachers.index',
+                        'admin.teachers.create',
+                        'admin.teachers.edit',
+                        'admin.teachers.show',
                     ),
                 ],
 

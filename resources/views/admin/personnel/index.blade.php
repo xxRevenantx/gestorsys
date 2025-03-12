@@ -27,6 +27,6 @@
 
 
 @livewire('personnel.crear-personal')
-@livewire('personnel.mostrar-personal', ['lazy' => true])
+@livewire('personnel.mostrar-personals', ['lazy' => true])
 
 </x-admin-layout>

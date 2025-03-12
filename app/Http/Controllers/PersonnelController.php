@@ -35,17 +35,19 @@ class PersonnelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Personnel $personnel)
+    public function show($personnel_id)
     {
-        //
+        $personnel = Personnel::findOrFail($personnel_id);
+        return view('admin.personnel.show', compact('personnel'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Personnel $personnel)
+    public function edit($personnel_id)
     {
-        //
+        $personnel = Personnel::findOrFail($personnel_id);
+        return view('admin.personnel.edit', compact('personnel'));
     }
 
     /**

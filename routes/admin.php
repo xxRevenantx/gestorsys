@@ -59,7 +59,7 @@ Route::resource('tutores', TutorController::class)->names('tutors');
 Route::resource('personal', PersonnelController::class)->names('personnels');
 
 // RUTAS DEL PROFESOR
-Route::resource('profesor', TeacherController::class)->names('teachers');
+Route::resource('asignacion-personal', TeacherController::class)->names('teachers');
 
 // RUTAS DEL ESTUDIANTE
 Route::resource('matricula-general', StudentController::class)->names('students');

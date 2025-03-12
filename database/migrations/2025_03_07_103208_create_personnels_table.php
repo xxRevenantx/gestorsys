@@ -18,11 +18,14 @@ return new class extends Migration
             $table->string('apellido_paterno');
             $table->string('apellido_materno');
             $table->string('CURP', 18)->unique()->nullable();
-            $table->string('RFC', 13)->unique()->nullable();
+            $table->string('RFC')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('telefono', 10)->unique()->nullable();
             $table->string('direccion')->nullable();
             $table->string('perfil')->nullable();
+            $table->enum('genero', ['H', 'M']);
+            $table->string('foto')->nullable();
+            $table->integer('sort');
             $table->timestamps();
         });
     }
