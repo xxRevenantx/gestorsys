@@ -28,7 +28,7 @@ class Materia extends Model
         return $this->belongsTo(Teacher::class);
     }
 
-    public function camposFormativo(){
+    public function campoFormativo(){
         return $this->belongsTo(CamposFormativo::class);
     }
 }

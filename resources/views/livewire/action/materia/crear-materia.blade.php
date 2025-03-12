@@ -1,5 +1,7 @@
 <div>
 @include('admin.partials.loader')
+
+
 <section class=" py-1">
 <div class="w-full lg:w-12/12 px-4 mx-auto mt-6">
   <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg border-0">
@@ -43,7 +45,7 @@
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                 Clave
               </label>
-              <x-input wire:mode.live='clave' type="text" class="w-full" />
+              <x-input wire:model.live='clave' type="text" class="w-full" />
                 @error('clave')
                     <span class="text-red-500">{{ $message }}</span>
                 @enderror
@@ -99,4 +101,7 @@
 
 </div>
 </section>
+
+
+
 </div>

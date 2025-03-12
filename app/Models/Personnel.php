@@ -23,6 +23,10 @@ class Personnel extends Model
         'perfil',
     ];
 
+    public function teacher(){
+        return $this->hasOne(Teacher::class);
+    }
+
 
 
 }

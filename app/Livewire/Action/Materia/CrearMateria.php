@@ -15,6 +15,9 @@ class CrearMateria extends Component
     public $slug;
     public $clave;
     public $campo_formativo_id;
+    public $level_id;
+    public $grade;
+    // public $teacher_id;
     public $calificacion;
 
     protected $rules = [
@@ -51,11 +54,19 @@ class CrearMateria extends Component
             'materia' => $this->materia,
             'slug' => $this->slug,
             'clave' => $this->clave,
+            'level_id' => $this->level_id,
+            'grade_id' => $this->grade->id,
             'campo_formativo_id' => $this->campo_formativo_id,
             'calificacion' => $this->calificacion,
         ]);
 
-        $this->reset(['materia', 'slug', 'clave', 'campo_formativo_id', 'calificacion']);
+        $this->reset([
+            'materia',
+            'slug',
+            'clave',
+            'campo_formativo_id',
+            'calificacion',
+        ]);
 
         $this->dispatch('swal', [
             'title' => '¡La materia se ha creado correctamente!',

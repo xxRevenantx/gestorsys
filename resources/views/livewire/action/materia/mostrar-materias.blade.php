@@ -16,7 +16,14 @@
 
 </nav>
 
-<livewire:action.materia.crear-materia>
+<livewire:action.materia.crear-materia :level_id="$level_id"  :grade="$grade" />
+
+<div class="mx-auto ">
+    <div class="relative overflow-x-auto">
+        {{-- @livewire('action.materia-table', ['level_id' => $level_id, 'grade' => $grade]) --}}
+        <livewire:action.materia-table :level_id="$level_id"  :grade="$grade" >
+    </div>
+</div>
 
 
 </div>
