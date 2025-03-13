@@ -36,7 +36,12 @@
 
             <div class="mb-4">
                 <label for="grade_id" class="block text-sm font-medium text-gray-700">Grados</label>
-                <select id="grade_id" wire:model.live="grade_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <select id="grade_id" wire:model.live="grade_id" class="mt-1 block w-full border-gray-300
+                rounded-md shadow-sm
+                @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                @if(!$habilitarInput) disabled  @endif
+
+                >
                     <option value="">---Seleccione una grado---</option>
                     @foreach($grados as $grado)
                         <option value="{{ $grado->id }}">{{ $grado->grado }}° GRADO</option>
@@ -49,7 +54,12 @@
 
             <div class="mb-4">
                 <label for="group_id" class="block text-sm font-medium text-gray-700">Grupos</label>
-                <select id="group_id" wire:model.live="group_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <select id="group_id" wire:model.live="group_id" class="mt-1 block w-full
+                 border-gray-300 rounded-md shadow-sm
+                 @if ($habilitarInput) bg-gray-50 focus:ring-primary-500 focus:border-primary-500 @else bg-gray-100 @endif"
+                 @if(!$habilitarInput) disabled  @endif
+
+                 >
                     <option value="">---Seleccione un grupo---</option>
                     @foreach($grupos as $grupo)
                         <option value="{{ $grupo->id }}">{{ $grupo->grupo }}</option>

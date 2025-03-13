@@ -105,7 +105,7 @@ class GradeTable extends DataTableComponent
                 ->label(
                     fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
                         [
-                            'editLink' => route('admin.grades.edit', $row),
+                            'editLink' => route('admin.grades.edit', $row->id),
 
                         ]
                     )

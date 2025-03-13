@@ -9,15 +9,18 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TeacherTable extends DataTableComponent
 {
-    protected $model = Teacher::class;
+    // protected $model = Teacher::class;
 
     public $nivel_id;
+
+
 
     protected $listeners = ['resfreshTable' => '$refresh'];
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+
 
         $this->setReorderEnabled();
 
@@ -79,19 +82,27 @@ class TeacherTable extends DataTableComponent
     public function reorder($items): void
     {
 
-        // dd($items);
+
+
 
         foreach ($items as $item) {
-            Teacher::find($item[$this->getPrimaryKey()])->update(['sort' => (int)$item[$this->getDefaultReorderColumn()]]);
+            $teacher = Teacher::find($item[$this->getPrimaryKey()]);
+            if ($teacher) {
+                $teacher->update(['sort' => (int)$item[$this->getDefaultReorderColumn()]]);
+            }
         }
     }
 
     public function builder(): Builder
     {
-        return Teacher::query()
-            ->where('teachers.level_id', $this->nivel_id)
-            ->orderBy('teachers.sort', 'asc');
-    }
+
+    return Teacher::query()
+        ->where('teachers.level_id', $this->nivel_id)
+        ->orderBy('teachers.sort', 'asc')
+        ->orderBy('teachers.level_id', 'asc');
+
+
+        }
 
 
 }

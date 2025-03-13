@@ -64,7 +64,7 @@ class EditarPersonal extends Component
             'CURP' => 'nullable|unique:personnels,CURP,'.$this->personnel->id.'|max:18|min:18',
             'RFC' => 'nullable|unique:personnels,RFC,'.$this->personnel->id,
             'email' => 'nullable|email|unique:personnels,email,'.$this->personnel->id,
-            'telefono' => 'nullable|unique:personnels,telefono,'.$this->personnel->id.'|max:10|min:10',
+            'telefono' => 'nullable|unique:personnels,telefono,'.$this->personnel->id.'|numeric|digits:10',
         ],[
             'CURP.unique' => 'El CURP ya existe',
             'CURP.max' => 'El CURP debe tener 18 caracteres',
@@ -79,17 +79,18 @@ class EditarPersonal extends Component
         ]);
 
         $this->personnel->update([
-            'titulo' => $this->titulo,
-            'nombre' => trim(strtoupper($this->nombre)),
-            'apellido_paterno' => trim(strtoupper($this->apellido_paterno)),
-            'apellido_materno' => trim(strtoupper($this->apellido_materno)),
-            'CURP' => trim(strtoupper($this->CURP)),
-            'RFC' => trim(strtoupper($this->RFC)),
-            'email' => $this->email,
-            'telefono' => trim($this->telefono),
-            'direccion' => trim(strtoupper($this->direccion)),
-            'perfil' => trim(strtoupper($this->perfil)),
-            'genero' => $this->genero,
+            'titulo' => $this->titulo ?: null,
+            'nombre' => $this->nombre ? trim(strtoupper($this->nombre)) : null,
+            'apellido_paterno' => $this->apellido_paterno ? trim(strtoupper($this->apellido_paterno)) : null,
+            'apellido_materno' => $this->apellido_materno ? trim(strtoupper($this->apellido_materno)) : null,
+            'CURP' => $this->CURP ? trim(strtoupper($this->CURP)) : null,
+            'RFC' => $this->RFC ? trim(strtoupper($this->RFC)) : null,
+            'email' => $this->email ?: null,
+            'telefono' => $this->telefono ? trim($this->telefono) : null,
+            'direccion' => $this->direccion ? trim(strtoupper($this->direccion)) : null,
+            'perfil' => $this->perfil ? trim(strtoupper($this->perfil)) : null,
+            'genero' => $this->genero ?: null,
+
         ]);
 
         $this->dispatch('swal', [

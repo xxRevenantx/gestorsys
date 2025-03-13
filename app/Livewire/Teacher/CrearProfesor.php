@@ -21,6 +21,8 @@ class CrearProfesor extends Component
     public $grados = [];
     public $grupos = [];
 
+    public $habilitarInput = true;
+
     protected $rules = [
         'personnel_id' => 'required|exists:personnels,id',
         'level_id' => 'required|exists:levels,id',
@@ -48,13 +50,25 @@ class CrearProfesor extends Component
     {
         if ($propertyName == 'level_id') {
             if (!empty($this->level_id)) {
-                $this->grados = Grade::where('level_id', $this->level_id)
-                    ->orderBy('grado', 'ASC')
-                    ->get();
+            $this->grados = Grade::where('level_id', $this->level_id)
+                ->orderBy('grado', 'ASC')
+                ->get();
             } else {
-                $this->grados = [];
+            $this->grados = [];
             }
             $this->grupos = [];
+        }
+
+        // CUANDO EL NIVEL SEA SECUNDARIA NO SE PODRÁ SELECCIONAR UN GRUPO NI UN GRADO
+        if ($this->level_id == 3) {
+            $this->habilitarInput = false;
+            $this->dispatch('swal',[
+                'title' => 'Para nivel secundaria, no es necesario seleccionar un grado ni un grupo',
+                'icon' => 'info',
+                'position' => 'top',
+            ]);
+        }else{
+            $this->habilitarInput = true;
         }
 
         if ($propertyName == 'grade_id') {
@@ -74,20 +88,25 @@ class CrearProfesor extends Component
     {
         // $this->validate();
 
-        if ($this->director === "0") {
+        if ($this->level_id == 3) {
             $this->validate([
-                'group_id' => 'required|exists:groups,id',
-                'grade_id' => 'required|exists:grades,id',
+            'group_id' => 'nullable|exists:groups,id',
+            'grade_id' => 'nullable|exists:grades,id',
             ]);
-        }else{
+        } elseif ($this->director === "0") {
+            $this->validate([
+            'group_id' => 'required|exists:groups,id',
+            'grade_id' => 'required|exists:grades,id',
+            ]);
+        } else {
             $this->validate();
         }
 
         Teacher::create([
             'personnel_id' => $this->personnel_id,
             'level_id' => $this->level_id,
-            'grade_id' => $this->grade_id,
-            'group_id' => $this->group_id,
+            'grade_id' => $this->grade_id ?: null,
+            'group_id' => $this->group_id ?: null,
             'funcion' => $this->funcion,
             'director' => $this->director,
         ]);

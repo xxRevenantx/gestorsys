@@ -29,7 +29,7 @@ class CrearPersonal extends Component
         'CURP' => 'nullable|unique:personnels,CURP|max:18|min:18',
         'RFC' => 'nullable|unique:personnels,RFC',
         'email' => 'nullable|email|unique:personnels,email',
-        'telefono' => 'nullable|unique:personnels,telefono|max:10|min:10',
+        'telefono' => 'nullable|unique:personnels,telefono|numeric|digits:10',
         'direccion' => 'nullable|max:255',
         'perfil' => 'required',
         'genero' => 'required|in:H,M',
@@ -66,17 +66,17 @@ class CrearPersonal extends Component
         $this->validate();
 
         Personnel::create([
-            'titulo' => $this->titulo,
-            'nombre' => trim(strtoupper($this->nombre)),
-            'apellido_paterno' => trim(strtoupper($this->apellido_paterno)),
-            'apellido_materno' => trim(strtoupper($this->apellido_materno)),
-            'CURP' => trim(strtoupper($this->CURP)),
-            'RFC' => trim(strtoupper($this->RFC)),
-            'email' => $this->email,
-            'telefono' => trim($this->telefono),
-            'direccion' => trim(strtoupper($this->direccion)),
-            'perfil' => trim(strtoupper($this->perfil)),
-            'genero' => $this->genero,
+            'titulo' => $this->titulo ?: null,
+            'nombre' => trim(strtoupper($this->nombre)) ?: null,
+            'apellido_paterno' => trim(strtoupper($this->apellido_paterno)) ?: null,
+            'apellido_materno' => trim(strtoupper($this->apellido_materno)) ?: null,
+            'CURP' => trim(strtoupper($this->CURP)) ?: null,
+            'RFC' => trim(strtoupper($this->RFC)) ?: null,
+            'email' => trim(strtoupper($this->email)) ?: null,
+            'telefono' => trim($this->telefono) ?: null,
+            'direccion' => trim(strtoupper($this->direccion)) ?: null,
+            'perfil' => trim(strtoupper($this->perfil)) ?: null,
+            'genero' => $this->genero ?: null,
 
         ]);
 

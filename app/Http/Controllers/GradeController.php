@@ -45,6 +45,7 @@ class GradeController extends Controller
      */
     public function edit($grade_id)
     {
+
         $grado = Grade::find($grade_id);
         return view('admin.grades.edit', compact('grado'));
     }
