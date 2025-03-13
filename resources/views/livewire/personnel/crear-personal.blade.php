@@ -22,6 +22,7 @@
                     <option value="c.p.">C.P. - Contador Público</option>
                     <option value="lcda">Lcda. - Licenciada</option>
                     <option value="qfb">Q.F.B. - Químico Farmacéutico Biólogo</option>
+                    <option value="c">Ciudadano(a)</option>
                 </select>
                 @error('titulo')
                     <span class="text-red-500">{{ $message }}</span>

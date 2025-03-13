@@ -5,7 +5,7 @@
 
     ],
     [
-        'name' => 'Profesores',
+        'name' => 'Asignación de personal',
         'url' => '#',
     ],
 
@@ -24,9 +24,9 @@
     </div>
 </div>
 @endif
-sdfsdfds
 
-{{-- @livewire('tutor.crear-tutor', ['lazy' => true])
-@livewire('tutor.mostrar-tutores', ['lazy' => true]) --}}
+
+@livewire('teacher.crear-profesor')
+@livewire('teacher.mostrar-profesores', ['lazy' => true])
 
 </x-admin-layout>

@@ -1,7 +1,8 @@
 ##NOTAS
 
-<p>Agregar los campos faltantes a mostrar estudiante</p>
-<p>Checar matricula-escolar y mostrar-materias, la cuestión del nav</p>
+<p>Checar al agregar un director, los errores de grados y grupos</p>
+<p>Checar el update de la tabla TeacherTable</p>
+
 
 
 <p>git clone https://github.com/xxRevenantx/gestorsys.git && cd gestorsys && composer install && npm install && code .<p>

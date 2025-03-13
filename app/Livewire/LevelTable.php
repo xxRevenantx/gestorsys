@@ -20,8 +20,7 @@ class LevelTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-        ->setReorderEnabled()
-        ;
+        ->setReorderEnabled();
 
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los niveles seleccionados?');
 
