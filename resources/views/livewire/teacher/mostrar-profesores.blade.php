@@ -2,14 +2,14 @@
 
     <div class='w-full py-8 mx-auto bg-white rounded-lg shadow-xl'>
 
-        @foreach ($niveles as $nivel )
+
         <details class="w-full bg-white border border-blue-500 cursor-pointer mb-3">
             <summary class="w-full bg-white text-dark flex justify-between px-4 py-3  after:content-['+']">
-                {{ $nivel->level }}
+                    PERSONAL ASIGNADO ({{ $personal->count() }})
             </summary>
 
             <div class="p-4">
-                <livewire:teacher-table :nivel_id="$nivel->id" />
+                <livewire:teacher-table />
             </div>
 
 
@@ -45,7 +45,7 @@
             </table> --}}
 
         </details>
-        @endforeach
+
 
 
 

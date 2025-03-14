@@ -67,8 +67,6 @@ class TeacherTable extends DataTableComponent
                 ->sortable(),
             Column::make("Ingreso ct", "ingreso_ct")
                 ->sortable(),
-            Column::make("Director", "director")
-                ->sortable(),
             Column::make("Created at", "created_at")
                 ->sortable(),
             Column::make("Updated at", "updated_at")
@@ -97,11 +95,11 @@ class TeacherTable extends DataTableComponent
     {
 
     return Teacher::query()
-        ->where('teachers.level_id', $this->nivel_id)
         ->orderBy('teachers.sort', 'asc')
-        ->orderBy('teachers.level_id', 'asc');
-
-
+        ->orderBy('teachers.level_id', 'asc')
+        ->orderBy('teachers.grade_id', 'asc')
+        ->orderBy('teachers.group_id', 'asc')
+        ->orderBy('teachers.personnel_id', 'asc');
         }
 
 

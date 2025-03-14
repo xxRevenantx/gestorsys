@@ -41,6 +41,7 @@ class EditarGrado extends Component
         $this->generation_id = $grado->generation_id;
         $this->generaciones = Generation::where('level_id', $this->level_id)
                             ->where('status', 1)
+                            ->orderBy('sort', 'ASC')
                             ->get();
     }
 

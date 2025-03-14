@@ -9,9 +9,12 @@ use Livewire\Component;
 class MostrarProfesores extends Component
 {
 
-    public $niveles;
+    // public $niveles;
+    public $personal;
+
     public function mount(){
-        $this->niveles = Level::with('teachers')->get();
+        // $this->niveles = Level::with('teachers')->get();
+        $this->personal = Teacher::all();
     }
 
     public function placeholder(){

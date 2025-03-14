@@ -1,7 +1,6 @@
 ##NOTAS
 
-<p>Checar al agregar un director, los errores de grados y grupos</p>
-<p>Checar el update de la tabla TeacherTable</p>
+<p>Agregar el status al personal</p>
 
 
 
