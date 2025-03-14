@@ -26,6 +26,7 @@ class Personnel extends Model
         'perfil',
         'genero',
         'foto',
+        'status',
         'sort',
     ];
 

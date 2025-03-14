@@ -18,6 +18,7 @@ class EditarPersonal extends Component
     public $direccion;
     public $perfil;
     public $genero;
+    public $status;
 
 
     public function mount($personnel)
@@ -34,6 +35,7 @@ class EditarPersonal extends Component
         $this->direccion = $personnel->direccion;
         $this->perfil = $personnel->perfil;
         $this->genero = $personnel->genero;
+        $this->status = $personnel->status;
     }
 
     protected $rules = [
@@ -44,6 +46,7 @@ class EditarPersonal extends Component
         'direccion' => 'nullable|max:255',
         'perfil' => 'required',
         'genero' => 'required|in:H,M',
+        'status' => 'required|in:0,1',
     ];
 
     protected $messages = [
@@ -56,6 +59,8 @@ class EditarPersonal extends Component
         'perfil.required' => 'El campo perfil es requerido',
         'genero.required' => 'El campo género es requerido',
         'genero.in' => 'El género debe ser H (Hombre) o M(Mujer)',
+        'status.required' => 'El campo estatus es requerido',
+        'status.in' => 'El estatus debe ser (Inactivo) o (Activo)',
     ];
 
 
@@ -90,6 +95,7 @@ class EditarPersonal extends Component
             'direccion' => $this->direccion ? trim(strtoupper($this->direccion)) : null,
             'perfil' => $this->perfil ? trim(strtoupper($this->perfil)) : null,
             'genero' => $this->genero ?: null,
+            'status' => $this->status
 
         ]);
 

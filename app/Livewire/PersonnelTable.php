@@ -5,7 +5,9 @@ namespace App\Livewire;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Personnel;
+use DragonCode\Support\Facades\Helpers\Boolean;
 use Illuminate\Database\Eloquent\Builder;
+use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 
 class PersonnelTable extends DataTableComponent
 {
@@ -55,26 +57,50 @@ class PersonnelTable extends DataTableComponent
                 ->sortable(),
             Column::make("#", "sort")
                 ->sortable(),
+            BooleanColumn::make("Estado", "status")
+                ->sortable(),
             Column::make("Titulo", "titulo")
-                ->sortable(),
-            Column::make("Nombre", "nombre")
-                ->sortable(),
-            Column::make("Apellido paterno", "apellido_paterno")
-                ->sortable(),
-            Column::make("Apellido materno", "apellido_materno")
-                ->sortable(),
+                ->sortable()
+                ->searchable()
+                ->format(
+                    fn ($value, $column, $row) => strtoupper($value)
+                )
+                ,
+            // Column::make("Nombre completo", "nombre")
+            //     ->sortable()
+            //     ->searchable()
+            //     ->format(
+            //         fn ($value, $column, $row) => strtoupper($column->nombre)." ".strtoupper($column->apellido_paterno)." ".strtoupper($column->apellido_materno)
+            //     ),
+
+            Column::make('Nombre completo')
+                ->label(fn ($row, Column $column) => $row),
+
+
             Column::make("CURP", "CURP")
-                ->sortable(),
+                ->sortable()
+                ->searchable()
+                ,
             Column::make("RFC", "RFC")
-                ->sortable(),
+                ->sortable()
+                ->searchable()
+                ,
             Column::make("Email", "email")
-                ->sortable(),
+                ->sortable()
+                ->searchable()
+                ,
             Column::make("Telefono", "telefono")
-                ->sortable(),
+                ->sortable()
+                ->searchable()
+                ,
             Column::make("Direccion", "direccion")
-                ->sortable(),
+                ->sortable()
+                ->searchable()
+                ,
             Column::make("Perfil", "perfil")
-                ->sortable(),
+                ->sortable()
+                ->searchable()
+                ,
             Column::make("Created at", "created_at")
                 ->sortable(),
             Column::make("Updated at", "updated_at")

@@ -11,19 +11,13 @@ class TeacherTable extends DataTableComponent
 {
     // protected $model = Teacher::class;
 
-    public $nivel_id;
-
-
 
     protected $listeners = ['resfreshTable' => '$refresh'];
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
-
-
         $this->setReorderEnabled();
-
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que quieres eliminar los elementos seleccionados?');
 
 
@@ -48,10 +42,23 @@ class TeacherTable extends DataTableComponent
     public function columns(): array
     {
         return [
+            Column::make('Acciones')
+                ->label(
+                    fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
+                        [
+                            'editLink' => route('admin.teachers.edit', $row),
+                            'viewLink' => route('admin.teachers.show', $row),
+
+                        ]
+                    )
+                )->html(),
+
             Column::make("Id", "id")
                 ->sortable(),
             Column::make("#", "sort")
                 ->sortable(),
+
+
             Column::make("Personal", "personnel.nombre")
                 ->sortable()
                 ->searchable(),
@@ -79,10 +86,6 @@ class TeacherTable extends DataTableComponent
 
     public function reorder($items): void
     {
-
-
-
-
         foreach ($items as $item) {
             $teacher = Teacher::find($item[$this->getPrimaryKey()]);
             if ($teacher) {
@@ -94,13 +97,14 @@ class TeacherTable extends DataTableComponent
     public function builder(): Builder
     {
 
-    return Teacher::query()
-        ->orderBy('teachers.sort', 'asc')
-        ->orderBy('teachers.level_id', 'asc')
-        ->orderBy('teachers.grade_id', 'asc')
-        ->orderBy('teachers.group_id', 'asc')
-        ->orderBy('teachers.personnel_id', 'asc');
-        }
+    $teacher = Teacher::with('personnel', 'level', 'grade', 'group')
+                      ->whereHas('personnel', function($query) {
+                          $query->where('status', 1);
+                      })
+                      ->orderBy('sort');
 
 
+    return $teacher;
+
+}
 }

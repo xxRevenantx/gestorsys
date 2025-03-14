@@ -131,7 +131,7 @@ class CrearProfesor extends Component
 
     public function render()
     {
-        $personal = Personnel::select('id', 'titulo', 'nombre', 'apellido_paterno', 'apellido_materno')->get();
+        $personal = Personnel::select('id', 'titulo', 'nombre', 'apellido_paterno', 'apellido_materno')->where('status', 1)->get();
         $niveles = Level::select('id', 'level')->orderBy('sort', 'ASC')->get();
         $grupos = Group::select('id', 'grupo')->get();
         return view('livewire.teacher.crear-profesor', compact('personal', 'niveles', 'grupos'));

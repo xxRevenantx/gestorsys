@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('perfil')->nullable();
             $table->enum('genero', ['H', 'M']);
             $table->string('foto')->nullable();
+            $table->integer('status')->default('1');
             $table->integer('sort');
             $table->timestamps();
         });

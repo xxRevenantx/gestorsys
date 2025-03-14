@@ -1,7 +1,4 @@
-<div class="w-full mt-15 p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-
-
-
+<div >
 
     @include('admin.partials.loader')
 
