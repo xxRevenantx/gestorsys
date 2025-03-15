@@ -12,8 +12,10 @@
         <div class="-mx-1">
             <p class="text-lg font-medium dark:text-slate-100 mb-2">
                 <span class="font-bold"> Nivel: </span> {{ $nivel->level }} <br>
+                <span class="font-bold"> Profesor: </span> {{$profesor->personnel->nombre}} {{$profesor->personnel->apellido_paterno}} {{$profesor->personnel->apellido_materno}}  <br>
                 <span class="font-bold"> C.C.T.: </span> {{ $nivel->cct }} <br>
                 <span class="font-bold"> Zona: </span> {{$nivel->supervisor->zona}}<br>
+
 
           </p>
             <hr>
@@ -44,7 +46,7 @@
         </div>
 
 
-        @if($action->slug == 'matricula-escolar')
+    @if($action->slug == 'matricula-escolar')
         <livewire:action.matricula-escolar :level_id="$level_id" :grade="$grade" lazy />
 
    @elseif ($action->slug == 'inscribir-alumno')

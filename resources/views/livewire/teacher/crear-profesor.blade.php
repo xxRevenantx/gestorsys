@@ -87,6 +87,23 @@
 
                 @enderror
             </div>
+            <div class="mb-4">
+                <label for="ingreso_seg" class="block text-sm font-medium text-gray-700">Ingreso a la SEG</label>
+                <input type="date" id="ingreso_seg" wire:model.live="ingreso_seg" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                @error('ingreso_seg')
+                    <span class="text-red-500 ">{{ $message }}</span>
+
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label for="ingreso_ct" class="block text-sm font-medium text-gray-700">Ingreso al C.T.</label>
+                <input type="date" id="ingreso_ct" wire:model.live="ingreso_ct" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                @error('ingreso_ct')
+                    <span class="text-red-500 ">{{ $message }}</span>
+
+                @enderror
+            </div>
+
         </div>
 
         <div class="flex justify-start items-center mb-5">

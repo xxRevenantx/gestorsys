@@ -6,6 +6,7 @@ use App\Models\Action;
 use App\Models\Grade;
 use App\Models\Level;
 use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class MostrarNivelController extends Controller
@@ -39,9 +40,12 @@ class MostrarNivelController extends Controller
         $acciones = Action::orderBy('sort', "asc")->get();
         $level_id = $nivel->id; // OBTENER EL ID DEL NIVEL
 
-        // return $action. " " . $nivel . " " . $grade;
+        $profesor = Teacher::where('level_id', $nivel->id)
+                   ->where('grade_id', $grade->id)
+                   ->with('personnel')
+                   ->first();
 
-        return view('admin.level.action', compact('nivel',  'action', 'acciones', 'level_id', 'grade'));
+        return view('admin.level.action', compact('nivel',  'action', 'acciones', 'level_id', 'grade', 'profesor'));
     }
 
     public function matricula($level, $action)

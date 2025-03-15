@@ -89,13 +89,30 @@
 
                 @enderror
             </div>
+
+            <div class="mb-4">
+                <label for="ingreso_seg" class="block text-sm font-medium text-gray-700">Ingreso a la SEG</label>
+                <input type="date" id="ingreso_seg" wire:model.live="ingreso_seg" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                @error('ingreso_seg')
+                    <span class="text-red-500 ">{{ $message }}</span>
+
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label for="ingreso_ct" class="block text-sm font-medium text-gray-700">Ingreso al C.T.</label>
+                <input type="date" id="ingreso_ct" wire:model.live="ingreso_ct" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                @error('ingreso_ct')
+                    <span class="text-red-500 ">{{ $message }}</span>
+
+                @enderror
+            </div>
         </div>
 
         <div class="flex justify-start items-center mb-5">
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
             focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
             dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Asignar
+                Actualizar
                 <svg wire:loading style="width: 30px; height: 40px; margin-left: 5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="6" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
             </button>
         </div>
