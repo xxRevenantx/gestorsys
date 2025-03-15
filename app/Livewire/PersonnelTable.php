@@ -11,7 +11,7 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 
 class PersonnelTable extends DataTableComponent
 {
-    protected $model = Personnel::class;
+    // protected $model = Personnel::class;
 
     protected $listeners = ['resfreshTable' => '$refresh'];
 
@@ -21,6 +21,11 @@ class PersonnelTable extends DataTableComponent
         ->setReorderEnabled();
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que deseas eliminar el personal seleccionado(s)?');
 
+        $this->setAdditionalSelects([
+            'personnels.nombre as nombre',
+            'personnels.apellido_paterno as apellido_paterno',
+            'personnels.apellido_materno as apellido_materno'
+        ]);
 
         $this->setBulkActions([
             'deleteSelected' => 'Eliminar',
@@ -63,18 +68,25 @@ class PersonnelTable extends DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->format(
-                    fn ($value, $column, $row) => strtoupper($value)
-                )
-                ,
-            // Column::make("Nombre completo", "nombre")
-            //     ->sortable()
-            //     ->searchable()
-            //     ->format(
-            //         fn ($value, $column, $row) => strtoupper($column->nombre)." ".strtoupper($column->apellido_paterno)." ".strtoupper($column->apellido_materno)
-            //     ),
+                    fn ($value, $column, $row) => strtoupper($column->titulo)
+                ),
 
-            Column::make('Nombre completo')
-                ->label(fn ($row, Column $column) => $row),
+
+                Column::make('Nombre completo')
+                ->label(
+                    fn($row, Column $column) => $row->nombre . ' ' . $row->apellido_paterno . ' ' . $row->apellido_materno
+                )
+                ->searchable(
+                    fn(Builder $query, $searchTerm) => $query->orWhere(
+                        'nombre', 'like', '%' . $searchTerm . '%'
+                    )->orWhere(
+                        'apellido_paterno', 'like', '%' . $searchTerm . '%'
+                    )->orWhere(
+                        'apellido_materno', 'like', '%' . $searchTerm . '%'
+                    )
+
+                )
+                ->sortable(),
 
 
             Column::make("CURP", "CURP")

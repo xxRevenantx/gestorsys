@@ -43,9 +43,10 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teacher $teacher)
+    public function edit($teacher_id)
     {
-        //
+       $teacher = Teacher::findOrFail($teacher_id);
+       return view('admin.teachers.edit', compact('teacher'));
     }
 
     /**

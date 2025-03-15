@@ -8,6 +8,8 @@
 
         </div>
 
+
+
         <div class="mx-auto ">
             <div class="relative overflow-x-auto">
                 @livewire('personnel-table')

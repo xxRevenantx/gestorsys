@@ -58,8 +58,13 @@ class TeacherTable extends DataTableComponent
             Column::make("#", "sort")
                 ->sortable(),
 
-
-            Column::make("Personal", "personnel.nombre")
+            Column::make("Nombre", "personnel.nombre")
+                ->sortable()
+                ->searchable(),
+            Column::make("Primer Apellido", "personnel.apellido_paterno")
+                ->sortable()
+                ->searchable(),
+            Column::make("Segundo Apellido", "personnel.apellido_materno")
                 ->sortable()
                 ->searchable(),
             Column::make("Nivel", "level.level")

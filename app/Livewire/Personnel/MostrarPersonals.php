@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Personnel;
 
+use App\Models\Personnel;
 use Livewire\Component;
 
 class MostrarPersonals extends Component
@@ -12,6 +13,7 @@ class MostrarPersonals extends Component
     }
     public function render()
     {
-        return view('livewire.personnel.mostrar-personals');
+        $personal = Personnel::all();
+        return view('livewire.personnel.mostrar-personals', compact('personal'));
     }
 }
