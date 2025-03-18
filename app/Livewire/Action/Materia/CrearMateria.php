@@ -3,7 +3,9 @@
 namespace App\Livewire\Action\Materia;
 
 use App\Models\CamposFormativo;
+use App\Models\Group;
 use App\Models\Materia;
+use App\Models\Teacher;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -16,7 +18,11 @@ class CrearMateria extends Component
     public $clave;
     public $campo_formativo_id;
     public $level_id;
+    public $teacher_id;
+    public $group_id;
     public $grade;
+    public $grupos = [];
+    public $profesores = [];
     // public $teacher_id;
     public $calificacion;
 
@@ -80,10 +86,17 @@ class CrearMateria extends Component
 
     }
 
+    public function mount(){
+        $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
+
+        $this->profesores = Teacher::where('level_id', $this->level_id)->orderBy('sort','asc')->get();
+    }
+
 
     public function render()
     {
         $campos = CamposFormativo::all();
+
         return view('livewire.action.materia.crear-materia', compact('campos'));
     }
 }

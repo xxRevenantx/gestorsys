@@ -70,6 +70,38 @@
           <div class="w-full lg:w-3/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                Grupo
+              </label>
+              <select wire:model.live='group_id' class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" wire:model.live='campo_formativo'>
+                <option value="">--Seleccione un grupo--</option>
+                @foreach($grupos as $grupo)
+                  <option value="{{ $grupo->id }}">{{ $grupo->grupo }}</option>
+                @endforeach
+              </select>
+              @error('group_id')
+                <span class="text-red-500">{{ $message }}</span>
+              @enderror
+            </div>
+          </div>
+          <div class="w-full lg:w-3/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                Profesor
+              </label>
+              <select wire:model.live='teacher_id' class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" wire:model.live='campo_formativo'>
+                <option value="">--Seleccione un profesor--</option>
+                @foreach($profesores as $profesor)
+                  <option value="{{ $profesor->id }}">{{ $profesor->personnel->nombre }} {{$profesor->personnel->apellido_paterno}} {{$profesor->personnel->apellido_materno}} </option>
+                @endforeach
+              </select>
+              @error('teacher_id')
+                <span class="text-red-500">{{ $message }}</span>
+              @enderror
+            </div>
+          </div>
+          <div class="w-full lg:w-3/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                 Calificación
               </label>
               <select wire:model.live='calificacion' class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
