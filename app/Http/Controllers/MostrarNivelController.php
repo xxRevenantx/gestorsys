@@ -40,12 +40,9 @@ class MostrarNivelController extends Controller
         $acciones = Action::orderBy('sort', "asc")->get();
         $level_id = $nivel->id; // OBTENER EL ID DEL NIVEL
 
-        $profesor = Teacher::where('level_id', $nivel->id)
-                   ->where('grade_id', $grade->id)
-                   ->with('personnel')
-                   ->first();
+        return view('admin.level.action', compact('nivel',  'action', 'acciones', 'level_id', 'grade', 'action'));
 
-        return view('admin.level.action', compact('nivel',  'action', 'acciones', 'level_id', 'grade', 'profesor'));
+
     }
 
     public function matricula($level, $action)

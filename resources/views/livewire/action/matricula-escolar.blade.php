@@ -1,5 +1,6 @@
 <div class="rounded-lg shadow-lg px-4 py-4 bg-white dark:bg-gray-800">
 
+
 <nav
         class="flex items-center justify-center flex-wrap bg-white py-2 mb-4 lg:px-12 shadow border-solid border-t-2 border-blue-700">
         <div class="menu w-full lg:block lg:flex lg:items-center lg:w-auto lg:px-3 px-8 justify-center">
@@ -78,7 +79,18 @@
     </div>
 
     <div class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-            <div class="flex justify-end p-4">
+
+
+        <div class="flex justify-between p-4">
+
+            <div>
+            @isset($profesor)
+            <span class="font-bold text-indigo-800"> PROFESOR TITULAR:  {{ $profesor->personnel->nombre }} {{ $profesor->personnel->apellido_paterno }} {{ $profesor->personnel->apellido_materno }}
+            </span>
+                @endisset
+            </div>
+
+
                 @if($grade_id &&  $group_id && $genero)
                 <a target="_blank" href="{{ route('admin.lista.alumnos.gender', ["level" => $level_id, "grade" => $grade_id, "group" => $group_id, "gender" => $genero]) }}" class="flex items-center px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700">
                     <i class="mdi mdi-file-pdf-outline mr-2"></i> Descargar lista

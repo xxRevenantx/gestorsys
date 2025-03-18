@@ -7,6 +7,7 @@ use App\Models\Grade;
 use App\Models\Group;
 use App\Models\Level;
 use App\Models\Student;
+use App\Models\Teacher;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,6 +23,7 @@ class MatriculaEscolar extends Component
     public $genero;
     public $termino;
     public $grupos = [];
+    public $profesor;
 
     public $headers = ['#','CURP', 'Nombre completo', 'Nivel', 'Grado', 'Grupo','Genero', 'Fecha de Nacimiento', 'Edad'];
 
@@ -90,6 +92,12 @@ class MatriculaEscolar extends Component
         if($propertyName == 'group_id'){
             $this->resetPage();
             $this->termino = "";
+
+            $this->profesor = Teacher::where('level_id', $this->level_id)
+            ->where('grade_id', $this->grade_id)
+            ->where('group_id', $this->group_id)
+            ->with('personnel')
+            ->first();
 
             $this->contarAlumnos = Student::where('level_id', $this->level_id)
             ->when($this->group_id, function ($query) {
@@ -171,6 +179,13 @@ class MatriculaEscolar extends Component
         $this->grade_id = $this->grade->id; // GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRADOS EN LA VISTA DE MATRICULA ESCOLAR
 
 
+        $this->profesor = Teacher::where('level_id', $this->level_id)
+            ->where('grade_id', $this->grade_id)
+            ->where('group_id', $this->group_id)
+            ->with('personnel')
+            ->first();
+
+
     }
 
 
@@ -207,7 +222,9 @@ class MatriculaEscolar extends Component
 
         $grados = Grade::where('level_id', $this->level_id)->get();
 
-        return view('livewire.action.matricula-escolar', compact('alumnos', 'level_nombre', 'grados'));
+        $acciones = Action::orderBy('sort', "asc")->get();
+
+        return view('livewire.action.matricula-escolar', compact('alumnos', 'level_nombre', 'grados', 'acciones'));
     }
 }
 
