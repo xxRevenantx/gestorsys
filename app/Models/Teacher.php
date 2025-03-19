@@ -13,7 +13,7 @@ class Teacher extends Model
     /** @use HasFactory<\Database\Factories\TeacherFactory> */
     use HasFactory;
 
-    protected $fillable = ['personnel_id','level_id', 'grade_id', 'group_id', 'funcion', 'ingreso_seg', 'ingreso_ct', 'director', 'sort'];
+    protected $fillable = ['personnel_id','level_id', 'grade_id', 'group_id', 'funcion', 'ingreso_seg', 'ingreso_ct', 'director', 'extra', 'sort'];
 
 
 

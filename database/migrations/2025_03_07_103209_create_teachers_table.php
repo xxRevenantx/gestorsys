@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('ingreso_seg')->nullable();
             $table->date('ingreso_ct')->nullable();
             $table->enum('director', ['0','1'])->nullable()->default('0');
+            $table->enum('extra', ['0','1'])->default('0');
             $table->integer('sort');
 
 

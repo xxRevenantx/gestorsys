@@ -17,6 +17,7 @@ class CrearProfesor extends Component
     public $group_id;
     public $funcion;
     public $director;
+    public $extra;
     public $ingreso_seg;
     public $ingreso_ct;
 
@@ -32,6 +33,7 @@ class CrearProfesor extends Component
         'group_id' => 'nullable|exists:groups,id', // Cambiado a nullable
         'funcion' => 'required|string',
         'director' => 'required|in:0,1',
+        'extra' => 'required|in:0,1',
         'ingreso_seg' => 'nullable|date',
         'ingreso_ct' => 'nullable|date',
     ];
@@ -48,6 +50,8 @@ class CrearProfesor extends Component
         'funcion.string' => 'La función debe ser una cadena de texto.',
         'director.required' => 'El campo director es requerido.',
         'director.in' => 'El campo director es inválido.',
+        'extra.required' => 'El campo extra es requerido.',
+        'extra.in' => 'El campo extra es inválido.',
         'ingreso_seg.date' => 'El campo ingreso a SEG debe ser una fecha.',
         'ingreso_ct.date' => 'El campo ingreso a CT debe ser una fecha.',
 
@@ -116,6 +120,7 @@ class CrearProfesor extends Component
             'group_id' => $this->group_id ?: null,
             'funcion' => $this->funcion,
             'director' => $this->director,
+            'extra' => $this->extra,
             'ingreso_seg' => $this->ingreso_seg,
             'ingreso_ct' => $this->ingreso_ct,
         ]);

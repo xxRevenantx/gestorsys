@@ -13,7 +13,7 @@ class Materia extends Model
     /** @use HasFactory<\Database\Factories\MateriaFactory> */
     use HasFactory;
 
-    protected $fillable = ['materia', 'slug', 'clave', 'level_id', 'grade_id', 'teacher_id', 'campo_formativo_id', 'calificacion', 'sort'];
+    protected $fillable = ['materia', 'slug', 'clave', 'level_id', 'grade_id', 'group_id', 'teacher_id', 'campo_formativo_id', 'calificacion', 'sort'];
 
 
     public function level(){
@@ -24,6 +24,10 @@ class Materia extends Model
         return $this->belongsTo(Grade::class);
     }
 
+    public function group(){
+        return $this->belongsTo(Group::class);
+    }
+
     public function teacher(){
         return $this->belongsTo(Teacher::class);
     }
@@ -31,4 +35,11 @@ class Materia extends Model
     public function campoFormativo(){
         return $this->belongsTo(CamposFormativo::class);
     }
+
+
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
+
 }

@@ -27,6 +27,8 @@ class Group extends Model
         return $this->belongsTo(Grade::class);
     }
 
+
+
     public function students()
     {
         return $this->hasMany(Student::class);
@@ -35,6 +37,11 @@ class Group extends Model
     public function teachers()
     {
         return $this->hasMany(Teacher::class);
+    }
+
+    public function materias()
+    {
+        return $this->hasMany(Materia::class);
     }
 
 }

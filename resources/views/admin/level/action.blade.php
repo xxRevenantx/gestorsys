@@ -50,6 +50,9 @@
     @elseif ($action->slug == 'materias')
          <livewire:action.materia.mostrar-materias :level_id="$level_id"  :grade="$grade" lazy />
 
+    @elseif ($action->slug == 'horarios')
+        <livewire:action.horario-clase  :level_id="$level_id"  />
+
    @endif
 
     </div>

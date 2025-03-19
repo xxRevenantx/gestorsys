@@ -87,6 +87,18 @@
 
                 @enderror
             </div>
+                <div class="mb-4">
+                    <label for="extra" class="block text-sm font-medium text-gray-700">Profesor extra</label>
+                    <select id="extra" wire:model.live="extra" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="">---Seleccione una opción---</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                    @error('extra')
+                        <span class="text-red-500 ">{{ $message }}</span>
+
+                    @enderror
+                </div>
             <div class="mb-4">
                 <label for="ingreso_seg" class="block text-sm font-medium text-gray-700">Ingreso a la SEG</label>
                 <input type="date" id="ingreso_seg" wire:model.live="ingreso_seg" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">

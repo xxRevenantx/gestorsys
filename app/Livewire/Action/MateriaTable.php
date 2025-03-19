@@ -63,6 +63,8 @@ class MateriaTable extends DataTableComponent
                 ->searchable( ),
             Column::make("Grado", "grade.grado")
                 ->sortable(),
+            Column::make("Grupo", "group.grupo")
+                ->sortable(),
             Column::make("Campo Formativo", "campoFormativo.nombre")
                 ->sortable()
                 ->searchable( ),

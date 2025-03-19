@@ -19,6 +19,7 @@ class EditarProfesor extends Component
     public $group_id;
     public $funcion;
     public $director;
+    public $extra;
     public $ingreso_seg;
     public $ingreso_ct;
 
@@ -34,6 +35,7 @@ class EditarProfesor extends Component
         'group_id' => 'nullable|exists:groups,id', // Cambiado a nullable
         'funcion' => 'required|string',
         'director' => 'required|in:0,1',
+        'extra' => 'required|in:0,1',
         'ingreso_seg' => 'nullable|date',
         'ingreso_ct' => 'nullable|date',
     ];
@@ -50,6 +52,8 @@ class EditarProfesor extends Component
         'funcion.string' => 'La función debe ser una cadena de texto.',
         'director.required' => 'El campo director es requerido.',
         'director.in' => 'El campo director es inválido.',
+        'extra.required' => 'El campo extra es requerido.',
+        'extra.in' => 'El campo extra es inválido.',
         'ingreso_seg.date' => 'El campo ingreso a SEG debe ser una fecha.',
         'ingreso_ct.date' => 'El campo ingreso a CT debe ser una fecha.',
     ];
@@ -64,6 +68,7 @@ class EditarProfesor extends Component
         $this->group_id = $teacher->group_id;
         $this->funcion = $teacher->funcion;
         $this->director = $teacher->director;
+        $this->extra = $teacher->extra;
         $this->ingreso_seg = $teacher->ingreso_seg;
         $this->ingreso_ct = $teacher->ingreso_ct;
 
@@ -119,6 +124,16 @@ class EditarProfesor extends Component
             }
         }
 
+        if ($propertyName == 'extra' ) {
+            if ($this->extra == 1) {
+                $this->grados = [];
+                $this->grupos = [];
+             }else{
+                $this->habilitarInput = true;
+             }
+
+        }
+
         $this->validateOnly($propertyName);
     }
 
@@ -126,34 +141,35 @@ class EditarProfesor extends Component
     {
 
 
-        if ($this->level_id == 3) {
-            $this->validate([
-            'group_id' => 'nullable|exists:groups,id',
-            'grade_id' => 'nullable|exists:grades,id',
-            ]);
+        $validationRules = [];
+
+        if ($this->level_id == 3 || $this->extra == 1) {
+            $validationRules = [
+                'group_id' => 'nullable|exists:groups,id',
+                'grade_id' => 'nullable|exists:grades,id',
+            ];
         } elseif ($this->director === "0") {
-            $this->validate([
-            'group_id' => 'required|exists:groups,id',
-            'grade_id' => 'required|exists:grades,id',
-            ]);
-        } else {
-            $this->validate();
+            $validationRules = [
+                'group_id' => 'required|exists:groups,id',
+                'grade_id' => 'required|exists:grades,id',
+            ];
         }
+
+        $this->validate($validationRules ?: $this->rules);
 
 
 
         $teacher = Teacher::find($this->teacher->id);
         $teacher->personnel_id = $this->personnel_id;
         $teacher->level_id = $this->level_id;
-        $teacher->grade_id = $this->grade_id;
-        $teacher->group_id = $this->group_id;
+        $teacher->grade_id = $this->grade_id ?: null;
+        $teacher->group_id =$this->group_id ?: null;
         $teacher->funcion = $this->funcion;
         $teacher->director = $this->director;
+        $teacher->extra = $this->extra;
         $teacher->ingreso_seg = $this->ingreso_seg;
         $teacher->ingreso_ct = $this->ingreso_ct;
         $teacher->save();
-
-
 
 
         $this->dispatch('resfreshTable');
