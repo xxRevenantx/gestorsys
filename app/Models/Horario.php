@@ -10,7 +10,26 @@ class Horario extends Model
     /** @use HasFactory<\Database\Factories\HorarioFactory> */
     use HasFactory;
 
-    protected $fillable = ['hora', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+    protected $fillable = ['hora', 'level_id', 'grade_id', 'group_id', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+
+
+    // Relación con Nivel
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    // Relación con Grado
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
+    // Relación con Grupo
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 
 
     // Relación con Materia para cada día de la semana

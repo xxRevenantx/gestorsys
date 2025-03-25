@@ -45,7 +45,7 @@ class MateriaController extends Controller
      */
     public function edit($materia_id)
     {
-        $materia = Materia::find($materia_id);
+        $materia = Materia::findOrFail($materia_id);
         return view('admin.level.materia.edit', compact('materia'));
 
     }

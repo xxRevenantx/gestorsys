@@ -44,4 +44,9 @@ class Group extends Model
         return $this->hasMany(Materia::class);
     }
 
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
+
 }

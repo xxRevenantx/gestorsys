@@ -7,6 +7,7 @@ use App\Models\Grade;
 use App\Models\Horario;
 use App\Models\Level;
 use App\Models\Materia;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class HorarioClase extends Component
@@ -14,7 +15,9 @@ class HorarioClase extends Component
     public $materias;
     public $grade_id;
     public $level_id;
+    public $group_id;
     public $horarios = [];
+    public $grupos = [];
 
 
     // VARIABLES GET
@@ -23,6 +26,9 @@ class HorarioClase extends Component
     public $grade; // GRADO SELECCIONADO
 
     public $hora;
+
+    // Colores de las materias
+    public $materiaColors = [];
 
 
     public function placeholder(){
@@ -45,6 +51,7 @@ class HorarioClase extends Component
             'miercoles' => $horario->miercoles,
             'jueves' => $horario->jueves,
             'viernes' => $horario->viernes,
+            'group_id' => $horario->group_id, // <-- Agregado
         ];
     }
 
@@ -54,23 +61,54 @@ class HorarioClase extends Component
     $this->action = Action::where('slug', 'horarios')->first();
     $this->grade_id = $this->grade->id; // GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRADOS EN LA VISTA DE MATRICULA ESCOLAR
 
+    $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
+
+
+    $this->materiaColors = [
+        1 => 'bg-red-300',
+        2 => 'bg-green-300',
+        3 => 'bg-blue-300',
+        4 => 'bg-yellow-300',
+        // y así sucesivamente según los IDs
+    ];
 
     }
 
 
     public function guardarHora(){
+
         $this->validate([
-            'hora' => 'required|string|unique:horarios,hora',
+            'hora' => [
+            'required',
+            'string',
+            function ($attribute, $value, $fail) {
+                $exists = Horario::where('hora', $value)
+                ->where('group_id', $this->group_id)
+                ->exists();
+                if ($exists) {
+                $fail('La hora ya existe en el mismo grupo.');
+                }
+            },
+            ],
+            'group_id' => 'required|exists:groups,id',
         ],[
             'hora.required' => 'El campo hora es obligatorio',
-            'hora.unique' => 'La hora ya existe',
+            'group_id.required' => 'El campo grupo es obligatorio',
+            'group_id.exists' => 'El grupo no existe',
         ]);
+
+
 
         Horario::create([
             'hora' => trim($this->hora),
+            'level_id' => $this->level_id,
+            'grade_id' => $this->grade_id,
+            'group_id' => $this->group_id,
+
         ]);
 
         $this->hora = '';
+        $this->group_id = '';
 
         $this->dispatch('swal', [
             'title' => 'Hora guardada correctamente',
@@ -78,6 +116,30 @@ class HorarioClase extends Component
             'position' => 'top',
         ]);
 
+        $this->dispatch('refreshTable');
+
+
+    }
+
+    #[On('refreshTable')]
+    public function refreshTable()
+    {
+        // ESPERAR UN SEGUNDO, Y RESETEAR EL GRADO, GRUPO Y genero
+        sleep(1);
+        $this->horarios = Horario::all()->mapWithKeys(function ($horario) {
+            return [
+                $horario->id => [
+                    'id' => $horario->id,
+                    'hora' => $horario->hora,
+                    'lunes' => $horario->lunes,
+                    'martes' => $horario->martes,
+                    'miercoles' => $horario->miercoles,
+                    'jueves' => $horario->jueves,
+                    'viernes' => $horario->viernes,
+                    'group_id' => $horario->group_id, // <-- Agregado
+                ],
+            ];
+        })->toArray();
 
     }
 

@@ -65,6 +65,12 @@ class Level extends Model
         return 'slug';
     }
 
+    // HORARIO
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
+
 
 
 }

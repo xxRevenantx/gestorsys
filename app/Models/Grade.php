@@ -47,4 +47,9 @@ class Grade extends Model
 
 
 
+    // HORARIO
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
 }

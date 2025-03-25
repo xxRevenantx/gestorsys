@@ -14,7 +14,7 @@
 
 
 
-<livewire:action.materia.editar-materia  />
+<livewire:action.materia.editar-materia :materia="$materia"  />
 
 
 </x-admin-layout>
