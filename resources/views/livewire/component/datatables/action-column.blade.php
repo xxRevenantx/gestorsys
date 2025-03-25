@@ -29,6 +29,10 @@
             <span class="hidden md:inline-block">Ver</span>
         </a>
         @endisset
+
+
+
+
     </div>
 
 

@@ -58,21 +58,21 @@ class MostrarNivelController extends Controller
         return view('admin.level.grade', compact('nivel',  'action', 'acciones', 'level_id'));
     }
 
-    public function materias($level, $action)
-    {
+    // public function materias($level, $action)
+    // {
 
-        dd($level, $action);
+    //     dd($level, $action);
 
-        // $nivel = Level::where('slug', $level)->firstOrFail();
-        // $action = Action::where('slug', $action)->firstOrFail();
-        // // $grade = Grade::where('grado', $grade)->firstOrFail();
+    //     // $nivel = Level::where('slug', $level)->firstOrFail();
+    //     // $action = Action::where('slug', $action)->firstOrFail();
+    //     // // $grade = Grade::where('grado', $grade)->firstOrFail();
 
-        // $acciones = Action::orderBy('sort', "asc")->get();
+    //     // $acciones = Action::orderBy('sort', "asc")->get();
 
-        // $level_id = $nivel->id; // OBTENER EL ID DEL NIVEL
+    //     // $level_id = $nivel->id; // OBTENER EL ID DEL NIVEL
 
-        // return view('admin.level.grade', compact('nivel',  'action', 'acciones', 'level_id'));
-    }
+    //     // return view('admin.level.grade', compact('nivel',  'action', 'acciones', 'level_id'));
+    // }
 
 
 

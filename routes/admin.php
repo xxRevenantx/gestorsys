@@ -7,6 +7,7 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LevelPDFController;
+use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\MostrarNivelController;
 use App\Http\Controllers\PagoInscripcionController;
 use App\Http\Controllers\PDFController;
@@ -65,6 +66,12 @@ Route::resource('asignacion-personal', TeacherController::class)->names('teacher
 Route::resource('matricula-general', StudentController::class)->names('students');
 
 
+
+// EDITAR MATERIA
+Route::resource('materias', MateriaController::class)->names('materias');
+
+
+
 // PDFS
 
 // Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');
@@ -93,7 +100,6 @@ Route::get('/niveles/{nivel}/{action}/{grade}', [MostrarNivelController::class, 
 
 
 Route::get('/niveles/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'matricula'])->name('level.grados');
-
 
 
 

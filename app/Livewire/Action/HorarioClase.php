@@ -22,6 +22,8 @@ class HorarioClase extends Component
     public $action;
     public $grade; // GRADO SELECCIONADO
 
+    public $hora;
+
 
     public function placeholder(){
         return view('placeholder');
@@ -55,6 +57,49 @@ class HorarioClase extends Component
 
     }
 
+
+    public function guardarHora(){
+        $this->validate([
+            'hora' => 'required|string|unique:horarios,hora',
+        ],[
+            'hora.required' => 'El campo hora es obligatorio',
+            'hora.unique' => 'La hora ya existe',
+        ]);
+
+        Horario::create([
+            'hora' => trim($this->hora),
+        ]);
+
+        $this->hora = '';
+
+        $this->dispatch('swal', [
+            'title' => 'Hora guardada correctamente',
+            'icon' => 'success',
+            'position' => 'top',
+        ]);
+
+
+    }
+
+    // ACTUALIZAR HORA
+    public function actualizarHora($id)
+    {
+        $this->validate([
+            "horarios.$id.hora" => 'required|string|unique:horarios,hora,' . $id,
+        ], [
+            "horarios.$id.hora.required" => 'El campo hora es obligatorio',
+            "horarios.$id.hora.unique" => 'La hora ya existe',
+        ]);
+
+
+        $horario = Horario::find($id);
+
+        if ($horario) {
+            $horario->hora = $this->horarios[$id]['hora'];
+            $horario->save();
+        }
+    }
+
     // Actualizar la materia en el día específico del horario
     public function actualizarMateria($id, $dia, $materia)
     {
@@ -69,12 +114,7 @@ class HorarioClase extends Component
             $horario->$dia = $materia;
             $horario->save();
 
-            // Disparar notificación de éxito
-            $this->dispatch('swal', [
-                'icon' => 'success',
-                'position' => 'top',
-                'text' => 'Horario actualizado correctamente.',
-            ]);
+
         }
     }
 

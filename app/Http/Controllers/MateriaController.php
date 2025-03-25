@@ -43,9 +43,11 @@ class MateriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Materia $materia)
+    public function edit($materia_id)
     {
-        //
+        $materia = Materia::find($materia_id);
+        return view('admin.level.materia.edit', compact('materia'));
+
     }
 
     /**

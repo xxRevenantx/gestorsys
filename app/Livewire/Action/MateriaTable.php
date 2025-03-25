@@ -20,11 +20,26 @@ class MateriaTable extends DataTableComponent
     public $level_id;
     public $grade;
 
+    public $selectedMateria;
+    public $showModal = false;
+
+
+        public function edit($id)
+    {
+        $this->selectedMateria = Materia::find($id);
+        $this->showModal = true;
+    }
+
+    public function rowView(): string
+{
+    return 'livewire.action.materia.editar-materia';
+}
 
     public function configure(): void
     {
 
         $this->setPrimaryKey('id')
+
         ->setReorderEnabled();
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que deseas eliminar los elementos seleccionados?');
 
@@ -47,6 +62,17 @@ class MateriaTable extends DataTableComponent
     public function columns(): array
     {
         return [
+
+            Column::make('Acciones')
+                ->label(
+                    fn ($row, Column $column) => view('livewire.component.datatables.action-column')->with(
+                        [
+
+                            'editLink' => route('admin.materias.edit', $row),
+
+                        ]
+                    )
+                )->html(),
 
             Column::make('#', 'sort')
             ->sortable(),

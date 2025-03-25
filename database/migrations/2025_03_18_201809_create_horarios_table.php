@@ -19,6 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('miercoles')->nullable();
             $table->unsignedBigInteger('jueves')->nullable();
             $table->unsignedBigInteger('viernes')->nullable();
+            $table->unsignedBigInteger('level_id')->nullable();
+            $table->unsignedBigInteger('grade_id')->nullable();
+            $table->unsignedBigInteger('group_id')->nullable();
             $table->timestamps();
 
 
@@ -27,6 +30,10 @@ return new class extends Migration
             $table->foreign('miercoles')->references('id')->on('materias')->onDelete('set null');
             $table->foreign('jueves')->references('id')->on('materias')->onDelete('set null');
             $table->foreign('viernes')->references('id')->on('materias')->onDelete('set null');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('set null');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('set null');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
+
 
 
 

@@ -168,6 +168,7 @@
                         'admin.level.index',
                         'admin.level.nivel',
                         'admin.level.action',
+                        'admin.materias.edit'
 
 
 
