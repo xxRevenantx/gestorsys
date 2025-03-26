@@ -128,6 +128,8 @@ class EditarProfesor extends Component
             if ($this->extra == 1) {
                 $this->grados = [];
                 $this->grupos = [];
+                $this->grade_id = null;
+                $this->group_id = null;
              }else{
                 $this->habilitarInput = true;
              }
@@ -142,6 +144,7 @@ class EditarProfesor extends Component
 
 
         $validationRules = [];
+
 
         if ($this->level_id == 3 || $this->extra == 1) {
             $validationRules = [

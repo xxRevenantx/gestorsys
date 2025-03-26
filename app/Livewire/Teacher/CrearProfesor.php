@@ -66,8 +66,10 @@ class CrearProfesor extends Component
                 ->get();
             } else {
             $this->grados = [];
+            $this->grade_id = null;
             }
             $this->grupos = [];
+            $this->group_id = null;
         }
 
         // CUANDO EL NIVEL SEA SECUNDARIA NO SE PODRÁ SELECCIONAR UN GRUPO NI UN GRADO
@@ -89,7 +91,20 @@ class CrearProfesor extends Component
                     ->get();
             } else {
                 $this->grupos = [];
+                $this->group_id = null;
             }
+        }
+
+        if ($propertyName == 'extra' ) {
+            if ($this->extra == 1) {
+                $this->grados = [];
+                $this->grupos = [];
+                $this->grade_id = null;
+                $this->group_id = null;
+             }else{
+                $this->habilitarInput = true;
+             }
+
         }
 
         $this->validateOnly($propertyName);
@@ -99,19 +114,21 @@ class CrearProfesor extends Component
     {
         // $this->validate();
 
-        if ($this->level_id == 3) {
-            $this->validate([
-            'group_id' => 'nullable|exists:groups,id',
-            'grade_id' => 'nullable|exists:grades,id',
-            ]);
+        $validationRules = [];
+
+        if ($this->level_id == 3 || $this->extra == 1) {
+            $validationRules = [
+                'group_id' => 'nullable|exists:groups,id',
+                'grade_id' => 'nullable|exists:grades,id',
+            ];
         } elseif ($this->director === "0") {
-            $this->validate([
-            'group_id' => 'required|exists:groups,id',
-            'grade_id' => 'required|exists:grades,id',
-            ]);
-        } else {
-            $this->validate();
+            $validationRules = [
+                'group_id' => 'required|exists:groups,id',
+                'grade_id' => 'required|exists:grades,id',
+            ];
         }
+
+        $this->validate($validationRules ?: $this->rules);
 
         Teacher::create([
             'personnel_id' => $this->personnel_id,

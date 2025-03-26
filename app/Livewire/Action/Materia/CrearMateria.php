@@ -28,7 +28,6 @@ class CrearMateria extends Component
 
     protected $rules = [
         'materia' => 'required',
-        'slug' => 'required|unique:materias',
         'clave' => 'nullable|unique:materias',
         'level_id' => 'required|exists:levels,id',
         'group_id' => 'required|exists:groups,id',
@@ -39,8 +38,6 @@ class CrearMateria extends Component
 
     protected $messages = [
         'materia.required' => 'El campo materia es obligatorio',
-        'slug.required' => 'El campo slug es obligatorio',
-        'slug.unique' => 'El slug ya existe',
         'clave.unique' => 'La clave ya existe',
         'level_id.required' => 'El campo nivel es obligatorio',
         'level_id.exists' => 'El nivel no existe',
@@ -64,6 +61,20 @@ class CrearMateria extends Component
     public function guardarMateria()
     {
         $this->validate();
+
+         // Verificar la combinación duplicada de anio_inicio, anio_termino y level_id
+            $exists = Materia::where('slug', $this->slug)
+                ->where('group_id', $this->group_id)
+                 ->exists();
+
+        if ($exists) {
+            $this->dispatch('swal',[
+                'title' => '¡Esta materia ya existe en el grupo seleccionado!',
+                'icon' => 'error',
+                'position' => 'top',
+            ]);
+            return;
+        }
 
         Materia::create([
             'materia' => $this->materia,
@@ -102,7 +113,7 @@ class CrearMateria extends Component
     public function mount(){
         $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
 
-        $this->profesores = Teacher::where('level_id', $this->level_id)->orderBy('sort','asc')->get();
+        $this->profesores = Teacher::orderBy('sort','asc')->get();
     }
 
 

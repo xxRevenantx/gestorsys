@@ -27,7 +27,7 @@
                    placeholder="08:00am - 09:00am">
 
             <select wire:model.live="group_id" class="form-control w-1/2 border-gray-300 rounded-md">
-                <option value="">--Seleccione el grupo--</option>
+                <option value="">----Seleccione una materia-- el grupo--</option>
                 @foreach($grupos as $grupo)
                     <option value="{{ $grupo->id }}">{{ $grupo->grupo }}</option>
                 @endforeach
@@ -82,7 +82,12 @@
                     @foreach($horarios as $horario)
                     @if($horario['group_id'] == $grupo->id)
 
+
+
                         @php
+                            $materiasGrupo = $materias->filter(function($materia) use ($grupo) {
+                                return $materia->group_id == $grupo->id;
+                            });
                             $colorLunes = !empty($horarios[$horario['id']]['lunes']) ? 'bg-indigo-300' : '';
                             $colorMartes = !empty($horarios[$horario['id']]['martes']) ? 'bg-green-300' : '';
                             $colorMiercoles = !empty($horarios[$horario['id']]['miercoles']) ? 'bg-yellow-300' : '';
@@ -104,55 +109,72 @@
                                 <select wire:model="horarios.{{ $horario['id'] }}.lunes"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'lunes', $event.target.value)">
-                                    <option value="">Seleccione</option>
-                                    @foreach($materias as $materia)
-                                        <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
+                                    <option value="">--Seleccione una materia--</option>
+                                    @foreach($materiasGrupo as $materia)
+                                        <option value="{{ $materia['id'] }}">
+                                            {{ $materia->materia }}
+                                        </option>
                                     @endforeach
                                 </select>
+                                <div class="text-sm text-gray-600 mt-1">
+                                    Profesor: {{ $horarios[$horario['id']]['lunes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['lunes'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['lunes'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['lunes'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
+                                </div>
                             </td>
 
                             <td class="border border-gray-300 px-4 py-2 {{ $colorMartes }}">
                                 <select wire:model="horarios.{{ $horario['id'] }}.martes"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'martes', $event.target.value)">
-                                    <option value="">Seleccione</option>
-                                    @foreach($materias as $materia)
+                                    <option value="">--Seleccione una materia--</option>
+                                    @foreach($materiasGrupo as $materia)
                                         <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
                                     @endforeach
                                 </select>
+                                <div class="text-sm text-gray-600 mt-1">
+                                    Profesor: {{ $horarios[$horario['id']]['martes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
+                                </div>
                             </td>
 
                             <td class="border border-gray-300 px-4 py-2 {{ $colorMiercoles }}">
                                 <select wire:model="horarios.{{ $horario['id'] }}.miercoles"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'miercoles', $event.target.value)">
-                                    <option value="">Seleccione</option>
-                                    @foreach($materias as $materia)
+                                    <option value="">--Seleccione una materia--</option>
+                                    @foreach($materiasGrupo as $materia)
                                         <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
                                     @endforeach
                                 </select>
+                                <div class="text-sm text-gray-600 mt-1">
+                                    Profesor: {{ $horarios[$horario['id']]['miercoles'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['miercoles'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['miercoles'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['miercoles'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
+                                </div>
                             </td>
 
                             <td class="border border-gray-300 px-4 py-2 {{ $colorJueves }}">
                                 <select wire:model="horarios.{{ $horario['id'] }}.jueves"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'jueves', $event.target.value)">
-                                    <option value="">Seleccione</option>
-                                    @foreach($materias as $materia)
+                                    <option value="">--Seleccione una materia--</option>
+                                    @foreach($materiasGrupo as $materia)
                                         <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
                                     @endforeach
                                 </select>
+                                <div class="text-sm text-gray-600 mt-1">
+                                    Profesor: {{ $horarios[$horario['id']]['jueves'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['jueves'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['jueves'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['jueves'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
+                                </div>
                             </td>
 
                             <td class="border border-gray-300 px-4 py-2 {{ $colorViernes }}">
                                 <select wire:model="horarios.{{ $horario['id'] }}.viernes"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'viernes', $event.target.value)">
-                                    <option value="">Seleccione</option>
-                                    @foreach($materias as $materia)
+                                    <option value="">--Seleccione una materia--</option>
+                                    @foreach($materiasGrupo as $materia)
                                         <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
                                     @endforeach
                                 </select>
+                                <div class="text-sm text-gray-600 mt-1">
+                                    Profesor: {{ $horarios[$horario['id']]['viernes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['viernes'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['viernes'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['viernes'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
+                                </div>
                             </td>
                         </tr>
                     @endif

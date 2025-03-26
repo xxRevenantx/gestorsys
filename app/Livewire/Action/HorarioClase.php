@@ -16,6 +16,7 @@ class HorarioClase extends Component
     public $grade_id;
     public $level_id;
     public $group_id;
+    public $teacher_id;
     public $horarios = [];
     public $grupos = [];
 
@@ -55,13 +56,16 @@ class HorarioClase extends Component
         ];
     }
 
-    $this->materias = Materia::where('level_id', $this->level_id)->get();
+    $this->materias = Materia::where('level_id', $this->level_id)->with('teacher')->get();
 
     $this->level = Level::find($this->level_id);
     $this->action = Action::where('slug', 'horarios')->first();
     $this->grade_id = $this->grade->id; // GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRADOS EN LA VISTA DE MATRICULA ESCOLAR
 
     $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
+
+
+
 
 
     $this->materiaColors = [
@@ -76,6 +80,8 @@ class HorarioClase extends Component
 
 
     public function guardarHora(){
+
+
 
         $this->validate([
             'hora' => [
@@ -165,18 +171,11 @@ class HorarioClase extends Component
     // Actualizar la materia en el día específico del horario
     public function actualizarMateria($id, $dia, $materia)
     {
-        // Asegurarse de que la materia no esté vacía antes de actualizar
-        if (empty($materia)) {
-            return; // No hacer nada si no hay materia seleccionada
-        }
-
         $horario = Horario::find($id);
 
         if ($horario) {
-            $horario->$dia = $materia;
+            $horario->$dia = $materia ?: null; // Si no se selecciona una materia, se asigna null
             $horario->save();
-
-
         }
     }
 
