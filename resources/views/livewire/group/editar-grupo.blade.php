@@ -1,8 +1,14 @@
 <div class="w-full mt-15 p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-    <div class="flex items-center justify-between mb-4">
+
+    <!-- Main modal -->
+
+
+
+
+    {{-- <div class="flex items-center justify-between mb-4">
 
         <div class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-4 w-full" role="alert">
-            <p class="font-bold"><i class="fas fa-layer-group"></i> Nuevo Grupo</p>
+            <p class="font-bold"><i class="fas fa-layer-group"></i> Editar Grupo</p>
           </div>
 
    </div>
@@ -63,7 +69,7 @@
 
   </form>
 
-   </div>
+   </div> --}}
 </div>
 
 

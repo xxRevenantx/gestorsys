@@ -11,6 +11,10 @@ class GroupTable extends DataTableComponent
 {
     protected $listeners = ['resfreshTable' => '$refresh'];
 
+    public $selectedItems;
+    public $modalIsOpen = false;
+
+
     protected $model = Group::class;
 
     public function configure(): void
@@ -21,8 +25,21 @@ class GroupTable extends DataTableComponent
 
         $this->setBulkActions([
             'deleteSelected' => 'Eliminar',
+              'editarModal' => 'Editar'
         ]);
     }
+
+
+    public function editarModal()
+    {
+        $this->selectedItems = $this->getSelected();
+        $this->modalIsOpen = true;
+    }
+
+    public function customView(): string
+{
+    return 'livewire.group.editar-grupo';
+}
 
     public function deleteSelected()
     {

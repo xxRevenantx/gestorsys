@@ -52,6 +52,8 @@
 
     @elseif ($action->slug == 'horarios')
         <livewire:action.horario-clase  :level_id="$level_id"  :grade="$grade" lazy  />
+    @elseif ($action->slug == 'calificaciones')
+        <livewire:action.calificacion :level_id="$level_id"  :grade="$grade" lazy />
 
    @endif
 
