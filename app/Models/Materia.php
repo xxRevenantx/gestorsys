@@ -42,4 +42,10 @@ class Materia extends Model
         return $this->hasMany(Horario::class);
     }
 
+    // CALIFICACIONES
+    public function calificaciones()
+    {
+        return $this->hasMany(Calificacion::class);
+    }
+
 }

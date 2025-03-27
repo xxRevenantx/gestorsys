@@ -12,6 +12,7 @@ use App\Http\Controllers\MostrarNivelController;
 use App\Http\Controllers\PagoInscripcionController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PDFLevelController;
+use App\Http\Controllers\PeriodoController;
 use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SupervisorController;
@@ -40,6 +41,9 @@ Route::resource('directores', DirectorController::class)->names('directores');
 
 // RUTAS DEL CONTROLADOR ADMINISTADOR DE NIVELES
 Route::resource('administrar-niveles', LevelController::class)->names('levels');
+
+// RUTAS DEL PERIODO
+Route::resource('periodos', PeriodoController::class)->names('periodos');
 
 
 

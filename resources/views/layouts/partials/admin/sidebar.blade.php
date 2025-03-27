@@ -124,6 +124,16 @@
                         'admin.groups.edit'
                     ),
                 ],
+                [
+                    'name' => 'Periodos',
+                    'icon' => 'fas fa-layer-group',
+                    'route' =>  route('admin.periodos.index'),
+                    'active' =>  request()->routeIs(
+                        'admin.periodos.index',
+                        'admin.periodos.create',
+                        'admin.periodos.edit'
+                    ),
+                ],
 
 
             ]

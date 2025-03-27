@@ -1,4 +1,5 @@
 <x-form-section submit="updateProfileInformation">
+    @include('admin.partials.loader')
     <x-slot name="title">
         {{ __('Profile Information') }}
     </x-slot>
