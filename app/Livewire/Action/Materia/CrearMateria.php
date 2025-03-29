@@ -113,7 +113,7 @@ class CrearMateria extends Component
     public function mount(){
         $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
 
-        $this->profesores = Teacher::orderBy('sort','asc')->get();
+        $this->profesores = Teacher::where('level_id', $this->level_id)->orderBy('sort', 'asc')->get();
     }
 
 

@@ -13,7 +13,7 @@ class Teacher extends Model
     /** @use HasFactory<\Database\Factories\TeacherFactory> */
     use HasFactory;
 
-    protected $fillable = ['personnel_id','level_id', 'grade_id', 'group_id', 'funcion', 'ingreso_seg', 'ingreso_ct', 'director', 'extra', 'sort'];
+    protected $fillable = ['personnel_id','level_id', 'grade_id', 'group_id', 'funcion', 'ingreso_seg', 'ingreso_ct', 'director', 'extra', 'color', 'sort'];
 
 
 
@@ -32,6 +32,19 @@ class Teacher extends Model
 
     public function group(){
         return $this->belongsTo(Group::class);
+    }
+
+    public function materias()
+    {
+        return $this->hasMany(Materia::class);
+    }
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
+    public function calificaciones()
+    {
+        return $this->hasMany(Calificacion::class);
     }
 
 

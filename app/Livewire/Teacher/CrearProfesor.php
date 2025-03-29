@@ -20,6 +20,7 @@ class CrearProfesor extends Component
     public $extra;
     public $ingreso_seg;
     public $ingreso_ct;
+    public $color;
 
     public $grados = [];
     public $grupos = [];
@@ -36,6 +37,7 @@ class CrearProfesor extends Component
         'extra' => 'required|in:0,1',
         'ingreso_seg' => 'nullable|date',
         'ingreso_ct' => 'nullable|date',
+        'color' => 'required|string',
     ];
 
     protected $messages = [
@@ -54,6 +56,7 @@ class CrearProfesor extends Component
         'extra.in' => 'El campo extra es inválido.',
         'ingreso_seg.date' => 'El campo ingreso a SEG debe ser una fecha.',
         'ingreso_ct.date' => 'El campo ingreso a CT debe ser una fecha.',
+        'color.required' => 'El color es requerido.',
 
     ];
 
@@ -140,6 +143,7 @@ class CrearProfesor extends Component
             'extra' => $this->extra,
             'ingreso_seg' => $this->ingreso_seg,
             'ingreso_ct' => $this->ingreso_ct,
+            'color' => $this->color,
         ]);
 
         $this->reset();

@@ -58,4 +58,10 @@ class Horario extends Model
         return $this->belongsTo(Materia::class, 'viernes');
     }
 
+    //RELACION CON PROFESOR
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
+
 }

@@ -22,7 +22,7 @@ class EditarProfesor extends Component
     public $extra;
     public $ingreso_seg;
     public $ingreso_ct;
-
+    public $color;
     public $habilitarInput = true;
     public $grados = [];
     public $grupos = [];
@@ -38,11 +38,10 @@ class EditarProfesor extends Component
         'extra' => 'required|in:0,1',
         'ingreso_seg' => 'nullable|date',
         'ingreso_ct' => 'nullable|date',
+        'color' => 'required|string',
     ];
 
     protected $messages = [
-        'personnel_id.required' => 'El personal es requerido.',
-        'personnel_id.exists' => 'El personal seleccionado no existe.',
         'level_id.required' => 'El nivel es requerido.',
         'level_id.exists' => 'El nivel seleccionado no existe.',
         'grade_id.exists' => 'El grado seleccionado no existe.',
@@ -56,6 +55,7 @@ class EditarProfesor extends Component
         'extra.in' => 'El campo extra es inválido.',
         'ingreso_seg.date' => 'El campo ingreso a SEG debe ser una fecha.',
         'ingreso_ct.date' => 'El campo ingreso a CT debe ser una fecha.',
+        'color.required' => 'El color es requerido.',
     ];
 
 
@@ -71,6 +71,7 @@ class EditarProfesor extends Component
         $this->extra = $teacher->extra;
         $this->ingreso_seg = $teacher->ingreso_seg;
         $this->ingreso_ct = $teacher->ingreso_ct;
+        $this->color = $teacher->color;
 
         if (!empty($this->level_id)) {
             $this->grados = Grade::where('level_id', $this->level_id)
@@ -158,6 +159,10 @@ class EditarProfesor extends Component
             ];
         }
 
+        $validationRules['personnel_id'] = 'required|exists:personnels,id';
+        $this->messages['personnel_id.required'] = 'El profesor es requerido.';
+        $this->messages['personnel_id.exists'] = 'El profesor seleccionado no existe.';
+
         $this->validate($validationRules ?: $this->rules);
 
 
@@ -172,6 +177,7 @@ class EditarProfesor extends Component
         $teacher->extra = $this->extra;
         $teacher->ingreso_seg = $this->ingreso_seg;
         $teacher->ingreso_ct = $this->ingreso_ct;
+        $teacher->color = $this->color;
         $teacher->save();
 
 

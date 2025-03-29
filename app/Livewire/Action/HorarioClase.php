@@ -65,17 +65,6 @@ class HorarioClase extends Component
     $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
 
 
-
-
-
-    $this->materiaColors = [
-        1 => 'bg-red-300',
-        2 => 'bg-green-300',
-        3 => 'bg-blue-300',
-        4 => 'bg-yellow-300',
-        // y así sucesivamente según los IDs
-    ];
-
     }
 
 

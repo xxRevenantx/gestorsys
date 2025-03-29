@@ -56,10 +56,10 @@
         @foreach ($grupos as $grupo )
         <h2 id="accordion-open-heading-{{$grupo->id}}">
           <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
-            <span class="flex items-center"><svg class="w-5 h-5 me-2 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+            <span class="flex items-center"><svg class="w-5 h-5 me-2 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2eee/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 eee 2z" clip-rule="evenodd"></path></svg>
                 GRUPO: {{ $grupo->grupo }}
             </span>
-            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2eee/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
             </svg>
           </button>
@@ -82,17 +82,13 @@
                     @foreach($horarios as $horario)
                     @if($horario['group_id'] == $grupo->id)
 
-
-
                         @php
                             $materiasGrupo = $materias->filter(function($materia) use ($grupo) {
                                 return $materia->group_id == $grupo->id;
                             });
-                            $colorLunes = !empty($horarios[$horario['id']]['lunes']) ? 'bg-indigo-300' : '';
-                            $colorMartes = !empty($horarios[$horario['id']]['martes']) ? 'bg-green-300' : '';
-                            $colorMiercoles = !empty($horarios[$horario['id']]['miercoles']) ? 'bg-yellow-300' : '';
-                            $colorJueves = !empty($horarios[$horario['id']]['jueves']) ? 'bg-pink-300' : '';
-                            $colorViernes = !empty($horarios[$horario['id']]['viernes']) ? 'bg-orange-300' : '';
+
+
+
                         @endphp
 
                         <tr class="hover:bg-gray-50">
@@ -105,7 +101,7 @@
                                 @enderror
                             </td>
 
-                            <td class="border border-gray-300 px-4 py-2 {{ $colorLunes }}">
+                            <td class="border border-gray-300 px-4 py-2" style="background-color:  {{ $horarios[$horario['id']]['lunes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['lunes'])->teacher->color ?? '#eee') : '#eee' }} ">
                                 <select wire:model="horarios.{{ $horario['id'] }}.lunes"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'lunes', $event.target.value)">
@@ -121,7 +117,7 @@
                                 </div>
                             </td>
 
-                            <td class="border border-gray-300 px-4 py-2 {{ $colorMartes }}">
+                            <td class="border border-gray-300 px-4 py-2" style="background-color:  {{ $horarios[$horario['id']]['martes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->color ?? '#eee') : '#eee' }} ">
                                 <select wire:model="horarios.{{ $horario['id'] }}.martes"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'martes', $event.target.value)">
@@ -135,7 +131,7 @@
                                 </div>
                             </td>
 
-                            <td class="border border-gray-300 px-4 py-2 {{ $colorMiercoles }}">
+                            <td class="border border-gray-300 px-4 py-2" style="background-color: {{ $horarios[$horario['id']]['miercoles'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['miercoles'])->teacher->color ?? '#eee') : '#eee' }} ">
                                 <select wire:model="horarios.{{ $horario['id'] }}.miercoles"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'miercoles', $event.target.value)">
@@ -149,7 +145,7 @@
                                 </div>
                             </td>
 
-                            <td class="border border-gray-300 px-4 py-2 {{ $colorJueves }}">
+                            <td class="border border-gray-300 px-4 py-2" style="background-color: {{ $horarios[$horario['id']]['jueves'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['jueves'])->teacher->color ?? '#eee') : '#eee' }} ">
                                 <select wire:model="horarios.{{ $horario['id'] }}.jueves"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'jueves', $event.target.value)">
@@ -163,7 +159,7 @@
                                 </div>
                             </td>
 
-                            <td class="border border-gray-300 px-4 py-2 {{ $colorViernes }}">
+                            <td class="border border-gray-300 px-4 py-2" style="background-color: {{ $horarios[$horario['id']]['viernes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['viernes'])->teacher->color ?? '#eee') : '#eee' }} ">
                                 <select wire:model="horarios.{{ $horario['id'] }}.viernes"
                                     class="form-control w-full border-gray-300 rounded-md"
                                     wire:change="actualizarMateria({{ $horario['id'] }}, 'viernes', $event.target.value)">
@@ -182,6 +178,65 @@
 
                 </tbody>
             </table>
+
+            <div class="mt-4">
+                <h3 class="text-lg font-bold text-gray-700">Horas Totales del Profesor</h3>
+
+
+                <table class="table-auto w-full border-collapse border border-gray-300 mt-4">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="border border-gray-300 px-4 py-2">#</th>
+                            <th class="border border-gray-300 px-4 py-2">Profesor</th>
+                            @foreach($materiasGrupo as $materia)
+                                <th class="border border-gray-300 px-4 py-2">{{ $materia->materia }}</th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $profesores = $materiasGrupo->map(function($materia) {
+                                return $materia->teacher->personnel ?? null;
+                            })->unique()->filter();
+                        @endphp
+                        @foreach($profesores as $key => $profesor)
+                            <tr class="hover:bg-gray-100">
+                                <td class="border border-gray-300 px-4 py-2 text-center font-bold">
+                                                {{ $key + 1 }}
+                                </td>
+                                <td class="border border-gray-300 px-4 py-2 text-center font-bold text-sm">
+                                    {{ $profesor->nombre ?? 'Sin Profesor' }} {{ $profesor->apellido_paterno ?? '' }} {{ $profesor->apellido_materno ?? '' }}
+                                </td>
+                                @foreach($materiasGrupo as $materia)
+                                    <td class="border text-sm  border-gray-300 px-4 py-2 text-center" style="background-color: {{ (($materia->teacher->personnel->id ?? null) === $profesor->id && collect($horarios)->filter(function($horario) use ($materia) {
+                                                return in_array($materia->id, [
+                                                    $horario['lunes'] ?? null,
+                                                    $horario['martes'] ?? null,
+                                                    $horario['miercoles'] ?? null,
+                                                    $horario['jueves'] ?? null,
+                                                    $horario['viernes'] ?? null
+                                                ]);
+                                            })->count() > 0) ? ($materia->teacher->color ?? '#eee') : '#fff' }}">
+                                        @if(($materia->teacher->personnel->id ?? null) === $profesor->id)
+                                            {{ collect($horarios)->filter(function($horario) use ($materia) {
+                                                return in_array($materia->id, [
+                                                    $horario['lunes'] ?? null,
+                                                    $horario['martes'] ?? null,
+                                                    $horario['miercoles'] ?? null,
+                                                    $horario['jueves'] ?? null,
+                                                    $horario['viernes'] ?? null
+                                                ]);
+                                            })->count() }} horas
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
           </div>
         </div>
         @endforeach

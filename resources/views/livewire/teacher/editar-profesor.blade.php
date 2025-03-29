@@ -119,6 +119,14 @@
 
                 @enderror
             </div>
+
+            <div class="mb-4">
+                <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
+                <input type="color" id="color" wire:model.live="color" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                @error('color')
+                    <span class="text-red-500 ">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
 
         <div class="flex justify-start items-center mb-5">
