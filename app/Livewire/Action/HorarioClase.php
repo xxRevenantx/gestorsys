@@ -69,12 +69,11 @@ class HorarioClase extends Component
 
     $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
 
-    $this->materiasGrupo = Materia::where('level_id', $this->level_id)
-        ->where('group_id', $this->group_id)
-        ->with('teacher')
-        ->get();
+
 
     }
+
+
 
 
     public function guardarHora(){

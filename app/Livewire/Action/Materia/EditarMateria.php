@@ -57,14 +57,7 @@ class EditarMateria extends Component
 
 
     public function actualizarMateria(){
-        $this->validate([
-            'slug' => 'required|unique:materias,slug,'.$this->materia_id,
-            'clave' => 'nullable|unique:materias,clave,'.$this->materia_id,
-        ],[
-            'slug.required' => 'El campo slug es obligatorio',
-            'slug.unique' => 'El slug ya existe',
-            'clave.unique' => 'La clave ya existe',
-        ]);
+
         $materia = \App\Models\Materia::findOrFail($this->materia_id);
 
         $materia->update([

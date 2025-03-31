@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('materia');
             $table->string('slug');
-            $table->string('clave')->unique()->nullable();
+            $table->string('clave')->nullable();
             $table->unsignedBigInteger('level_id')->nullable();
             $table->unsignedBigInteger('grade_id')->nullable();
             $table->unsignedBigInteger('group_id')->nullable();

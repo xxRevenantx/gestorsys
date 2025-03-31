@@ -28,7 +28,6 @@ class CrearMateria extends Component
 
     protected $rules = [
         'materia' => 'required',
-        'clave' => 'nullable|unique:materias',
         'level_id' => 'required|exists:levels,id',
         'group_id' => 'required|exists:groups,id',
         'teacher_id' => 'required|exists:teachers,id',
@@ -38,7 +37,6 @@ class CrearMateria extends Component
 
     protected $messages = [
         'materia.required' => 'El campo materia es obligatorio',
-        'clave.unique' => 'La clave ya existe',
         'level_id.required' => 'El campo nivel es obligatorio',
         'level_id.exists' => 'El nivel no existe',
         'group_id.required' => 'El campo grupo es obligatorio',
