@@ -64,8 +64,19 @@
             </svg>
           </button>
         </h2>
+            
         <div id="accordion-open-body-{{$grupo->id}}"  aria-labelledby="accordion-open-heading-{{$grupo->id}}">
           <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+            <a href="{{route('admin.horario', ["level" => $level_id, "grade" => $grade, "group" => $grupo->id] )}}" class="inline-block px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+                Descargar horario
+            </a>
+
+
+          
+
             <table class="table-auto w-full border-collapse border border-gray-300 mt-4">
                 <thead>
                     <tr class="bg-gray-100">
@@ -79,17 +90,21 @@
                 </thead>
                 <tbody>
 
+                    @php
+                        // $materiasGrupo = $materias->filter(function($materia) use ($grupo) { // Filtrar materias por grupo 
+                        //     return $materia->group_id == $grupo->id;
+                        // });
+                    @endphp
+
+                    {{$materiasGrupo}}
+
+                    {{$group_id}}
+                    
+
                     @foreach($horarios as $horario)
                     @if($horario['group_id'] == $grupo->id)
 
-                        @php
-                            $materiasGrupo = $materias->filter(function($materia) use ($grupo) {
-                                return $materia->group_id == $grupo->id;
-                            });
-
-
-
-                        @endphp
+                    
 
                         <tr class="hover:bg-gray-50">
                             <td class="border border-gray-300 px-4 py-2 text-center">
@@ -178,6 +193,12 @@
 
                 </tbody>
             </table>
+
+            <div class="mt-4">
+                <input type="text" wire:model.live="search" placeholder="Buscar materia o profesor..."
+                    class="form-control w-full border-gray-300 rounded-md px-4 py-2  focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            </div>
 
             <div class="mt-4">
                 <h3 class="text-lg font-bold text-gray-700">Horas Totales del Profesor</h3>

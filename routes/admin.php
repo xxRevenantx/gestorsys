@@ -93,6 +93,9 @@ Route::get('/recibo-colegiatura/{alumno}/{mes}', [PDFLevelController::class, 're
 Route::get('/estado-cuenta/{alumno}', [PDFLevelController::class, 'estadoCuenta'])->name('estado.cuenta');
 
 
+Route::get('/horarios/{level}/{grade}/{group}', [PDFLevelController::class, 'horarios'])->name('horario');
+
+
 
 
 // RUTAS DEL CONTROLADOR DE NIVELES

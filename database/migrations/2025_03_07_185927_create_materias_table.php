@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('materias', function (Blueprint $table) {
             $table->id();
             $table->string('materia');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->string('clave')->unique()->nullable();
             $table->unsignedBigInteger('level_id')->nullable();
             $table->unsignedBigInteger('grade_id')->nullable();

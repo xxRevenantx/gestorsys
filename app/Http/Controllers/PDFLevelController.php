@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Colegiatura;
+use App\Models\Horario;
 use App\Models\Level;
+use App\Models\Materia;
 use App\Models\Month;
 use App\Models\PagoInscripcion;
 use App\Models\Student;
@@ -154,6 +156,34 @@ class PDFLevelController extends Controller
     }
 
 
+    // HORARIOS
+    public function horarios ($level, $grade, $group)
+    {
+
+       
+
+        $horario = Horario::where('level_id', $level)
+            ->where('grade_id', $grade)
+            ->where('group_id', $group)
+            ->get();
+        $level = Level::findOrFail($level);
+        $grade = $level->grades->find($grade);
+        $group = $level->groups->find($group);
+        $materias = Materia::where('level_id', $level->id)
+            ->where('grade_id', $grade->id)
+            ->where('group_id', $group->id)
+            ->get();
+        $data = [
+            'horarios' => $horario,
+            'materias' => $materias,
+            'level' => $level,
+            'grade' => $grade,
+            'group' => $group,
+        ];
+
+        $pdf = Pdf::loadView('admin.PDF.horarios', $data)->setPaper('letter', 'portrait');
+        return $pdf->stream("Horarios de ". $level->level." ".$grade->grade.".pdf");
+    }
 
 
 }

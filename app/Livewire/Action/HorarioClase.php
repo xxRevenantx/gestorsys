@@ -19,7 +19,7 @@ class HorarioClase extends Component
     public $teacher_id;
     public $horarios = [];
     public $grupos = [];
-
+    public $materiasGrupo;
 
     // VARIABLES GET
     public $level;
@@ -30,6 +30,11 @@ class HorarioClase extends Component
 
     // Colores de las materias
     public $materiaColors = [];
+
+
+    // busqueda
+
+    public $search = '';
 
 
     public function placeholder(){
@@ -64,6 +69,10 @@ class HorarioClase extends Component
 
     $this->grupos = $this->grade->groups; // GRUPOS DEL GRADO SELECCIONADO POR DEFECTO EN EL SELECT DE GRUPOS EN LA VISTA DE MATRICULA ESCOLAR
 
+    $this->materiasGrupo = Materia::where('level_id', $this->level_id)
+        ->where('group_id', $this->group_id)
+        ->with('teacher')
+        ->get();
 
     }
 

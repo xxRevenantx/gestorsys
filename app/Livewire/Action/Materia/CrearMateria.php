@@ -77,7 +77,7 @@ class CrearMateria extends Component
         }
 
         Materia::create([
-            'materia' => $this->materia,
+            'materia' => trim($this->materia),
             'slug' => $this->slug,
             'clave' => $this->clave,
             'level_id' => $this->level_id,

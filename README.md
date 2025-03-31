@@ -9,3 +9,4 @@
 
 
 
+<p>CHECAR EL GROUP_ID</p>
