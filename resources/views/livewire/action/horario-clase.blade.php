@@ -13,6 +13,12 @@
                         {{ $grado->grado }}° GRADO
                     </a>
                 @endforeach
+
+                <a target="_blank"  href="{{ route('admin.horario.general', ['level' => $level]) }}"
+                {{-- <a href="#" --}}
+                    class="text-blue-700 hover:text-white hover:bg-blue-700 px-4 py-2 rounded block lg:inline-block lg:mt-0">
+                     Horario General
+                </a>
             </div>
         </div>
 
@@ -137,7 +143,9 @@
                                     @endforeach
                                 </select>
                                 <div class="text-sm text-gray-600 mt-1">
+
                                     Profesor: {{ $horarios[$horario['id']]['martes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
+
                                 </div>
                             </td>
 
@@ -267,7 +275,7 @@
                                 <td class="border text-sm border-gray-300 px-4 py-2 text-center"
                                     style="background-color: {{ $esProfesorDeLaMateria && $horasAsignadas > 0 ? ($materia->teacher->color ?? '#eee') : '#fff' }}">
                                     @if($esProfesorDeLaMateria && $horasAsignadas > 0)
-                                        {{ $horasAsignadas }} horas
+                                        {{ $horasAsignadas }} {{ $horasAsignadas > 1 ? 'horas' : 'hora' }}
                                     @else
                                         -
                                     @endif
@@ -299,7 +307,7 @@
 
 
                             <td class="border font-bold text-sm border-gray-300 px-4 py-2 text-center bg-yellow-100">
-                                {{ $totalReales }} horas
+                                {{ $totalReales }} {{ $totalReales > 1 ? 'horas' : 'hora' }}
                             </td>
                         </tr>
                     @endforeach

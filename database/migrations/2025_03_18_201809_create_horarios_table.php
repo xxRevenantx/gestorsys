@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('miercoles')->nullable();
             $table->unsignedBigInteger('jueves')->nullable();
             $table->unsignedBigInteger('viernes')->nullable();
+            $table->string('observacion')->nullable();
 
             $table->timestamps();
 

@@ -160,7 +160,7 @@ class PDFLevelController extends Controller
     public function horarios ($level, $grade, $group)
     {
 
-       
+
 
         $horario = Horario::where('level_id', $level)
             ->where('grade_id', $grade)
@@ -183,6 +183,29 @@ class PDFLevelController extends Controller
 
         $pdf = Pdf::loadView('admin.PDF.horarios', $data)->setPaper('letter', 'portrait');
         return $pdf->stream("Horarios de ". $level->level." ".$grade->grade.".pdf");
+    }
+
+    public function horarioGeneral($level_slug)
+    {
+
+
+
+        $level = Level::where('slug', $level_slug)->firstOrFail();
+        $horarios = Horario::where('level_id', $level->id)
+            ->orderBy('hora')
+            ->get();
+        $materias = Materia::where('level_id', $level->id)
+            ->orderBy('sort')
+            ->get();
+
+        $data = [
+            'horarios' => $horarios,
+            'materias' => $materias,
+            'level' => $level,
+        ];
+
+        $pdf = Pdf::loadView('admin.PDF.horario-general', $data)->setPaper('letter', 'landscape');
+        return $pdf->stream("Horarios generales de ". $level->level.".pdf");
     }
 
 

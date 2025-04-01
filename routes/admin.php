@@ -95,7 +95,8 @@ Route::get('/estado-cuenta/{alumno}', [PDFLevelController::class, 'estadoCuenta'
 
 Route::get('/horarios/{level}/{grade}/{group}', [PDFLevelController::class, 'horarios'])->name('horario');
 
-
+// HORARIO GENERAL
+Route::get('/horario-general/{level}', [PDFLevelController::class, 'horarioGeneral'])->name('horario.general');
 
 
 // RUTAS DEL CONTROLADOR DE NIVELES

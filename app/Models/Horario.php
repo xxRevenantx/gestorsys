@@ -10,7 +10,7 @@ class Horario extends Model
     /** @use HasFactory<\Database\Factories\HorarioFactory> */
     use HasFactory;
 
-    protected $fillable = ['hora', 'level_id', 'grade_id', 'group_id', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+    protected $fillable = ['hora', 'level_id', 'grade_id', 'group_id', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'observacion'];
 
 
     // Relación con Nivel

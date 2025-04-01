@@ -31,6 +31,8 @@ class HorarioClase extends Component
     // Colores de las materias
     public $materiaColors = [];
 
+    public $observacion;
+
 
     // busqueda
 
@@ -46,6 +48,8 @@ class HorarioClase extends Component
     {
         $this->level_id = $level_id;
 
+
+
     // Obtener los horarios y convertirlos a un arreglo simple
     $horarios = Horario::all();
     foreach ($horarios as $horario) {
@@ -58,6 +62,7 @@ class HorarioClase extends Component
             'jueves' => $horario->jueves,
             'viernes' => $horario->viernes,
             'group_id' => $horario->group_id, // <-- Agregado
+            'observacion' => $horario->observacion,
         ];
     }
 
@@ -80,9 +85,6 @@ class HorarioClase extends Component
 
 
     public function guardarHora(){
-
-
-
         $this->validate([
             'hora' => [
             'required',
@@ -149,6 +151,8 @@ class HorarioClase extends Component
             ];
         })->toArray();
 
+
+
     }
 
     // ACTUALIZAR HORA
@@ -187,11 +191,60 @@ class HorarioClase extends Component
     {
         $horario = Horario::find($id);
 
-        if ($horario) {
-            $horario->$dia = $materia ?: null; // Si no se selecciona una materia, se asigna null
+        if (!$horario) return;
+
+        // Si se quiere quitar la materia
+        if (!$materia) {
+            $horario->$dia = null;
             $horario->save();
+            return;
         }
+
+        // Obtener la nueva materia y su maestro
+        $nuevaMateria = Materia::with('teacher')->find($materia);
+        if (!$nuevaMateria || !$nuevaMateria->teacher_id) return;
+
+        $nuevoTeacherId = $nuevaMateria->teacher_id;
+        $relacionDia = $dia . 'Materia';
+
+        // Buscar conflicto específico
+        $horarioConflicto = Horario::where('hora', $horario->hora)
+            ->where('id', '!=', $horario->id)
+            ->whereHas($relacionDia, function ($query) use ($nuevoTeacherId) {
+                $query->where('teacher_id', $nuevoTeacherId);
+            })
+            ->with(['group', 'grade', 'level']) // Para mostrar información en el mensaje
+            ->first();
+
+        if ($horarioConflicto) {
+            $grupo = $horarioConflicto->group?->grupo ?? 'Desconocido';
+            $grado = $horarioConflicto->grade?->grado ?? 'Desconocido';
+            $nivel = $horarioConflicto->level?->level ?? 'Desconocido';
+            $hora = $horario->hora;
+
+
+
+
+            $this->dispatch('swal', [
+                'title' => "Este profesor ya está asignado en el $grado ° Grado, Grupo $grupo, Nivel $nivel a las $hora el día $dia.",
+                'icon' => 'info',
+                'position' => 'top',
+            ]);
+
+            // $horarioConflicto->observacion = "Profesor asignado en el $grado ° Grado, Grupo $grupo, Nivel $nivel a las $hora el día $dia.";
+            // $horarioConflicto->save();
+
+        }
+
+
+        // No hay conflicto, guardar
+        // $horario->observacion = null; // Limpiar la observación si no hay conflicto
+        $horario->$dia = $materia;
+        $horario->save();
     }
+
+
+
 
     public function render()
     {
