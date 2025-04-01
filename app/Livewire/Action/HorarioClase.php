@@ -61,7 +61,10 @@ class HorarioClase extends Component
         ];
     }
 
-    $this->materias = Materia::where('level_id', $this->level_id)->with('teacher')->get();
+    $this->materias = Materia::where('level_id', $this->level_id)
+        ->with('teacher')
+        ->orderBy('sort', 'asc')
+        ->get();
 
     $this->level = Level::find($this->level_id);
     $this->action = Action::where('slug', 'horarios')->first();
@@ -87,9 +90,11 @@ class HorarioClase extends Component
             function ($attribute, $value, $fail) {
                 $exists = Horario::where('hora', $value)
                 ->where('group_id', $this->group_id)
+                ->where('level_id', $this->level_id)
+                ->where('grade_id', $this->grade_id)
                 ->exists();
                 if ($exists) {
-                $fail('La hora ya existe en el mismo grupo.');
+                $fail('La hora ya existe en el mismo grupo, nivel y grado.');
                 }
             },
             ],
@@ -150,12 +155,24 @@ class HorarioClase extends Component
     public function actualizarHora($id)
     {
         $this->validate([
-            "horarios.$id.hora" => 'required|string|unique:horarios,hora,' . $id,
+            "horarios.$id.hora" => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) use ($id) {
+                    $exists = Horario::where('hora', $value)
+                        ->where('level_id', $this->level_id)
+                        ->where('grade_id', $this->grade_id)
+                        ->where('group_id', $this->group_id)
+                        ->where('id', '!=', $id)
+                        ->exists();
+                    if ($exists) {
+                        $fail('La hora ya existe en el mismo grupo, nivel y grado.');
+                    }
+                },
+            ],
         ], [
             "horarios.$id.hora.required" => 'El campo hora es obligatorio',
-            "horarios.$id.hora.unique" => 'La hora ya existe',
         ]);
-
 
         $horario = Horario::find($id);
 

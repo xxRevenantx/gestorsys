@@ -67,7 +67,7 @@
 
         <div id="accordion-open-body-{{$grupo->id}}"  aria-labelledby="accordion-open-heading-{{$grupo->id}}">
           <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-            <a href="{{route('admin.horario', ["level" => $level_id, "grade" => $grade, "group" => $grupo->id] )}}" class="inline-block px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600">
+            <a target="_blank" href="{{route('admin.horario', ["level" => $level_id, "grade" => $grade, "group" => $grupo->id] )}}" class="inline-block px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
@@ -195,68 +195,116 @@
                 <h3 class="text-lg font-bold text-gray-700">Horas Totales del Profesor</h3>
 
 
+                @php
+                $profesores = $materiasGrupo->map(function($materia) {
+                    return $materia->teacher->personnel ?? null;
+                })->unique()->filter();
+            @endphp
+
+            <div class="overflow-x-auto">
                 <table class="table-auto w-full border-collapse border border-gray-300 mt-4">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="border border-gray-300 px-4 py-2">#</th>
-                            <th class="border border-gray-300 px-4 py-2">Profesor</th>
-                            @foreach($materiasGrupo as $materia)
-                                <th class="border border-gray-300 px-4 py-2">{{ $materia->materia }}</th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $profesores = $materiasGrupo->map(function($materia) {
-                                return $materia->teacher->personnel ?? null;
-                            })->filter();
-                        @endphp
-                        @foreach($profesores as $key => $profesor)
-                            <tr class="hover:bg-gray-100">
-                                <td class="border border-gray-300 px-4 py-2 text-center font-bold">
-                                                {{ $key + 1 }}
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2 text-center font-bold text-sm">
-                                    {{ $profesor->nombre ?? 'Sin Profesor' }} {{ $profesor->apellido_paterno ?? '' }} {{ $profesor->apellido_materno ?? '' }}
-                                </td>
-                                @foreach($materiasGrupo as $materia)
-
-                                    <td class="border text-sm  border-gray-300 px-4 py-2 text-center" style="background-color: {{ (($materia->teacher->personnel->id ?? null) === $profesor->id && collect($horarios)->filter(function($horario) use ($materia) {
-                                                return in_array($materia->id, [
-                                                    $horario['lunes'] ?? null,
-                                                    $horario['martes'] ?? null,
-                                                    $horario['miercoles'] ?? null,
-                                                    $horario['jueves'] ?? null,
-                                                    $horario['viernes'] ?? null
-                                                ]);
-                                            })->count() > 0) ? ($materia->teacher->color ?? '#eee') : '#fff' }}">
-                                        @if(($materia->teacher->personnel->id ?? null) === $profesor->id)
-
-                                            {{ collect($horarios)->filter(function($horario) use ($materia) {
-
-                                                return in_array($materia->id, [
-                                                    $horario['lunes'] ?? null,
-                                                    $horario['martes'] ?? null,
-                                                    $horario['miercoles'] ?? null,
-                                                    $horario['jueves'] ?? null,
-                                                    $horario['viernes'] ?? null
-                                                ]);
-
-
-
-
-                                            })->count() }} horas
-
-
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                @endforeach
-                            </tr>
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border border-gray-300 px-4 py-2">#</th>
+                        <th class="border border-gray-300 px-4 py-2">Profesor</th>
+                        @foreach($materiasGrupo as $materia)
+                            <th class="border border-gray-300 px-4 py-2">{{ $materia->materia }}</th>
                         @endforeach
-                    </tbody>
-                </table>
+                        <th class="border border-gray-300 px-4 py-2 bg-yellow-100">Total</th>
+                    </tr>
+                </thead
+                <tbody>
+                    @foreach($profesores as $key => $profesor)
+
+                        @php
+                            $totalHorasProfesor = 0;
+                        @endphp
+
+                        <tr class="hover:bg-gray-400">
+                            <td class="border border-gray-300 px-4 py-2 text-center font-bold">
+                                {{ $key + 1 }}
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2 text-center font-bold text-sm">
+                                {{ $profesor->nombre }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}
+                            </td>
+
+                            @foreach($materiasGrupo as $materia)
+
+                            @php
+                            $esProfesorDeLaMateria = ($materia->teacher->personnel->id ?? null) === $profesor->id;
+                            $horasAsignadas = 0;
+
+                            if ($esProfesorDeLaMateria) {
+                                $horasAsignadas = collect($horarios)->reduce(function($carry, $horario) use ($materia, $profesor, $materias, $grupo) {
+                                    // Solo horarios del grupo actual
+                                    if ($horario['group_id'] != $grupo->id) {
+                                        return $carry;
+                                    }
+
+                                    $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+                                    foreach ($dias as $dia) {
+                                        $materiaId = $horario[$dia] ?? null;
+                                        $materiaAsignada = $materias->firstWhere('id', $materiaId);
+
+                                        // Contar solo si el profesor es el mismo y el nombre de la materia también
+                                        if (
+                                            $materiaAsignada &&
+                                            ($materiaAsignada->teacher->personnel->id ?? null) === $profesor->id &&
+                                            $materiaAsignada->materia === $materia->materia
+                                        ) {
+                                            $carry++;
+                                        }
+                                    }
+                                    return $carry;
+                                }, 0);
+
+                                $totalHorasProfesor += $horasAsignadas;
+                            }
+                        @endphp
+
+
+
+                                <td class="border text-sm border-gray-300 px-4 py-2 text-center"
+                                    style="background-color: {{ $esProfesorDeLaMateria && $horasAsignadas > 0 ? ($materia->teacher->color ?? '#eee') : '#fff' }}">
+                                    @if($esProfesorDeLaMateria && $horasAsignadas > 0)
+                                        {{ $horasAsignadas }} horas
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            @endforeach
+
+                            {{-- Total general real de horas por coincidencia de profesor en TODO el horario --}}
+                            @php
+
+                                $totalReales = collect($horarios)->reduce(function($carry, $horario) use ($materias, $profesor, $grupo) {
+                                    // Asegurar que solo se sumen las horas del grupo actual
+                                    if ($horario['group_id'] != $grupo->id) {
+                                        return $carry;
+                                    }
+
+                                    $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+                                    foreach ($dias as $dia) {
+                                        $materiaId = $horario[$dia] ?? null;
+                                        $materia = $materias->firstWhere('id', $materiaId);
+                                        if ($materia && ($materia->teacher->personnel->id ?? null) === $profesor->id) {
+                                            $carry++;
+                                        }
+                                    }
+
+                                    return $carry;
+                                }, 0);
+                            @endphp
+
+
+
+                            <td class="border font-bold text-sm border-gray-300 px-4 py-2 text-center bg-yellow-100">
+                                {{ $totalReales }} horas
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
             </div>
           </div>
         </div>

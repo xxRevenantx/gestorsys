@@ -24,6 +24,7 @@ class MateriaTable extends DataTableComponent
     public $showModal = false;
 
 
+
         public function edit($id)
     {
         $this->selectedMateria = Materia::find($id);
@@ -40,8 +41,16 @@ class MateriaTable extends DataTableComponent
 
         $this->setPrimaryKey('id')
 
+
+
         ->setReorderEnabled();
         $this->setBulkActionConfirmMessage('deleteSelected', '¿Estás seguro de que deseas eliminar los elementos seleccionados?');
+
+        // $this->setAdditionalSelects([
+        //     'teacher.personnel.nombre as nombre',
+        //     'teacher.personnel.apellido_paterno as apellido_paterno',
+        //     'teacher.personnel.apellido_materno as apellido_materno'
+        // ]);
 
 
         $this->setBulkActions([
@@ -84,9 +93,6 @@ class MateriaTable extends DataTableComponent
             Column::make("Clave", "clave")
                 ->sortable()
                 ->searchable( ),
-            Column::make("Nivel", "level.level")
-                ->sortable()
-                ->searchable( ),
             Column::make("Grado", "grade.grado")
                 ->sortable(),
             Column::make("Grupo", "group.grupo")
@@ -96,6 +102,11 @@ class MateriaTable extends DataTableComponent
                 ->searchable( ),
             BooleanColumn::make("Calificación", "calificacion")
                 ->sortable(),
+            Column::make("Profesor", 'teacher.personnel.nombre')
+                ->sortable()
+                ->searchable(),
+
+
 
             Column::make("Created at", "created_at")
                 ->sortable(),
