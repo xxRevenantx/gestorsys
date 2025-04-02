@@ -20,6 +20,14 @@ return new class extends Migration
             $table->unsignedBigInteger('materia_id');
             $table->unsignedBigInteger('periodo_id');
             $table->integer('calificacion');
+
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreign('materia_id')->references('id')->on('materias')->onDelete('cascade');
+            $table->foreign('periodo_id')->references('id')->on('periodos')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

@@ -14,25 +14,28 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+
         }
 
         table {
-            border-collapse: collapse;
+            /* border-collapse: collapse; */
             width: 100%;
             margin: 20px 0;
+            font-size: 13px;
         }
 
         th, td {
-            padding: 8px;
+            padding: 3px;
             text-align: center;
-            border: 1px solid #ddd;
+            /* border: 1px solid #ddd; */
             border-radius: 5px;
         }
 
         th {
             background-color: #f4b400;
             color: white;
+            padding: 12px;
+            font-size: 20px;
         }
 
         tr:nth-child(even) {
@@ -49,31 +52,37 @@
 
         .border-gray-300 {
             border-color: #d1d5db;
+
         }
 
         .border-red-500 {
-            border-color: #f56565;
+            background: #f56565
         }
 
         .border-pink-500 {
-            border-color: #ed64a6;
+            background: #ed64a6
         }
 
         .border-purple-500 {
-            border-color: #9f7aea;
+            background: #9f7aea
         }
 
         .border-blue-500 {
-            border-color: #4299e1;
+            background: #4299e1
         }
 
         .border-green-500 {
-            border-color: #48bb78;
+            background: #48bb78
         }
 
         .bg-yellow-400 {
             background-color: #f6e05e;
+            color: white;
         }
+
+        .page-break {
+page-break-before: always;
+}
     </style>
 
 </head>
@@ -82,9 +91,12 @@
     @php
     // Agrupar por hora y ordenar por hora desc y grade_id
     $horasAgrupadas = collect($horarios)
-        ->sortBy('hora')
-        ->sortBy('grade_id')
-        ->groupBy('hora');
+    ->sortBy(function($item) {
+        $horaInicio = explode('-', $item['hora'])[0]; // "07:00am"
+        return \Carbon\Carbon::createFromFormat('h:ia', $horaInicio);
+    })
+    ->sortBy('grade_id')
+    ->groupBy('hora');
     @endphp
 
 <table class="table-auto w-full border border-gray-300 text-sm text-center">
@@ -109,7 +121,7 @@
                 @php
                 $materiasDia = $bloqueHorarios->pluck($dia)->unique()->map(function($id) use ($materias) {
                     $materia = $materias->firstWhere('id', $id);
-                    return $materia ? $materia->materia : '-';
+                    return $materia ? $materia->grade->grado . '° ' . $materia->materia : '-';
                 })->filter()->join('<br>');
                 @endphp
                 <td class="border border-gray-300 px-2 py-1">
@@ -120,6 +132,9 @@
         @endforeach
     </tbody>
 </table>
+
+<div class="page-break"></div>
+
 
 
 </body>

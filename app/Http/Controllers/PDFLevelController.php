@@ -187,16 +187,17 @@ class PDFLevelController extends Controller
 
     public function horarioGeneral($level_slug)
     {
-
-
-
         $level = Level::where('slug', $level_slug)->firstOrFail();
+
         $horarios = Horario::where('level_id', $level->id)
             ->orderBy('hora')
             ->get();
+
         $materias = Materia::where('level_id', $level->id)
             ->orderBy('sort')
             ->get();
+
+
 
         $data = [
             'horarios' => $horarios,
