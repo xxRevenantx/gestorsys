@@ -3,6 +3,9 @@
 
     @include('admin.partials.loader')
 
+
+
+
     <nav
         class="flex items-center justify-center flex-wrap bg-white py-2 mb-4 lg:px-12 shadow border-solid border-t-2 border-blue-700">
         <div class="menu w-full lg:block lg:flex lg:items-center lg:w-auto lg:px-3 px-8 justify-center">
@@ -25,15 +28,23 @@
     </nav>
 
 
+
+
     <form wire:submit.prevent="guardarHora" class="mb-4">
         <div class="flex items-center">
             <label for="hora" class="mr-2 font-bold text-gray-700">Agregar Hora:</label>
-            <input type="text" id="hora" wire:model.live="hora"
-                   class="form-control border-gray-300 rounded-md px-4 py-2 text-sm"
-                   placeholder="08:00am - 09:00am">
+
+            <select wire:model.live="hora" id="hora" class="block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">-- Selecciona una hora --</option>
+                @foreach ($horasSecundaria as $horaItem)
+                    <option value="{{ $horaItem }}">{{ $horaItem }}</option>
+                @endforeach
+            </select>
+
+
 
             <select wire:model.live="group_id" class="form-control w-1/2 border-gray-300 rounded-md">
-                <option value="">----Seleccione una materia-- el grupo--</option>
+                <option value="">----Seleccione el grupo--</option>
                 @foreach($grupos as $grupo)
                     <option value="{{ $grupo->id }}">{{ $grupo->grupo }}</option>
                 @endforeach
@@ -123,9 +134,16 @@
 
                                     <tr class="hover:bg-gray-50">
                                         <td class="border border-gray-300 px-4 py-2 text-center">
-                                            <input type="text" wire:model="horarios.{{ $horario['id'] }}.hora"
-                                                class="form-control border-gray-300 rounded-md px-3 py-3 text-sm text-center"
-                                                wire:change="actualizarHora({{ $horario['id'] }}, $event.target.value)">
+
+
+                                                <select wire:model="horarios.{{ $horario['id'] }}.hora"
+                                                wire:change="actualizarHora({{ $horario['id'] }})"
+                                                class="form-control w-full border-gray-300 rounded-md px-3 py-2 text-sm text-center focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="">-- Selecciona una hora --</option>
+                                            @foreach($horasSecundaria as $horaItem)
+                                                <option value="{{ $horaItem }}">{{ $horaItem }}</option>
+                                            @endforeach
+                                        </select>
                                             @error('horarios.' . $horario['id'] . '.hora')
                                                 <span class="text-red-500">{{ $message }}</span>
                                             @enderror

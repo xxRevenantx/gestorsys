@@ -33,6 +33,10 @@ class HorarioClase extends Component
 
     public $observacion;
 
+    public $horasSecundaria = [];
+
+    public $horasPrimaria = [];
+
 
     // busqueda
 
@@ -47,6 +51,29 @@ class HorarioClase extends Component
     public function mount($level_id)
     {
         $this->level_id = $level_id;
+
+
+        $this->horasSecundaria = [
+            "7:00am-8:00am",
+            "8:00am-9:00am",
+            "9:00am-9:30am",
+            "9:30am-10:30am",
+            "10:30am-11:30am",
+            "11:30am-12:30pm",
+            "12:30pm-1:30pm",
+            "1:30pm-2:30pm"
+        ];
+
+        $this->horasPrimaria =[
+            "8:00am-9:00am",
+            "9:00am-10:00am",
+            "10:00am-10:30am",
+            "10:30am-11:30am",
+            "11:30am-12:30pm",
+            "12:30pm-1:30pm",
+            "1:30pm-2:30pm"
+        ];
+
 
 
 
@@ -158,24 +185,40 @@ class HorarioClase extends Component
     // ACTUALIZAR HORA
     public function actualizarHora($id)
     {
+
+
+        $groupId = $this->horarios[$id]['group_id'] ?? null;
+
+
         $this->validate([
             "horarios.$id.hora" => [
                 'required',
-                'string',
-                function ($attribute, $value, $fail) use ($id) {
+                function ($attribute, $value, $fail) use ($id, $groupId) {
                     $exists = Horario::where('hora', $value)
                         ->where('level_id', $this->level_id)
                         ->where('grade_id', $this->grade_id)
-                        ->where('group_id', $this->group_id)
+                        ->where('group_id', $groupId)
                         ->where('id', '!=', $id)
                         ->exists();
-                    if ($exists) {
-                        $fail('La hora ya existe en el mismo grupo, nivel y grado.');
-                    }
+                        if ($exists) {
+                            // Limpiar el valor del campo
+                            $this->horarios[$id]['hora'] = '';
+
+                            // Lanzar el error de validación
+                            // $fail('La hora ya existe en el mismo grupo, nivel y grado.');
+
+                            // Mostrar alerta visual opcional
+                            $this->dispatch('swal', [
+                                'title' => "Hora duplicada",
+                                'icon' => 'error',
+                                'position' => 'top',
+                            ]);
+                        }
                 },
             ],
         ], [
             "horarios.$id.hora.required" => 'El campo hora es obligatorio',
+
         ]);
 
         $horario = Horario::find($id);
