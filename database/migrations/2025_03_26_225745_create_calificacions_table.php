@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('materia_id');
             $table->unsignedBigInteger('periodo_id');
-            $table->integer('calificacion');
+            $table->string('calificacion');
 
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
