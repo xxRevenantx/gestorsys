@@ -43,6 +43,25 @@ class HorarioClase extends Component
     public $search = '';
 
 
+    public function isDarkColor($hexColor)
+{
+    $hexColor = str_replace('#', '', $hexColor);
+    if (strlen($hexColor) === 3) {
+        $r = hexdec(str_repeat(substr($hexColor, 0, 1), 2));
+        $g = hexdec(str_repeat(substr($hexColor, 1, 1), 2));
+        $b = hexdec(str_repeat(substr($hexColor, 2, 1), 2));
+    } else {
+        $r = hexdec(substr($hexColor, 0, 2));
+        $g = hexdec(substr($hexColor, 2, 2));
+        $b = hexdec(substr($hexColor, 4, 2));
+    }
+
+    // Cálculo de luminancia (fórmula perceptiva)
+    $luminancia = (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
+
+    return $luminancia < 0.5; // true si es oscuro
+}
+
     public function placeholder(){
         return view('placeholder');
     }

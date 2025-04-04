@@ -83,7 +83,6 @@
 
 
 
-
     <div x-data="{
         openGroupId: localStorage.getItem('grupo_abierto') || null,
         setGroup(id) {
@@ -145,6 +144,20 @@
 
 
 
+                                    @php
+                                    $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+                                    @endphp
+
+                                    @foreach($dias as $dia)
+                                        @php
+                                            $materiaId = $horarios[$horario['id']][$dia];
+                                            $materia = $materias->firstWhere('id', $materiaId);
+                                            $colorFondo = $materia?->teacher?->color ?? '#eee';
+                                            $esOscuro = $this->isDarkColor($colorFondo);
+                                            $colorTexto = $esOscuro ? 'white' : 'black';
+                                        @endphp
+                                    @endforeach
+
                                     <tr class="hover:bg-gray-50">
                                         <td class="border border-gray-300 px-4 py-2 text-center">
 
@@ -174,23 +187,30 @@
                                             @enderror
                                         </td>
 
-                                        <td class="border border-gray-300 px-4 py-2" style="background-color:  {{ $horarios[$horario['id']]['lunes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['lunes'])->teacher->color ?? '#eee') : '#eee' }} ">
-                                            <select wire:model="horarios.{{ $horario['id'] }}.lunes"
+                                        {{--  --}}
+                                        <td class="border border-gray-300 px-4 py-2"
+                                        style="background-color: {{ $colorFondo }}; color: {{ $colorTexto }};">
+                                        {{-- Select materia --}}
+                                        <select wire:model="horarios.{{ $horario['id'] }}.lunes"
                                                 class="form-control w-full border-gray-300 rounded-md"
                                                 wire:change="actualizarMateria({{ $horario['id'] }}, 'lunes', $event.target.value)">
-                                                <option value="">--Seleccione una materia--</option>
-                                                @foreach($materiasGrupo as $materia)
-                                                    <option value="{{ $materia['id'] }}">
-                                                        {{ $materia->materia }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <div class="text-sm text-gray-600 mt-1">
-                                                Profesor: {{ $horarios[$horario['id']]['lunes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['lunes'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['lunes'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['lunes'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
-                                            </div>
-                                        </td>
+                                            <option value="">--Seleccione una materia--</option>
+                                            @foreach($materiasGrupo as $materia)
+                                                <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
+                                            @endforeach
+                                        </select>
 
-                                        <td class="border border-gray-300 px-4 py-2" style="background-color:  {{ $horarios[$horario['id']]['martes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->color ?? '#eee') : '#eee' }} ">
+                                        {{-- Nombre del profesor --}}
+                                        <div class="text-sm mt-1">
+                                            Profesor:
+                                            {{ $materia?->teacher?->personnel?->nombre ?? 'Sin Profesor' }}
+                                            {{ $materia?->teacher?->personnel?->apellido_paterno ?? '' }}
+                                            {{ $materia?->teacher?->personnel?->apellido_materno ?? '' }}
+                                        </div>
+                                    </td>
+
+                                    <td class="border border-gray-300 px-4 py-2"
+                                    style="background-color: {{ $colorFondo }}; color: {{ $colorTexto }};">
                                             <select wire:model="horarios.{{ $horario['id'] }}.martes"
                                                 class="form-control w-full border-gray-300 rounded-md"
                                                 wire:change="actualizarMateria({{ $horario['id'] }}, 'martes', $event.target.value)">
@@ -199,14 +219,15 @@
                                                     <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="text-sm text-gray-600 mt-1">
+                                            <div class="text-sm mt-1">
 
                                                 Profesor: {{ $horarios[$horario['id']]['martes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['martes'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
 
                                             </div>
                                         </td>
 
-                                        <td class="border border-gray-300 px-4 py-2" style="background-color: {{ $horarios[$horario['id']]['miercoles'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['miercoles'])->teacher->color ?? '#eee') : '#eee' }} ">
+                                        <td class="border border-gray-300 px-4 py-2"
+                                        style="background-color: {{ $colorFondo }}; color: {{ $colorTexto }};">
                                             <select wire:model="horarios.{{ $horario['id'] }}.miercoles"
                                                 class="form-control w-full border-gray-300 rounded-md"
                                                 wire:change="actualizarMateria({{ $horario['id'] }}, 'miercoles', $event.target.value)">
@@ -215,12 +236,13 @@
                                                     <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="text-sm text-gray-600 mt-1">
+                                            <div class="text-sm mt-1">
                                                 Profesor: {{ $horarios[$horario['id']]['miercoles'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['miercoles'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['miercoles'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['miercoles'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
                                             </div>
                                         </td>
 
-                                        <td class="border border-gray-300 px-4 py-2" style="background-color: {{ $horarios[$horario['id']]['jueves'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['jueves'])->teacher->color ?? '#eee') : '#eee' }} ">
+                                        <td class="border border-gray-300 px-4 py-2"
+                                        style="background-color: {{ $colorFondo }}; color: {{ $colorTexto }};">
                                             <select wire:model="horarios.{{ $horario['id'] }}.jueves"
                                                 class="form-control w-full border-gray-300 rounded-md"
                                                 wire:change="actualizarMateria({{ $horario['id'] }}, 'jueves', $event.target.value)">
@@ -229,12 +251,13 @@
                                                     <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="text-sm text-gray-600 mt-1">
+                                            <div class="text-sm mt-1">
                                                 Profesor: {{ $horarios[$horario['id']]['jueves'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['jueves'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['jueves'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['jueves'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
                                             </div>
                                         </td>
 
-                                        <td class="border border-gray-300 px-4 py-2" style="background-color: {{ $horarios[$horario['id']]['viernes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['viernes'])->teacher->color ?? '#eee') : '#eee' }} ">
+                                        <td class="border border-gray-300 px-4 py-2"
+                                        style="background-color: {{ $colorFondo }}; color: {{ $colorTexto }};">
                                             <select wire:model="horarios.{{ $horario['id'] }}.viernes"
                                                 class="form-control w-full border-gray-300 rounded-md"
                                                 wire:change="actualizarMateria({{ $horario['id'] }}, 'viernes', $event.target.value)">
@@ -243,7 +266,7 @@
                                                     <option value="{{ $materia['id'] }}">{{ $materia->materia }}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="text-sm text-gray-600 mt-1">
+                                            <div class="text-sm mt-1">
                                                 Profesor: {{ $horarios[$horario['id']]['viernes'] ? ($materias->firstWhere('id', $horarios[$horario['id']]['viernes'])->teacher->personnel->nombre ?? 'Sin Profesor') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['viernes'])->teacher->personnel->apellido_paterno ?? '') . ' ' . ($materias->firstWhere('id', $horarios[$horario['id']]['viernes'])->teacher->personnel->apellido_materno ?? '') : 'Sin Profesor' }}
                                             </div>
                                         </td>
