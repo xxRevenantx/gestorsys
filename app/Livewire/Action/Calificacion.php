@@ -26,6 +26,9 @@ class Calificacion extends Component
 
     public $grupos = [];
 
+
+    public $studentsByGroup = [];
+
     public function placeholder()
     {
         return view('placeholder');
@@ -37,18 +40,20 @@ class Calificacion extends Component
         $this->action = Action::where('slug', 'calificaciones')->first();
         $this->grade_id = $this->grade->id;
 
-        $this->grupos = $this->grade->groups;
+        $this->grupos = \App\Models\Group::where('grade_id', $this->grade->id)->get();
 
-        $this->students = Student::where('level_id', $this->level_id)
+        $students = Student::where('level_id', $this->level_id)
             ->where('grade_id', $this->grade_id)
             ->get();
+
+        $this->studentsByGroup = collect($students)->groupBy('group_id'); // AGRUPAR POR GRUPO
 
         $this->materias = Materia::where('grade_id', $this->grade_id)->get();
 
         $periodos = Periodo::all();
 
         foreach ($periodos as $periodo) {
-            foreach ($this->students as $student) {
+            foreach ($students as $student) {
                 foreach ($this->materias as $materia) {
                     $calificacion = ModelsCalificacion::where('student_id', $student->id)
                         ->where('materia_id', $materia->id)

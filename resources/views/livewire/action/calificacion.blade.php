@@ -78,7 +78,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                                        @foreach ($students as $index => $student)
+                                                        @if (!empty($studentsByGroup[$grupo->id]) && count($studentsByGroup[$grupo->id]) > 0)
+                                                              @foreach ($studentsByGroup[$grupo->id] as $index => $student)
                                                             @php
                                                                 $notas = collect($inputs[$periodo->id][$student->id] ?? [])
                                                                     ->filter(fn($n) => is_numeric($n))
@@ -103,6 +104,24 @@
                                                                 <td class="px-4 py-2 font-bold text-indigo-600">{{ $promedio }}</td>
                                                             </tr>
                                                         @endforeach
+
+                                                        @else
+                                                        <tr>
+                                                            <td colspan="{{ count($materias) + 3 }}">
+                                                                <div class="flex items-center justify-center bg-yellow-50 text-yellow-800 text-sm px-4 py-3 rounded-md">
+                                                                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2"
+                                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                                              d="M12 9v2m0 4h.01M4.93 4.93l1.414 1.414M1 12h2m16.97-7.07l-1.414 1.414M21 12h2m-4.93 4.93l1.414 1.414M12 1v2m0 18v2M7.05 19.07l-1.414-1.414M12 5a7 7 0 110 14a7 7 0 010-14z" />
+                                                                    </svg>
+                                                                    <span>No hay alumnos registrados en este grupo.</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+
+
+
                                                     </tbody>
                                                 </table>
                                             </div>

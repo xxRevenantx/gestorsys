@@ -33,12 +33,25 @@
     <form wire:submit.prevent="guardarHora" class="mb-4">
         <div class="flex items-center">
             <label for="hora" class="mr-2 font-bold text-gray-700">Agregar Hora:</label>
-
             <select wire:model.live="hora" id="hora" class="block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 <option value="">-- Selecciona una hora --</option>
-                @foreach ($horasSecundaria as $horaItem)
-                    <option value="{{ $horaItem }}">{{ $horaItem }}</option>
-                @endforeach
+
+                {{-- PRIMARIA --}}
+                @if ($level->slug == "primaria")
+                    @foreach ($horasPrimaria as $horaItem)
+                      <option value="{{ $horaItem }}">{{ $horaItem }}</option>
+                    @endforeach
+                {{-- SECUNDARIA --}}
+                @elseif ($level->slug == "secundaria")
+                    @foreach ($horasSecundaria as $horaItem)
+                      <option value="{{ $horaItem }}">{{ $horaItem }}</option>
+                    @endforeach
+
+                @endif
+
+
+
+
             </select>
 
 
@@ -140,9 +153,21 @@
                                                 wire:change="actualizarHora({{ $horario['id'] }})"
                                                 class="form-control w-full border-gray-300 rounded-md px-3 py-2 text-sm text-center focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="">-- Selecciona una hora --</option>
-                                            @foreach($horasSecundaria as $horaItem)
+
+                                                {{-- PRIMARIA --}}
+                                                @if ($level->slug == "primaria")
+                                                @foreach ($horasPrimaria as $horaItem)
                                                 <option value="{{ $horaItem }}">{{ $horaItem }}</option>
-                                            @endforeach
+                                                @endforeach
+                                            {{-- SECUNDARIA --}}
+                                            @elseif ($level->slug == "secundaria")
+                                                @foreach ($horasSecundaria as $horaItem)
+                                                <option value="{{ $horaItem }}">{{ $horaItem }}</option>
+                                                @endforeach
+
+                                            @endif
+
+
                                         </select>
                                             @error('horarios.' . $horario['id'] . '.hora')
                                                 <span class="text-red-500">{{ $message }}</span>
