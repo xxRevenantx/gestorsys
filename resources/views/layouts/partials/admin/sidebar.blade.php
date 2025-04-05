@@ -171,7 +171,7 @@
                     ),
                 ],
                 [
-                    'name' => 'Niveles',
+                    'name' => 'Nivel Básico',
                     'icon' => 'fa-regular fa-circle',
                     'route' => route('admin.level.index'),
                     'active' => request()->routeIs(

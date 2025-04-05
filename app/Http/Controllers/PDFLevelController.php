@@ -205,7 +205,12 @@ class PDFLevelController extends Controller
             'level' => $level,
         ];
 
-        $pdf = Pdf::loadView('admin.PDF.horario-general', $data)->setPaper('letter', 'landscape');
+        if($level->slug == 'primaria'){
+            $pdf = Pdf::loadView('admin.PDF.horario-general', $data)->setPaper('legal', 'landscape');
+        }else if($level->slug == 'secundaria'){
+            $pdf = Pdf::loadView('admin.PDF.horario-general', $data)->setPaper('letter', 'landscape');
+        }
+
         return $pdf->stream("Horarios generales de ". $level->level.".pdf");
     }
 
