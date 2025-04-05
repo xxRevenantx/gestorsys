@@ -6,16 +6,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <style>
+
+   <style>
         @page { margin:10px 15px 0px 15px; }
+
+        @font-face {
+        font-family: 'Nunito';
+        src: url({{ storage_path("fonts/Nunito-VariableFont_wght.ttf") }}) format("truetype");
+        font-weight: 700;
+        font-style: normal;
+
+        }
+
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: "Nunito", sans-serif;
             margin: 0;
             padding: 0;
-
         }
 
         table {
@@ -84,10 +91,20 @@
         .page-break {
 page-break-before: always;
 }
+
+h1{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-align: center;
+}
+
     </style>
 
 </head>
 <body>
+
+    <h1>HORARIO GENERAL DE CLASES DE {{strtoupper($level->level)}}</h1>
 
     @php
     // Agrupar por hora y ordenar por hora desc y grade_id
