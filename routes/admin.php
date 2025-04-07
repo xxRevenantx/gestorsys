@@ -100,14 +100,14 @@ Route::get('/horario-general/{level}', [PDFLevelController::class, 'horarioGener
 
 
 // RUTAS DEL CONTROLADOR DE NIVELES
-Route::get('/niveles', [MostrarNivelController::class, 'index'])->name('level.index');
+Route::get('/basico', [MostrarNivelController::class, 'index'])->name('level.index');
 
-Route::get('/niveles/{nivel}', [MostrarNivelController::class, 'nivel'])->name('level.nivel');
+Route::get('/basico/{nivel}', [MostrarNivelController::class, 'nivel'])->name('level.nivel');
 
-Route::get('/niveles/{nivel}/{action}/{grade}', [MostrarNivelController::class, 'action'])->name('level.action');
+Route::get('/basico/{nivel}/{action}/{grade}', [MostrarNivelController::class, 'action'])->name('level.action');
 
 
-Route::get('/niveles/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'matricula'])->name('level.grados');
+Route::get('/basico/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'matricula'])->name('level.grados');
 
 
 

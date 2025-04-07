@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Horario General de Clases de {{ $level->level }}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400&display=swap" rel="stylesheet">
 
    <style>
         @page { margin:10px 15px 0px 15px; }
 
-        @font-face {
-        font-family: 'Nunito';
-        src: url({{ storage_path("fonts/Nunito-VariableFont_wght.ttf") }}) format("truetype");
-        font-weight: 700;
-        font-style: normal;
-
-        }
-
+        /* @font-face {
+            font-family: 'Nunito';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('{{ public_path('fonts/nunito.ttf') }}') format('truetype');
+        } */
 
         body {
-            font-family: "Nunito", sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        h1{
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            text-align: center;
+            font-family: 'Nunito', sans-serif;
         }
 
         table {
@@ -92,12 +99,7 @@
 page-break-before: always;
 }
 
-h1{
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 18px;
-    text-align: center;
-}
+
 
     </style>
 

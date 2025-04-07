@@ -205,25 +205,16 @@ class PDFLevelController extends Controller
             'level' => $level,
         ];
 
-        if($level->slug == 'primaria'){
-            $pdf = Pdf::loadView('admin.PDF.horario-general', $data)->setPaper('legal', 'landscape')
-            ->setOption([
-                'fontDir' => public_path('/fonts'),
-                'fontCache' => public_path('/fonts'),
-                'defaultFont' => 'Times New Roman'
-            ]);
-            ;
-        }else if($level->slug == 'secundaria'){
-            $pdf = Pdf::loadView('admin.PDF.horario-general', $data)->setPaper('letter', 'landscape')
-            ->setOption([
-                'fontDir' => public_path('/fonts'),
-                'fontCache' => public_path('/fonts'),
-                'defaultFont' => 'Times New Roman'
-            ]);
-            ;
-        }
 
-        return $pdf->stream("Horarios generales de ". $level->level.".pdf");
+            $pdf = Pdf::loadView('admin.PDF.horario-general', $data)
+            ->setPaper($level->slug == 'primaria' ? 'legal' : 'letter', 'landscape')
+            ->setOptions([
+                'defaultFont' => 'Nunito',
+                'isHtml5ParserEnabled' => true,
+
+            ]);
+
+        return $pdf->stream("Horarios generales de {$level->level}.pdf");
     }
 
 
