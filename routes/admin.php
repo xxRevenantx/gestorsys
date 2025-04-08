@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\DirectorController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\GenerationController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GroupController;
@@ -116,3 +117,6 @@ Route::resource('/pago-inscripcion', PagoInscripcionController::class)->names('p
 
 // RUTAS DE LAS MATERIAS
 // Route::get('/niveles/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'materias'])->name('level.materias');
+
+// EXPORTS
+Route::get('/exportar-calificaciones', [ExportController::class, 'calificaciones'])->name('exportar.calificaciones');

@@ -20,13 +20,13 @@
     <div
     class="max-w-2xl mx-4 sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900">
     <div class="rounded-t-lg h-32 overflow-hidden">
-        <img class="object-cover object-top w-full" src='https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ' alt='Mountain'>
+        <img class="object-cover object-top w-full" src='{{ asset('storage/banner.png') }}' alt='banner'>
     </div>
     <div class="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
         @if ($nivel->imagen)
-        <img class="object-cover object-center w-full h-full" src="{{ asset('storage/levels/'.$nivel->imagen) }}" alt="Profile image">
+        <img class="object-cover object-center w-full h-full" src="{{ asset('storage/levels/'.$nivel->imagen) }}" alt="{{ $nivel->level }}">
         @else
-        <img class="object-cover object-center w-full h-full" src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png" alt="Profile image">
+        <img class="object-cover object-center w-full h-full" src="{{ asset('storage/banner.png') }}" alt="banner">
         @endif
     </div>
     <div class="text-center mt-2">

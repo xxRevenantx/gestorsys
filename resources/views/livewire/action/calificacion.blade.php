@@ -66,6 +66,16 @@
                                     <div x-show="openPeriodos['{{ $accordionId }}']" x-transition class="border border-t-0 border-gray-300 dark:border-gray-700 rounded-b-lg">
                                         <div class="p-4 bg-white dark:bg-gray-800">
                                             <div class="overflow-x-auto shadow rounded">
+
+                                                <a href="{{ route('admin.exportar.calificaciones')}}"
+                                                <a href="#"
+                                                    class="inline-flex my-3 items-center justify-end px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                          <path d="M19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 14h-2v-2H8v2H6v-2H4v-2h2v-2H4V8h2V6h2v2h2V6h2v2h2v2h-2v2h2v2h-2v2zm4-2h-2v-2h2v2zm0-4h-2V8h2v2z"/>
+                                                     </svg>
+                                                     Exportar
+                                                </a>
+
                                                 <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-200">
                                                     <thead class="bg-gray-100 dark:bg-gray-700">
                                                         <tr>
@@ -82,10 +92,12 @@
                                                               @foreach ($studentsByGroup[$grupo->id] as $index => $student)
                                                             @php
                                                                 $notas = collect($inputs[$periodo->id][$student->id] ?? [])
-                                                                    ->filter(fn($n) => is_numeric($n))
+                                                                    ->filter(fn($n, $key) => is_numeric($n) && ($materias->where('id', $key)->first()->calificacion ?? 0) == 1)
                                                                     ->values();
+
                                                                 $promedio = $notas->count() ? number_format($notas->avg(), 1) : '-';
                                                             @endphp
+
                                                             <tr>
                                                                 <td class="px-4 py-2">{{ $index + 1 }}</td>
                                                                 <td class="px-4 py-2">
@@ -94,8 +106,7 @@
                                                                 @foreach ($materias as $materia)
                                                                     <td class="px-2 py-1 text-center">
                                                                         <input
-                                                                            type="number"
-                                                                            min="5" max="10" step="1"
+                                                                            type="text"
                                                                             class="w-16 text-center bg-gray-100 dark:bg-gray-700 text-sm rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                                             wire:model.lazy="inputs.{{ $periodo->id }}.{{ $student->id }}.{{ $materia->id }}"
                                                                         >
@@ -139,3 +150,95 @@
 
 
 </div>
+
+@push('scripts')
+<script>
+    function enableKeyboardNavigation(containerSelector = 'table') {
+        const table = document.querySelector(containerSelector);
+        if (!table) return;
+
+        const inputs = Array.from(table.querySelectorAll('input[type="text"]'));
+
+        inputs.forEach((input) => {
+            input.removeEventListener('keydown', handleKeyNav);
+            input.addEventListener('keydown', handleKeyNav);
+        });
+    }
+
+    function handleKeyNav(event) {
+        const currentInput = event.target;
+        const currentCell = currentInput.closest('td');
+        const currentRow = currentInput.closest('tr');
+        const table = currentRow.closest('table');
+
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const currentRowIndex = rows.indexOf(currentRow);
+        const currentColIndex = currentCell.cellIndex;
+
+        let nextInput = null;
+
+        switch (event.key) {
+            case 'ArrowDown':
+                event.preventDefault();
+                if (currentRowIndex + 1 < rows.length) {
+                    nextInput = rows[currentRowIndex + 1].cells[currentColIndex]?.querySelector('input');
+                }
+                break;
+
+            case 'ArrowUp':
+                event.preventDefault();
+                if (currentRowIndex > 0) {
+                    nextInput = rows[currentRowIndex - 1].cells[currentColIndex]?.querySelector('input');
+                }
+                break;
+
+            case 'ArrowRight':
+                event.preventDefault();
+                if (currentColIndex + 1 < currentRow.cells.length - 1) { // -1 para evitar promedio
+                    nextInput = currentRow.cells[currentColIndex + 1]?.querySelector('input');
+                }
+                break;
+
+            case 'ArrowLeft':
+                event.preventDefault();
+                if (currentColIndex > 1) { // >1 para no pasar a columna de nombre
+                    nextInput = currentRow.cells[currentColIndex - 1]?.querySelector('input');
+                }
+                break;
+
+            case 'Enter':
+                event.preventDefault();
+                if (currentRowIndex + 1 < rows.length) {
+                    nextInput = rows[currentRowIndex + 1].cells[currentColIndex]?.querySelector('input');
+                } else {
+                    const firstRow = rows[0];
+                    const nextColIndex = currentColIndex + 1;
+                    if (nextColIndex < firstRow.cells.length - 1) {
+                        nextInput = firstRow.cells[nextColIndex]?.querySelector('input');
+                    }
+                }
+                break;
+        }
+
+        if (nextInput) {
+            nextInput.focus();
+            nextInput.select();
+        }
+    }
+
+    // Reaplicar el script cuando Livewire modifica el DOM
+    const observer = new MutationObserver(() => {
+        enableKeyboardNavigation();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const target = document.body;
+        observer.observe(target, { childList: true, subtree: true });
+        enableKeyboardNavigation();
+    });
+</script>
+
+
+
+
+@endpush

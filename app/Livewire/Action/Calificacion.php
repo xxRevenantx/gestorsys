@@ -71,10 +71,8 @@ class Calificacion extends Component
         [$periodo_id, $student_id, $materia_id] = explode('.', $key);
 
         // Validar rango permitido
-        if (!is_numeric($value) || $value < 5 || $value > 10) {
-            // Si el valor no es válido, forzar el valor a 5 en la vista
-            $this->inputs[$periodo_id][$student_id][$materia_id] = 5;
-            return;
+        if (!is_numeric($value)) {
+            $this->inputs[$periodo_id][$student_id][$materia_id] = strtoupper($this->inputs[$periodo_id][$student_id][$materia_id]);
         }
 
         // Obtener grupo del estudiante
