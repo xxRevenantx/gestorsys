@@ -145,7 +145,7 @@
         ],
 
         [
-            'name' => 'Gestión escolar',
+            'name' => 'Nivel básico',
             'icon' => 'fa-regular fa-user',
             'active' => request()->routeIs(
                     'admin.students.index',
@@ -185,6 +185,7 @@
                     ),
                 ],
 
+
                 [
                     'name' => 'Tutores',
                     'icon' => 'fa-regular fa-circle',
@@ -194,6 +195,23 @@
                         'admin.tutors.create',
                         'admin.tutors.edit',
                         'admin.tutors.show',
+                    ),
+                ],
+            ]
+        ],
+        [
+            'name' => 'Bachillerato',
+            'icon' => 'fa-regular fa-user',
+            'active' => request()->routeIs(
+                    'admin.bachillerato.index',
+            ),
+            'submenu' => [
+                [
+                    'name' => 'Bachillerato General',
+                    'icon' => 'fa-regular fa-circle',
+                    'route' => route('admin.bachillerato.index'),
+                    'active' => request()->routeIs(
+                        'admin.bachillerato.index',
                     ),
                 ],
             ]

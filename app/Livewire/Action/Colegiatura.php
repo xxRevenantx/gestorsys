@@ -5,6 +5,7 @@ namespace App\Livewire\Action;
 use App\Models\Colegiatura as ModelsColegiatura;
 use App\Models\Month;
 use App\Models\Student;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Colegiatura extends Component
@@ -239,9 +240,6 @@ class Colegiatura extends Component
     {
         $this->descuento = 0;
         $this->monto = 0;
-
-
-
     }
 
 
@@ -341,6 +339,57 @@ class Colegiatura extends Component
             ]);
         }
     }
+
+
+    // #[On('eliminarColegiatura')]
+    public function eliminarColegiatura($id)
+    {
+
+        $colegiatura = ModelsColegiatura::find($id);
+
+        if ($colegiatura) {
+            $colegiatura->delete();
+
+            $this->dispatch('swal', [
+                'title' => 'Colegiatura eliminada correctamente!',
+                'icon' => 'success',
+                'position' => 'top',
+            ]);
+            $this->dispatch('refreshColegiatura'); // actualizar la tabla
+
+            $this->reset([
+                'query',
+                'nombre_pago',
+                'tipo_pago',
+                'month_id',
+                'monto',
+                'descuento',
+                'fecha_pago',
+                'alumnoSeleccionadoId',
+                'matricula',
+                'nombre',
+                'apellido_paterno',
+                'apellido_materno',
+                'CURP',
+                'observaciones',
+                'pagoExistente',
+                'habilitarInput',
+                'textoPago',
+                'alumnos',
+                'selectedIndex',
+                'existingPayment',
+
+            ]);
+
+
+
+
+
+        }
+
+
+    }
+
 
 
     public function placeholder(){

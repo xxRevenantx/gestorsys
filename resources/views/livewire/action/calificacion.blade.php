@@ -57,10 +57,13 @@
                                 <div>
                                     <h2>
                                         <button @click="togglePeriodo('{{ $accordionId }}')"
-                                                type="button"
-                                                class="w-full p-4 font-semibold text-left rounded-t-lg transition bg-indigo-500 text-white hover:bg-indigo-600">
-                                            {{ $periodo->num_periodo }}° PERIODO
-                                        </button>
+                                        type="button"
+                                        class="w-full p-4 font-semibold text-left rounded-t-lg transition bg-indigo-500 text-white hover:bg-indigo-600 flex justify-between items-center">
+                                        {{ $periodo->num_periodo }}° PERIODO
+                                        <span class="text-xs bg-white text-indigo-600 px-2 py-1 rounded">
+                                            {{ $calificacionesPorcentaje[$grupo->id][$periodo->id] ?? 0 }}%
+                                        </span>
+                                    </button>
                                     </h2>
 
                                     <div x-show="openPeriodos['{{ $accordionId }}']" x-transition class="border border-t-0 border-gray-300 dark:border-gray-700 rounded-b-lg">
@@ -85,6 +88,7 @@
                                                                 <th class="px-4 py-2 text-left font-semibold">{{ $materia->materia }}</th>
                                                             @endforeach
                                                             <th class="px-4 py-2 text-left font-semibold">Promedio</th>
+                                                            <th class="px-4 py-2 text-left font-semibold">PDF</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -95,7 +99,8 @@
                                                                     ->filter(fn($n, $key) => is_numeric($n) && ($materias->where('id', $key)->first()->calificacion ?? 0) == 1)
                                                                     ->values();
 
-                                                                $promedio = $notas->count() ? number_format($notas->avg(), 1) : '-';
+                                                                    $promedio = $notas->count() ? number_format($notas->avg(), 2) : '-';
+
                                                             @endphp
 
                                                             <tr>
@@ -105,14 +110,34 @@
                                                                 </td>
                                                                 @foreach ($materias as $materia)
                                                                     <td class="px-2 py-1 text-center">
-                                                                        <input
-                                                                            type="text"
-                                                                            class="w-16 text-center bg-gray-100 dark:bg-gray-700 text-sm rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                                            wire:model.lazy="inputs.{{ $periodo->id }}.{{ $student->id }}.{{ $materia->id }}"
-                                                                        >
+                                                                        @php
+                                                                        $calif = $inputs[$periodo->id][$student->id][$materia->id] ?? '';
+                                                                        $color = 'bg-gray-100 dark:bg-gray-700'; // default
+
+                                                                        if (is_numeric($calif) && $calif < 6) {
+                                                                            $color = 'bg-red-200 text-red-800 font-bold';
+                                                                        }
+                                                                    @endphp
+
+                                                                    <input
+                                                                        type="text"
+                                                                        style="text-transform: uppercase"
+                                                                        class="w-16 text-center text-sm rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 {{ $color }}"
+                                                                        wire:model.lazy="inputs.{{ $periodo->id }}.{{ $student->id }}.{{ $materia->id }}"
+                                                                    >
                                                                     </td>
                                                                 @endforeach
                                                                 <td class="px-4 py-2 font-bold text-indigo-600">{{ $promedio }}</td>
+                                                                <td class="px-4 py-2 font-bold text-indigo-600">
+
+                                                                    <a target="_blank" href="{{ route('admin.exportar.calificaciones.pdf', ['student' => $student->id, 'periodo' => $periodo->id]) }}"
+                                                                        class="inline-flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                                        <i class="mdi mdi-file-pdf"></i>
+                                                                         PDF
+                                                                    </a>
+
+
+                                                                </td>
                                                             </tr>
                                                         @endforeach
 
@@ -140,6 +165,103 @@
                                     </div>
                                 </div>
                             @endforeach
+
+                            <!-- CALIFICACIONES FINALES -->
+                                    <div>
+                                        <h2>
+                                            <button @click="togglePeriodo('finales_{{ $grupo->id }}')"
+                                                    type="button"
+                                                    class="w-full p-4 font-semibold text-left rounded-t-lg transition bg-purple-600 text-white hover:bg-purple-700 flex justify-between items-center">
+                                                CALIFICACIONES FINALES
+                                            </button>
+                                        </h2>
+
+                                        <div x-show="openPeriodos['finales_{{ $grupo->id }}']" x-transition class="border border-t-0 border-gray-300 dark:border-gray-700 rounded-b-lg">
+                                            <div class="p-4 bg-white dark:bg-gray-800">
+                                                <div class="overflow-x-auto shadow rounded">
+                                                    <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-200">
+                                                        <thead class="bg-gray-100 dark:bg-gray-700">
+                                                            <tr>
+                                                                <th class="px-4 py-2 text-left font-semibold">#</th>
+                                                                <th class="px-4 py-2 text-left font-semibold">Nombre</th>
+                                                                @foreach ($materias as $materia)
+                                                                    <th class="px-4 py-2 text-left font-semibold">{{ $materia->materia }}</th>
+                                                                @endforeach
+                                                                <th class="px-4 py-2 text-left font-semibold">Promedio Final</th>
+                                                                <th class="px-4 py-2 text-left font-semibold">Descargar</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                                            @php
+                                                            $lugares = $this->calcularLugaresConMedallas($grupo->id);
+                                                        @endphp
+                                                            @foreach ($studentsByGroup[$grupo->id] ?? [] as $index => $student)
+                                                                <tr>
+                                                                    @php
+                                                                    $lugar = $lugares[$student->id] ?? null;
+
+                                                                @endphp
+
+                                                                <td class="px-4 py-2 font-bold text-center text-indigo-600" style="font-size: 20px">
+                                                                    {{ $lugar }}°
+                                                                </td>
+
+                                                                    <td class="px-4 py-2">{{ $student->nombre }} {{ $student->apellido_paterno }} {{ $student->apellido_materno }}</td>
+                                                                    @foreach ($materias as $materia)
+                                                                    @php
+                                                                    $final = $finales[$student->id][$materia->id] ?? ['promedio' => '', 'completas' => false];
+                                                                    $prom = $final['promedio'];
+                                                                    $clase = 'bg-gray-200'; // por defecto
+
+                                                                    if (!$final['completas']) {
+                                                                        $clase = 'bg-red-200 text-red-800 font-bold';
+                                                                    } elseif (is_numeric($prom) && $prom < 6) {
+                                                                        $clase = 'bg-yellow-200 text-yellow-800 font-semibold';
+                                                                    }
+                                                                @endphp
+
+                                                                <td class="px-2 py-1 text-center">
+                                                                    <div class="flex flex-col items-center">
+                                                                        <input
+                                                                            type="text"
+                                                                            class="w-16 text-center text-sm rounded border {{ $clase }}"
+                                                                            value="{{ $prom }}"
+                                                                            disabled
+                                                                        >
+
+                                                                        @if (!$final['completas'])
+                                                                            <span class="text-xs text-red-600 mt-1 font-medium">Revisar</span>
+                                                                        @elseif (is_numeric($prom) && $prom < 6)
+                                                                            <span class="text-xs text-yellow-700 mt-1 font-medium">Bajo</span>
+                                                                        @endif
+                                                                    </div>
+                                                                </td>
+
+                                                                    @endforeach
+                                                                    <td class="px-4 py-2 font-bold text-indigo-700">
+                                                                        {{ $promedioFinalAlumno[$student->id] ?? '' }}
+                                                                    </td>
+                                                                    <td class="px-4 py-2 font-bold text-indigo-600">
+
+                                                                        <a target="_blank" href="{{ route('admin.exportar.calificaciones.finales.pdf', ['student' => $student->id]) }}"
+                                                                            class="inline-flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                                            <i class="mdi mdi-file-pdf"></i>
+                                                                             PDF
+                                                                        </a>
+
+
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                         </div>
 
                     </div>
@@ -153,15 +275,16 @@
 
 @push('scripts')
 <script>
-    function enableKeyboardNavigation(containerSelector = 'table') {
-        const table = document.querySelector(containerSelector);
-        if (!table) return;
+    function enableKeyboardNavigation() {
+        const tables = document.querySelectorAll("table"); // Selecciona todas las tablas
 
-        const inputs = Array.from(table.querySelectorAll('input[type="text"]'));
+        tables.forEach((table) => {
+            const inputs = Array.from(table.querySelectorAll('input[type="text"]'));
 
-        inputs.forEach((input) => {
-            input.removeEventListener('keydown', handleKeyNav);
-            input.addEventListener('keydown', handleKeyNav);
+            inputs.forEach((input) => {
+                input.removeEventListener('keydown', handleKeyNav);
+                input.addEventListener('keydown', handleKeyNav);
+            });
         });
     }
 
@@ -194,14 +317,14 @@
 
             case 'ArrowRight':
                 event.preventDefault();
-                if (currentColIndex + 1 < currentRow.cells.length - 1) { // -1 para evitar promedio
+                if (currentColIndex + 1 < currentRow.cells.length - 1) {
                     nextInput = currentRow.cells[currentColIndex + 1]?.querySelector('input');
                 }
                 break;
 
             case 'ArrowLeft':
                 event.preventDefault();
-                if (currentColIndex > 1) { // >1 para no pasar a columna de nombre
+                if (currentColIndex > 1) {
                     nextInput = currentRow.cells[currentColIndex - 1]?.querySelector('input');
                 }
                 break;
@@ -232,13 +355,8 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-        const target = document.body;
-        observer.observe(target, { childList: true, subtree: true });
+        observer.observe(document.body, { childList: true, subtree: true });
         enableKeyboardNavigation();
     });
 </script>
-
-
-
-
 @endpush

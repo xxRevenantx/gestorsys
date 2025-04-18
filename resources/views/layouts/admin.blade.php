@@ -67,12 +67,9 @@
 
 
         @livewireScripts
-
-
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-        <script>
+      <script>
            Livewire.on('swal', (data) => {
                 const Toast = Swal.mixin({
                 toast: true,
@@ -93,6 +90,30 @@
             })
 
         </script>
+
+
+        {{-- ELIMINAR COLEGIATURA --}}
+        {{-- <script>
+            function eliminarColegiatura(id) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡Esta acción no se puede deshacer!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        @this.call('eliminarColegiatura', id)
+                    }
+                });
+            }
+        </script> --}}
+
+
+
 
 
 

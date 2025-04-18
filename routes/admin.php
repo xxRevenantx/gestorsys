@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\BachilleratoController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\GenerationController;
@@ -80,6 +81,10 @@ Route::resource('materias', MateriaController::class)->names('materias');
 // PDFS
 
 // Route::get('nivelesPDF', [PDFLevelController::class, 'nivelesPDF'])->name('nivelespdf');
+
+Route::get('/colegiaturas-pagadas-y-faltantes/{level}/{grade}', [PDFLevelController::class, 'colegiatura_faltantes_pdf'])->name('colegiaturas.faltantes');
+
+
 Route::get('/expediente-alumno/{alumno}', [PDFLevelController::class, 'expedienteAlumno'])->name('expediente.alumno');
 
 
@@ -99,6 +104,12 @@ Route::get('/horarios/{level}/{grade}/{group}', [PDFLevelController::class, 'hor
 // HORARIO GENERAL
 Route::get('/horario-general/{level}', [PDFLevelController::class, 'horarioGeneral'])->name('horario.general');
 
+// CALIFICACIONES
+Route::get('/calificaciones/{student}/{periodo}', [PDFLevelController::class, 'calificaciones_pdf'])->name('exportar.calificaciones.pdf');
+
+// CALIFICACIONES FINALES
+Route::get('/calificaciones-finales/{student}', [PDFLevelController::class, 'calificaciones_finales_pdf'])->name('exportar.calificaciones.finales.pdf');
+
 
 // RUTAS DEL CONTROLADOR DE NIVELES
 Route::get('/basico', [MostrarNivelController::class, 'index'])->name('level.index');
@@ -109,6 +120,12 @@ Route::get('/basico/{nivel}/{action}/{grade}', [MostrarNivelController::class, '
 
 
 Route::get('/basico/{nivel}/{action}/{grado}', [MostrarNivelController::class, 'matricula'])->name('level.grados');
+
+
+// RUTAS PARA BACHILLERATO
+Route::get('/bachillerato', [BachilleratoController::class, 'index'])->name('bachillerato.index');
+
+
 
 
 

@@ -37,6 +37,9 @@
             width: 100%;
             margin: 20px 0;
             font-size: 13px;
+
+            border-collapse: separate; /* Necesario para que funcione border-spacing */
+            border-spacing: 7px 7px; /* 10px entre columnas, 10px entre filas */
         }
 
         th, td {
@@ -232,7 +235,7 @@ page-break-before: always;
                     <td>{{ $profesor['nombre'] }}</td>
 
                     {{-- Materias --}}
-                    <td>
+                    <td style="text-align: left; text-transform:uppercase">
                         @foreach ($profesor['materias'] as $materia => $horas)
                             {{ $materia }} ({{ $horas }} horas)<br>
                         @endforeach
@@ -242,7 +245,7 @@ page-break-before: always;
                 </tr>
             @endforeach
             <tr>
-                <td colspan="2" class="font-bold text-right">Total de Horas:</td>
+                <td colspan="2" class="font-bold text-right">TOTAL DE HORAS:</td>
                 <td>{{ $totalHoras }}</td>
             </tr>
         </tbody>

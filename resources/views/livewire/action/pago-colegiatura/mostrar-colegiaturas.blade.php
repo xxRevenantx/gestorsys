@@ -46,7 +46,10 @@
             Nombre
         </th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Fecha de Pago
+            Descuento
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Total
         </th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
            Tipo de pago
@@ -77,6 +80,12 @@
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
             {{ $colegiatura->student->nombre }} {{ $colegiatura->student->apellido_paterno }} {{ $colegiatura->student->apellido_materno }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            ${{ $colegiatura->descuento }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            ${{ $colegiatura->total }}
         </td>
 
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

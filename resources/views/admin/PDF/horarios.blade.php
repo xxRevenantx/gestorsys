@@ -10,13 +10,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <style>
+  @page { margin:10px 30px 0px 30px; }
+        body{
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
         table {
             width: 100%;
-            border-collapse: collapse;
             font-family: 'Segoe UI', sans-serif;
             text-align: center;
             margin-top: 30px;
+
+
+            border-collapse: separate; /* Necesario para que funcione border-spacing */
+            border-spacing: 5px 5px; /* 5px entre columnas, 5px entre filas */
+            width: 100%;
         }
 
         thead th {
@@ -39,6 +49,8 @@
             font-size: 12px;
             border-radius: 5px;
             background-color: #d6eaf8;
+            border-spacing: 10px
+
         }
 
         /* Primera columna: Horas */
@@ -48,12 +60,35 @@
             color: #2c3e50;
         }
 
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+            color: #555;
+        }
 
 
+        .titulo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            color: #333;
+        }
+        .subtitulo {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 5px;
+            color: #666;
+        }
 
     </style>
 </head>
 <body>
+
 
 <div class="container">
     <div class="decoraciones">
@@ -62,9 +97,9 @@
     </div>
 
     <div class="titulo">Horario de Clases</div>
-    <div class="subtitulo">Nivel Secundaria</div>
+    <div class="subtitulo"> {{ $grade->grado }}° de {{ $level->level }}</div>
 
-    <table>
+    <table class="table table-bordered" >
         <thead>
         <tr>
             <th>Hora</th>
@@ -122,30 +157,33 @@
     <table>
         <thead>
         <tr>
-            <th>Materia</th>
-            <th>Profesor</th>
+            <th>PROFESOR</th>
+            <th>MATERIA</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($materias as $materia)
-            <tr>
-                <td>{{ $materia->materia }}</td>
-                <td>
-                    {{ ucfirst(strtolower($materia->teacher->personnel->nombre ?? '-')) }}
-                    {{ ucfirst(strtolower($materia->teacher->personnel->apellido_paterno ?? '-')) }}
-                    {{ ucfirst(strtolower($materia->teacher->personnel->apellido_materno ?? '-')) }}
-                </td>
-            </tr>
-        @endforeach
+
+
+
+        <tbody>
+            @foreach($materiasAgrupadas as $profesor => $materias)
+                <tr>
+                    <td>{{ $profesor }}</td>
+                    <td style="text-align: left; text-transform:uppercase">
+                        @foreach($materias as $materia)
+                            {{ $materia->materia }}<br>
+                        @endforeach
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
         </tbody>
     </table>
 
-    <div class="footer">
-        © 2025 - Centro Educativo Infantil y Juvenil
-    </div>
-
-    <img src="https://cdn.pixabay.com/photo/2017/01/31/17/44/kids-2024619_960_720.png" alt="niños" class="niños">
 </div>
 
+<footer>
+    © 2025 - Centro Educativo Infantil y Juvenil
+</footer>
 </body>
 </html>

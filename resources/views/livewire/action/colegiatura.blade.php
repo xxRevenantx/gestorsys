@@ -9,30 +9,83 @@
        <div class="flex justify-between items-center ">
            <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Pago de <span class="text-indigo-700">Colegiaturas</span></h2>
 
-               <button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal" class="text-white bg-indigo-500 hover:bg-indigo-100 border border-indigo-200 focus:ring-4 focus:outline-none focus:ring-indigo-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-indigo-600 dark:bg-indigo-800 dark:border-indigo-700 dark:text-white dark:hover:bg-indigo-700">
-                   <svg aria-hidden="true" class="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                   <i class="mdi mdi-file-pdf-outline mr-2"></i> Ver todos los recibos
-                   </button>
+
+           <div x-data="{ showFaltantes: false, showRecibos: false }">
+            <!-- Botón: Pagos Faltantes -->
+            <button @click="showFaltantes = true"
+                type="button"
+                class="text-white bg-indigo-500 hover:bg-indigo-100 border border-indigo-200 focus:ring-4 focus:outline-none focus:ring-indigo-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-indigo-600 dark:bg-indigo-800 dark:border-indigo-700 dark:text-white dark:hover:bg-indigo-700">
+                <svg aria-hidden="true" class="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                    </path>
+                </svg>
+                <i class="mdi mdi-file-pdf-outline mr-2"></i> Pagos faltantes
+            </button>
+
+            <!-- Botón: Ver todos los recibos -->
+            <button @click="showRecibos = true"
+                type="button"
+                class="text-white bg-indigo-500 hover:bg-indigo-100 border border-indigo-200 focus:ring-4 focus:outline-none focus:ring-indigo-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-indigo-600 dark:bg-indigo-800 dark:border-indigo-700 dark:text-white dark:hover:bg-indigo-700">
+                <svg aria-hidden="true" class="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                    </path>
+                </svg>
+                <i class="mdi mdi-file-pdf-outline mr-2"></i> Ver todos los recibos
+            </button>
+
+            <!-- Modal: Recibos de Pago -->
+            <div x-show="showRecibos"
+                x-transition
+                class="overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full h-full bg-black bg-opacity-40"
+                @click.away="showRecibos = false"
+                @keydown.escape.window="showRecibos = false">
+                <div class="relative p-4 w-full max-h-full mx-auto">
+                    <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t bg-indigo-700 dark:border-gray-600">
+                            <h3 class="text-lg font-semibold text-white">Recibos de Pago</h3>
+                            <button @click="showRecibos = false"
+                                class="text-white bg-transparent hover:bg-indigo-800 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                aria-label="Close">
+                                ✖
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <livewire:action.pago-colegiatura.mostrar-colegiaturas :level_id="$level_id" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal: Pagos Faltantes -->
+            <div x-show="showFaltantes"
+                x-transition
+                class="overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full h-full bg-black bg-opacity-40"
+                @click.away="showFaltantes = false"
+                @keydown.escape.window="showFaltantes = false">
+                <div class="relative p-4 w-full max-h-full mx-auto">
+                    <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t bg-indigo-700 dark:border-gray-600">
+                            <h3 class="text-lg font-semibold text-white">Colegiaturas pagadas y faltantes</h3>
+                            <button @click="showFaltantes = false"
+                                class="text-white bg-transparent hover:bg-indigo-800 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                aria-label="Close">
+                                ✖
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <livewire:action.pago-colegiatura.faltantes-colegiaturas :level_id="$level_id" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
-                   <!-- Main modal -->
-                   <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                       <div class="relative p-4  w-full max-h-full">
-                           <!-- Modal content -->
-                           <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-                               <!-- Modal header -->
-                               <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200 bg-indigo-700">
-                                   <h3 class="text-lg font-semibold text-white dark:text-white ">
-                                      Recibos de Pago
-                                   </h3>
-
-                               </div>
-                               <!-- Modal body -->
-                               <livewire:action.pago-colegiatura.mostrar-colegiaturas :level_id="$level_id" />
-                           </div>
-                       </div>
-                   </div>
        </div>
 
        <hr class="my-3">
@@ -265,9 +318,43 @@
                     <dl class="flex items-center justify-end gap-4">
 
                         @if ($month_id)
+                        {{-- existingPayment => El El pago del alumno --}}
                         @isset($existingPayment)
+
+                        <div x-data ="{
+                            eliminarColegiatura(id){
+                                    Swal.fire({
+                                        title: '¿Estás seguro?',
+                                        text: 'La colegiatura se eliminará de forma permanente',
+                                        icon: 'info',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        cancelButtonText: 'cancelar',
+                                        confirmButtonText: 'Sí, eliminar'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            @this.call('eliminarColegiatura', id);
+
+                                        }
+                                    })
+                                }
+                        }"
+                        <dd
+                        class="text-base font-medium text-gray-900 dark:text-white">
+                            <button
+                            x-on:click="eliminarColegiatura({{  $existingPayment->id }})"
+                            class="flex items-center justify-end mt-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                            <i class="mdi mdi-trash-can-outline mr-2"></i>
+                            Eliminar
+                        </button>
+                        </dd>
+                        </div>
+
+
+
                         <dd class="text-base font-medium text-gray-900 dark:text-white">
-                            <a target="_blank" href="{{route('admin.recibo.colegiatura', ['alumno' => $alumnoSeleccionadoId, 'mes' => $month_id])}}" class="flex items-center justify-end mt-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                            <a target="_blank" href="{{route('admin.recibo.colegiatura', ['alumno' => $alumnoSeleccionadoId, 'mes' => $month_id])}}" class="flex items-center justify-end mt-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
                                 <i class="mdi mdi-file-pdf-outline mr-2"></i>
                                 Descargar Recibo
                             </a>
@@ -276,18 +363,13 @@
                         @endif
                         @isset($alumnoSeleccionadoId)
                         <dd class="text-base font-medium text-gray-900 dark:text-white">
-                            <a target="_blank" href="{{route('admin.estado.cuenta', $alumnoSeleccionadoId )}}" class="flex items-center justify-end mt-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                            <a target="_blank" href="{{route('admin.estado.cuenta', $alumnoSeleccionadoId )}}" class="flex items-center justify-end mt-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
                                 <i class="mdi mdi-file-pdf-outline mr-2"></i>
                                 Descargar estado de cuenta
                             </a>
                         </dd>
                         @endisset
                     </dl>
-
-
-
-
-
 
                <dl class="flex items-center justify-between gap-4">
                  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Padre O Tutor de: </dt>
@@ -314,21 +396,21 @@
 
                <dl class="flex items-center justify-between gap-4">
                    <dt class="text-base font-normal text-gray-500 dark:text-gray-400">La cantidad de:</dt>
-                   <dd class="text-base font-medium text-green-500 dark:text-white">${{$monto}}</dd>
+                   <dd class="text-base font-medium text-green-500 dark:text-white">${{ number_format($monto, 2) }}</dd>
                  </dl>
 
                <dl class="flex items-center justify-between gap-4">
                  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Descuento</dt>
-                 <dd class="text-base font-medium text-blue-500 dark:text-white">-${{$descuento}}</dd>
+                 <dd class="text-base font-medium text-blue-500 dark:text-white">-${{ number_format($descuento, 2) }}</dd>
                </dl>
              </div>
 
              <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
                @isset($descuento)
-               <dd class="text-base font-bold text-gray-900 dark:text-white">${{$monto-$descuento}}</dd>
+               <dd class="text-base font-bold text-gray-900 dark:text-white">${{ number_format($monto-$descuento, 2) }}</dd>
                @else
-               <dd class="text-base font-bold text-gray-900 dark:text-white">${{$monto}}</dd>
+               <dd class="text-base font-bold text-gray-900 dark:text-white">${{ number_format($monto, 2) }}</dd>
                @endisset
 
              </dl>
@@ -347,10 +429,6 @@
      </div>
    </div>
  </section>
-
-
-
-
-
-
 </div>
+
+
